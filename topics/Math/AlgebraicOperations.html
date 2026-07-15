@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebraic Operations - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .theme-toggle {background:none;border:2px solid var(--primary);color:var(--primary);padding:8px 12px;border-radius:6px;cursor:pointer;font-size:1em;transition:all 0.3s;font-weight:600;}
+        .theme-toggle:hover {background-color:var(--primary);color:#fff;}
+        :root[data-theme="dark"] {--dark-text:#e0e0e0;--light-text:#b0b0b0;--bg:#1a1a1a;--card:#2d2d2d;--border:#404040;--code:#3a3a3a;}
+        :root[data-theme="light"] {--dark-text:#333;--light-text:#666;--bg:#f5f5f5;--card:#fff;--border:#e0e0e0;--code:#f0f0f0;}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        .subsection-title {color:var(--primary); font-size:1.2em; margin:20px 0 10px 0; font-weight:600; padding-left:10px; border-left:3px solid var(--secondary);}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        .property-box {background:var(--code); padding:15px; border-left:4px solid var(--primary); border-radius:4px; margin:15px 0;}
+        .hr {height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const stored = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Algebraic Operations</h1>
+            <p>Foundations of Operations in the Real Numbers</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3>The Six Basic Operations</h3>
+            <p>All of algebra is built on six fundamental operations on real numbers:</p>
+
+            <h4>1. Addition (\(+\))</h4>
+            <p>Combines two numbers to get their sum.</p>
+            <div class="example">
+                <strong>Example:</strong> \(3 + 5 = 8\)<br>
+                \(3.2 + 1.8 = 5.0\)
+            </div>
+
+            <h4>2. Subtraction (\(-\))</h4>
+            <p>The inverse operation of addition. Finds the difference between two numbers.</p>
+            <div class="example">
+                <strong>Example:</strong> \(8 - 3 = 5\)<br>
+                \(5 - 7 = -2\)
+            </div>
+
+            <h4>3. Multiplication (\(\times\) or \(\cdot\))</h4>
+            <p>Repeated addition. Combines numbers by scaling.</p>
+            <div class="example">
+                <strong>Example:</strong> \(4 \times 3 = 12\) (add 4 three times)<br>
+                \(2.5 \times 4 = 10\)
+            </div>
+
+            <h4>4. Division (\(\div\) or \(/\))</h4>
+            <p>The inverse operation of multiplication. Splits a number into equal parts.</p>
+            <p><strong>⚠️ CRITICAL RULE: Division by zero is undefined!</strong><br>
+            We cannot divide by 0 in the real numbers. There is no number \(x\) such that \(0 \cdot x = 5\).</p>
+            <div class="example">
+                <strong>Example:</strong> \(12 \div 3 = 4\) (because \(3 \times 4 = 12\))<br>
+                \(\frac{10}{2} = 5\) (because \(2 \times 5 = 10\))<br><br>
+                <strong>Invalid:</strong> \(\frac{7}{0}\) is undefined ✗
+            </div>
+
+            <h4>5. Exponentiation (\(x^y\)) or Power</h4>
+            <p>Repeated multiplication. \(a^n\) means multiply \(a\) by itself \(n\) times.</p>
+            <div class="example">
+                <strong>Example:</strong> \(2^3 = 2 \times 2 \times 2 = 8\)<br>
+                \(5^2 = 5 \times 5 = 25\)
+            </div>
+
+            <h4>6. Logarithm (\(\log\))</h4>
+            <p>The inverse operation of exponentiation. Asks: "What power do I need?"</p>
+            <div class="example">
+                <strong>Example:</strong> \(\log_2(8) = 3\) because \(2^3 = 8\)<br>
+                \(\log_{10}(100) = 2\) because \(10^2 = 100\)
+            </div>
+
+            <hr class="hr">
+
+            <h3>Basic Properties of Addition and Multiplication</h3>
+
+            <div class="property-box">
+                <h4>Commutativity (Order Doesn't Matter)</h4>
+                <p><strong>For Addition:</strong> \(a + b = b + a\)</p>
+                <div class="example">
+                    \(3 + 5 = 8\) and \(5 + 3 = 8\)
+                </div>
+                <p><strong>For Multiplication:</strong> \(a \times b = b \times a\)</p>
+                <div class="example">
+                    \(4 \times 6 = 24\) and \(6 \times 4 = 24\)
+                </div>
+                <p><strong>NOT for Subtraction or Division:</strong></p>
+                <div class="example">
+                    \(5 - 3 = 2\) but \(3 - 5 = -2\) ✗<br>
+                    \(10 \div 2 = 5\) but \(2 \div 10 = 0.2\) ✗
+                </div>
+            </div>
+
+            <div class="property-box">
+                <h4>Associativity (Grouping Doesn't Matter)</h4>
+                <p><strong>For Addition:</strong> \((a + b) + c = a + (b + c)\)</p>
+                <div class="example">
+                    \((2 + 3) + 4 = 5 + 4 = 9\) and \(2 + (3 + 4) = 2 + 7 = 9\)
+                </div>
+                <p><strong>For Multiplication:</strong> \((a \times b) \times c = a \times (b \times c)\)</p>
+                <div class="example">
+                    \((2 \times 3) \times 4 = 6 \times 4 = 24\) and \(2 \times (3 \times 4) = 2 \times 12 = 24\)
+                </div>
+            </div>
+
+            <div class="property-box">
+                <h4>Identity Elements</h4>
+                <p><strong>Additive Identity:</strong> \(a + 0 = a\) (adding 0 doesn't change the number)</p>
+                <div class="example">
+                    \(7 + 0 = 7\), \(0 + (-3) = -3\)
+                </div>
+                <p><strong>Multiplicative Identity:</strong> \(a \times 1 = a\) (multiplying by 1 doesn't change the number)</p>
+                <div class="example">
+                    \(5 \times 1 = 5\), \(1 \times (-2) = -2\)
+                </div>
+            </div>
+
+            <div class="property-box">
+                <h4>Inverse Elements</h4>
+                <p><strong>Additive Inverse:</strong> \(a + (-a) = 0\) (the inverse undoes the operation)</p>
+                <div class="example">
+                    \(7 + (-7) = 0\), \((-3) + 3 = 0\)
+                </div>
+                <p><strong>Multiplicative Inverse:</strong> \(a \times \frac{1}{a} = 1\) (where \(a \neq 0\))</p>
+                <div class="example">
+                    \(5 \times \frac{1}{5} = 1\), \(\frac{2}{3} \times \frac{3}{2} = 1\)<br>
+                    Note: 0 has NO multiplicative inverse (we cannot multiply by anything to get 1)
+                </div>
+            </div>
+
+            <div class="property-box">
+                <h4>Distributivity (Multiplication Distributes Over Addition)</h4>
+                <p>\(a \times (b + c) = (a \times b) + (a \times c)\)</p>
+                <div class="example">
+                    \(3 \times (4 + 5) = 3 \times 9 = 27\)<br>
+                    \((3 \times 4) + (3 \times 5) = 12 + 15 = 27\)
+                </div>
+            </div>
+
+            <hr class="hr">
+        </section>
+
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3>Symmetry and Symmetry Properties</h3>
+
+            <h4>Reflexive Property</h4>
+            <p>Every number equals itself: \(a = a\)</p>
+            <div class="example">
+                \(5 = 5\), \(\pi = \pi\)
+            </div>
+
+            <h4>Symmetric Property</h4>
+            <p>If \(a = b\), then \(b = a\)</p>
+            <div class="example">
+                If \(2 + 3 = 5\), then \(5 = 2 + 3\)
+            </div>
+
+            <h4>Transitive Property</h4>
+            <p>If \(a = b\) and \(b = c\), then \(a = c\)</p>
+            <div class="example">
+                If \(x + 2 = 5\) and \(5 = 3 + 2\), then \(x + 2 = 3 + 2\)
+            </div>
+
+            <hr class="hr">
+
+            <h3>Cancellation and Inverse Properties</h3>
+
+            <h4>Cancellation Property for Addition</h4>
+            <p>If \(a + c = b + c\), then \(a = b\)</p>
+            <p><strong>Why?</strong> Add the additive inverse of \(c\) to both sides:</p>
+            <div class="example">
+                If \(x + 5 = 7 + 5\), then \(x = 7\)<br>
+                Add \(-5\) to both sides: \((x + 5) + (-5) = (7 + 5) + (-5)\)<br>
+                \(x + 0 = 7 + 0\)<br>
+                \(x = 7\)
+            </div>
+
+            <h4>Cancellation Property for Multiplication</h4>
+            <p>If \(a \times c = b \times c\) and \(c \neq 0\), then \(a = b\)</p>
+            <p><strong>Why?</strong> Multiply both sides by the multiplicative inverse of \(c\):</p>
+            <div class="example">
+                If \(3x = 12\), then \(x = 4\)<br>
+                Multiply both sides by \(\frac{1}{3}\): \((3x) \times \frac{1}{3} = 12 \times \frac{1}{3}\)<br>
+                \(x \times 1 = 4\)<br>
+                \(x = 4\)
+            </div>
+
+            <hr class="hr">
+
+            <h3>Advanced Properties of Exponents</h3>
+
+            <p><strong>Product Rule:</strong> \(a^m \times a^n = a^{m+n}\)</p>
+            <div class="example">
+                \(2^3 \times 2^2 = 2^{3+2} = 2^5 = 32\)<br>
+                Check: \((2 \times 2 \times 2) \times (2 \times 2) = 8 \times 4 = 32\) ✓
+            </div>
+
+            <p><strong>Quotient Rule:</strong> \(\frac{a^m}{a^n} = a^{m-n}\) (where \(a \neq 0\))</p>
+            <div class="example">
+                \(\frac{2^5}{2^2} = 2^{5-2} = 2^3 = 8\)<br>
+                Check: \(\frac{32}{4} = 8\) ✓
+            </div>
+
+            <p><strong>Power of a Power:</strong> \((a^m)^n = a^{m \times n}\)</p>
+            <div class="example">
+                \((2^3)^2 = 2^{3 \times 2} = 2^6 = 64\)<br>
+                Check: \((8)^2 = 64\) ✓
+            </div>
+
+            <p><strong>Power of a Product:</strong> \((a \times b)^n = a^n \times b^n\)</p>
+            <div class="example">
+                \((2 \times 3)^2 = 2^2 \times 3^2 = 4 \times 9 = 36\)<br>
+                Check: \((6)^2 = 36\) ✓
+            </div>
+
+            <hr class="hr">
+
+            <h3>Logarithm Properties</h3>
+
+            <p><strong>Product Rule:</strong> \(\log_b(x \times y) = \log_b(x) + \log_b(y)\)</p>
+            <div class="example">
+                \(\log_2(4 \times 8) = \log_2(4) + \log_2(8) = 2 + 3 = 5\)<br>
+                Check: \(\log_2(32) = 5\) because \(2^5 = 32\) ✓
+            </div>
+
+            <p><strong>Quotient Rule:</strong> \(\log_b\left(\frac{x}{y}\right) = \log_b(x) - \log_b(y)\)</p>
+            <div class="example">
+                \(\log_2\left(\frac{16}{4}\right) = \log_2(16) - \log_2(4) = 4 - 2 = 2\)<br>
+                Check: \(\log_2(4) = 2\) because \(2^2 = 4\) ✓
+            </div>
+
+            <p><strong>Power Rule:</strong> \(\log_b(x^n) = n \times \log_b(x)\)</p>
+            <div class="example">
+                \(\log_2(8^2) = 2 \times \log_2(8) = 2 \times 3 = 6\)<br>
+                Check: \(\log_2(64) = 6\) because \(2^6 = 64\) ✓
+            </div>
+
+            <hr class="hr">
+        </section>
+
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3>Axioms of the Real Numbers</h3>
+
+            <p>The real numbers \(\mathbb{R}\) form a <strong>field</strong> with the following axioms (fundamental rules):</p>
+
+            <h4>Field Axioms</h4>
+
+            <p><strong>Closure Axioms:</strong></p>
+            <ul>
+                <li>For any \(a, b \in \mathbb{R}\), we have \(a + b \in \mathbb{R}\) (closed under addition)</li>
+                <li>For any \(a, b \in \mathbb{R}\), we have \(a \times b \in \mathbb{R}\) (closed under multiplication)</li>
+            </ul>
+
+            <p><strong>Associative Axioms:</strong></p>
+            <ul>
+                <li>\((a + b) + c = a + (b + c)\) for all \(a, b, c \in \mathbb{R}\)</li>
+                <li>\((a \times b) \times c = a \times (b \times c)\) for all \(a, b, c \in \mathbb{R}\)</li>
+            </ul>
+
+            <p><strong>Commutative Axioms:</strong></p>
+            <ul>
+                <li>\(a + b = b + a\) for all \(a, b \in \mathbb{R}\)</li>
+                <li>\(a \times b = b \times a\) for all \(a, b \in \mathbb{R}\)</li>
+            </ul>
+
+            <p><strong>Identity Axioms:</strong></p>
+            <ul>
+                <li>There exists \(0 \in \mathbb{R}\) such that \(a + 0 = a\) for all \(a \in \mathbb{R}\)</li>
+                <li>There exists \(1 \in \mathbb{R}\) such that \(a \times 1 = a\) for all \(a \in \mathbb{R}\)</li>
+                <li>\(0 \neq 1\)</li>
+            </ul>
+
+            <p><strong>Inverse Axioms:</strong></p>
+            <ul>
+                <li>For every \(a \in \mathbb{R}\), there exists \(-a \in \mathbb{R}\) such that \(a + (-a) = 0\)</li>
+                <li>For every \(a \in \mathbb{R}\) with \(a \neq 0\), there exists \(a^{-1} \in \mathbb{R}\) such that \(a \times a^{-1} = 1\)</li>
+            </ul>
+
+            <p><strong>Distributive Axiom:</strong></p>
+            <ul>
+                <li>\(a \times (b + c) = (a \times b) + (a \times c)\) for all \(a, b, c \in \mathbb{R}\)</li>
+            </ul>
+
+            <hr class="hr">
+
+            <h3>Order Axioms</h3>
+
+            <p>Beyond being a field, \(\mathbb{R}\) is an <strong>ordered field</strong>:</p>
+
+            <ul>
+                <li><strong>Totality:</strong> For any \(a, b \in \mathbb{R}\), exactly one of these holds: \(a < b\), \(a = b\), or \(a > b\)</li>
+                <li><strong>Transitivity:</strong> If \(a < b\) and \(b < c\), then \(a < c\)</li>
+                <li><strong>Compatibility with Addition:</strong> If \(a < b\), then \(a + c < b + c\) for all \(c \in \mathbb{R}\)</li>
+                <li><strong>Compatibility with Multiplication:</strong> If \(a < b\) and \(c > 0\), then \(a \times c < b \times c\)</li>
+                <li><strong>Sign Flip on Negative Multiplication:</strong> If \(a < b\) and \(c < 0\), then \(a \times c > b \times c\)</li>
+            </ul>
+
+            <hr class="hr">
+
+            <h3>Completeness Axiom</h3>
+
+            <p>Unlike the rational numbers \(\mathbb{Q}\), the real numbers have the <strong>completeness property</strong>:</p>
+
+            <p>Every non-empty subset of \(\mathbb{R}\) that is bounded above has a least upper bound (supremum).</p>
+
+            <p><strong>Why does this matter?</strong> This axiom guarantees that numbers like \(\sqrt{2}\), \(\pi\), and \(e\) actually exist in \(\mathbb{R}\), whereas they don't exist in \(\mathbb{Q}\).</p>
+
+            <hr class="hr">
+        </section>
+
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Ring and Group Theory</h3>
+
+            <p>The real numbers form an <strong>abelian group</strong> under addition and a <strong>field</strong> under both operations.</p>
+
+            <h4>Group Structure under Addition</h4>
+            <ul>
+                <li>\((\mathbb{R}, +)\) is an abelian group</li>
+                <li>Satisfies: Closure, Associativity, Identity (0), Inverses (-a), Commutativity</li>
+            </ul>
+
+            <h4>Field Structure</h4>
+            <ul>
+                <li>\((\mathbb{R}, +, \times)\) is a field</li>
+                <li>An abelian group under addition</li>
+                <li>\((\mathbb{R} \setminus \{0\}, \times)\) is an abelian group under multiplication</li>
+                <li>Distributive property connects the two operations</li>
+            </ul>
+
+            <h3>Non-Archimedean Fields and Hyperreal Numbers</h3>
+
+            <p>While \(\mathbb{R}\) is Archimedean (for any \(a, b > 0\), there exists \(n \in \mathbb{N}\) such that \(na > b\)), infinitesimal calculus can be formalized using <strong>hyperreal numbers</strong> \(^*\mathbb{R}\), which extend \(\mathbb{R}\) with infinitesimals and infinities while preserving field properties.</p>
+
+            <h3>Transcendental Numbers and Algebraic Closure</h3>
+
+            <p>The algebraic numbers \(\overline{\mathbb{Q}}\) (roots of polynomial equations with rational coefficients) are a proper subset of \(\mathbb{R}\). Numbers like \(\pi\) and \(e\) are <strong>transcendental</strong> (not algebraic).</p>
+
+            <p><strong>Liouville's Theorem:</strong> Transcendental numbers cannot be approximated too well by rational numbers. The measure of transcendence is quantified using Liouville numbers and continued fractions.</p>
+
+            <h3>Operations on Extended Real Numbers</h3>
+
+            <p>The extended real numbers \(\overline{\mathbb{R}} = \mathbb{R} \cup \{-\infty, +\infty\}\) extend operations but with restrictions:</p>
+            <ul>
+                <li>\(a + \infty = +\infty\) for \(a > -\infty\)</li>
+                <li>\(a \times 0 = 0\) is indeterminate when \(a\) involves \(\infty\)</li>
+                <li>\(\frac{\infty}{\infty}\) and \(\frac{0}{0}\) remain undefined</li>
+            </ul>
+
+            <h3>Abstract Algebra: Homomorphisms and Isomorphisms</h3>
+
+            <p>Operations on \(\mathbb{R}\) can be studied through <strong>field homomorphisms</strong>—functions that preserve the algebraic structure.</p>
+
+            <p>A field homomorphism \(\phi: \mathbb{R} \to \mathbb{R}\) satisfies:</p>
+            <ul>
+                <li>\(\phi(a + b) = \phi(a) + \phi(b)\)</li>
+                <li>\(\phi(a \times b) = \phi(a) \times \phi(b)\)</li>
+                <li>\(\phi(1) = 1\)</li>
+            </ul>
+
+            <p>The only field automorphism of \(\mathbb{R}\) is the identity function (this follows from the order structure).</p>
+        </section>
+
+        <section id="sources">
+            <h2>Sources & References</h2>
+
+            <h3>Wikipedia</h3>
+            <ul>
+                <li><a href="https://en.wikipedia.org/wiki/Real_number" target="_blank">Real Number - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Field_(mathematics)" target="_blank">Field (Mathematics) - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Group_(mathematics)" target="_blank">Group (Mathematics) - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Transcendental_number" target="_blank">Transcendental Number - Wikipedia</a></li>
+            </ul>
+
+            <h3>Academic Papers (arXiv)</h3>
+            <ul>
+                <li><a href="https://arxiv.org/search/?query=field+axioms&searchtype=all" target="_blank">Field Axioms - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=ordered+fields&searchtype=all" target="_blank">Ordered Fields - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=transcendental+numbers&searchtype=all" target="_blank">Transcendental Numbers - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=real+analysis+foundations&searchtype=all" target="_blank">Real Analysis Foundations - arXiv Search</a></li>
+            </ul>
+
+            <h3>Textbooks & Bibliography</h3>
+            <ul>
+                <li><strong>Principles of Mathematical Analysis</strong> - Walter Rudin (1976)</li>
+                <li><strong>Introduction to Real Analysis</strong> - Robert G. Bartle & Donald R. Sherbert (2011)</li>
+                <li><strong>Modern Algebra</strong> - B. L. van der Waerden (1949)</li>
+                <li><strong>Abstract Algebra</strong> - David S. Dummit & Richard M. Foote (2004)</li>
+                <li><strong>A Course in Analysis</strong> - Terence Tao (2016)</li>
+                <li><strong>Algebra and Trigonometry</strong> - Michael Sullivan (2012)</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Algebraic Operations | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        const ThemeToggle = (() => {
+            const STORAGE_KEY = 'theme-preference';
+            const LIGHT = 'light';
+            const DARK = 'dark';
+
+            const getSystemPreference = () => {
+                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (prefersDark) return DARK;
+                if (prefersLight) return LIGHT;
+                return DARK;
+            };
+
+            const getPreference = () => {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === LIGHT || stored === DARK) return stored;
+                return getSystemPreference();
+            };
+
+            const setTheme = (theme) => {
+                const validTheme = (theme === LIGHT) ? LIGHT : DARK;
+                document.documentElement.setAttribute('data-theme', validTheme);
+                localStorage.setItem(STORAGE_KEY, validTheme);
+                updateButton(validTheme);
+            };
+
+            const updateButton = (theme) => {
+                const btn = document.getElementById('themeToggle');
+                if (btn) btn.textContent = theme === DARK ? '☀️' : '🌙';
+            };
+
+            const toggle = () => {
+                const current = document.documentElement.getAttribute('data-theme') || getPreference();
+                const next = current === DARK ? LIGHT : DARK;
+                setTheme(next);
+            };
+
+            const init = () => {
+                const preference = getPreference();
+                setTheme(preference);
+                document.getElementById('themeToggle')?.addEventListener('click', toggle);
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem(STORAGE_KEY)) {
+                        setTheme(e.matches ? DARK : LIGHT);
+                    }
+                });
+            };
+
+            return { init };
+        })();
+
+        ThemeToggle.init();
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

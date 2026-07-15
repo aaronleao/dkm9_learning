@@ -18,9 +18,6 @@ This project shall have the following requirements.
 
 - [Topics](topics/Topics.md)
 
-> !IMPORTANT
-> DESIGN
-
 
 ## Development
 

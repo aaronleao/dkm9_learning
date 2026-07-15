@@ -121,17 +121,48 @@
             <h4>Linear Equations in One Variable</h4>
             <p>A <strong>linear equation in one variable</strong> has the form:</p>
             <p>\[ax + b = c\]</p>
-            <p>where \(a \neq 0\).</p>
+            <p>where \(a \neq 0\). <strong>Why the constraint \(a \neq 0\)?</strong> When we solve for \(x\), we must divide both sides by \(a\) in the form \(\frac{2x}{a}\). Division by zero is undefined in the real numbers (see <a href="AlgebraicOperations.html" style="color: var(--primary);">Algebraic Operations</a>), so we require \(a \neq 0\) to ensure the equation has a well-defined solution. The goal is to isolate \(x\) by performing the same operation on both sides of the equation.</p>
             <div class="example">
-                <strong>Example:</strong> Solve \(2x + 3 = 7\)<br>
-                \[2x = 4 \Rightarrow x = 2\]
+                <strong>Example:</strong> Solve \(2x + 3 = 7\)<br><br>
+                <strong>Step 1: Subtract 3 from both sides</strong><br>
+                Why? We want to remove the \(+3\) on the left side to isolate the term with \(x\).<br>
+                \[2x + 3 - 3 = 7 - 3\]
+                \[2x = 4\]<br><br>
+                <strong>Step 2: Divide both sides by 2</strong><br>
+                Why? We need to remove the coefficient 2 from \(x\) to isolate \(x\) completely.<br>
+                \[\frac{2x}{2} = \frac{4}{2}\]
+                \[x = 2\]<br><br>
+                <strong>Verification:</strong> Substitute \(x = 2\) back into the original equation:<br>
+                \[2(2) + 3 = 4 + 3 = 7\] ✓
             </div>
 
             <h4>Quadratic Equations</h4>
             <p>A <strong>quadratic equation</strong> has the form:</p>
             <p>\[ax^2 + bx + c = 0\]</p>
-            <p>The <strong>quadratic formula</strong> gives solutions:</p>
+            <p>where \(a \neq 0\). <strong>Why the constraint \(a \neq 0\)?</strong> If \(a = 0\), the \(x^2\) term disappears, and we no longer have a quadratic equation—we'd just have a linear equation \(bx + c = 0\). Also, the quadratic formula requires dividing by \(2a\), which is undefined if \(a = 0\) (see <a href="AlgebraicOperations.html" style="color: var(--primary);">Algebraic Operations</a>). These have up to 2 solutions (roots). The <strong>quadratic formula</strong> always works:</p>
             <p>\[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]</p>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(x^2 - 5x + 6 = 0\)<br><br>
+                <strong>Step 1: Identify the coefficients</strong><br>
+                From \(ax^2 + bx + c = 0\), we have: \(a = 1\), \(b = -5\), \(c = 6\)<br><br>
+
+                <strong>Step 2: Calculate the discriminant</strong><br>
+                The discriminant is \(\Delta = b^2 - 4ac\). This tells us how many real solutions exist.<br>
+                \[\Delta = (-5)^2 - 4(1)(6) = 25 - 24 = 1\]
+                Since \(\Delta = 1 > 0\), we have two distinct real solutions.<br><br>
+
+                <strong>Step 3: Apply the quadratic formula</strong><br>
+                \[x = \frac{-(-5) \pm \sqrt{1}}{2(1)} = \frac{5 \pm 1}{2}\]<br><br>
+
+                <strong>Step 4: Find both solutions</strong><br>
+                First solution: \(x = \frac{5 + 1}{2} = \frac{6}{2} = 3\)<br>
+                Second solution: \(x = \frac{5 - 1}{2} = \frac{4}{2} = 2\)<br><br>
+
+                <strong>Verification:</strong><br>
+                For \(x = 3\): \(3^2 - 5(3) + 6 = 9 - 15 + 6 = 0\) ✓<br>
+                For \(x = 2\): \(2^2 - 5(2) + 6 = 4 - 10 + 6 = 0\) ✓
+            </div>
 
             <div class="subsection-title">Inequalities</div>
 
@@ -145,16 +176,71 @@
             </ul>
 
             <h4>Linear Inequalities</h4>
-            <p>Similar to equations, but with one key difference:</p>
-            <p><strong>When multiplying or dividing by a negative number, flip the inequality sign.</strong></p>
+            <p>Similar to equations, we isolate the variable by performing operations on both sides. However, there is one crucial rule:</p>
+            <p><strong>🔴 KEY RULE: When multiplying or dividing by a negative number, flip the inequality sign.</strong></p>
             <div class="example">
-                <strong>Example:</strong> Solve \(-3x + 5 < 11\)<br>
-                \[-3x < 6 \Rightarrow x > -2\] (inequality flipped!)
+                <strong>Example 1:</strong> Solve \(2x + 3 > 7\)<br><br>
+                <strong>Step 1: Subtract 3 from both sides</strong><br>
+                Why? To isolate the term with \(x\).<br>
+                \[2x + 3 - 3 > 7 - 3\]
+                \[2x > 4\]<br><br>
+
+                <strong>Step 2: Divide both sides by 2</strong><br>
+                Why? To isolate \(x\). Since we're dividing by a positive number, the inequality sign stays the same.<br>
+                \[\frac{2x}{2} > \frac{4}{2}\]
+                \[x > 2\]<br><br>
+
+                <strong>Answer:</strong> All numbers greater than 2 satisfy this inequality.
+            </div>
+
+            <div class="example">
+                <strong>Example 2:</strong> Solve \(-3x + 5 < 11\)<br><br>
+                <strong>Step 1: Subtract 5 from both sides</strong><br>
+                Why? To isolate the term with \(x\).<br>
+                \[-3x + 5 - 5 < 11 - 5\]
+                \[-3x < 6\]<br><br>
+
+                <strong>Step 2: Divide both sides by -3</strong><br>
+                Why? To isolate \(x\). But CAREFUL: we're dividing by <strong>negative</strong> 3, so we must flip the inequality sign!<br>
+                \[\frac{-3x}{-3} > \frac{6}{-3}\]
+                \[x > -2\] ⚠️ (inequality flipped!)<br><br>
+
+                <strong>Verification:</strong> Let's check with \(x = 0\) (which is \(> -2\)):<br>
+                \[-3(0) + 5 = 5 < 11\] ✓<br>
+                Let's check with \(x = -5\) (which is \(< -2\)):<br>
+                \[-3(-5) + 5 = 15 + 5 = 20 < 11\] ✗ (This doesn't work!)
             </div>
 
             <h4>Absolute Value Inequalities</h4>
-            <p>\(|x| < a \iff -a < x < a\) (where \(a > 0\))<br>
-            \(|x| > a \iff x < -a \text{ or } x > a\) (where \(a > 0\))</p>
+            <p>The <strong>absolute value</strong> \(|x|\) represents the distance from \(x\) to 0 on the number line. It is always non-negative.</p>
+
+            <p><strong>Rule 1: For \(|x| < a\) (where \(a > 0\))</strong><br>
+            This means: the distance from \(x\) to 0 is less than \(a\).<br>
+            \[|x| < a \iff -a < x < a\]</p>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(|x| < 3\)<br><br>
+                <strong>What does this mean?</strong><br>
+                We want all numbers whose distance from 0 is less than 3.<br><br>
+
+                <strong>Solution:</strong><br>
+                \[|x| < 3 \iff -3 < x < 3\]<br>
+                This means \(x\) is between -3 and 3 (not including -3 and 3).
+            </div>
+
+            <p><strong>Rule 2: For \(|x| > a\) (where \(a > 0\))</strong><br>
+            This means: the distance from \(x\) to 0 is greater than \(a\).<br>
+            \[|x| > a \iff x < -a \text{ or } x > a\]</p>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(|x| > 2\)<br><br>
+                <strong>What does this mean?</strong><br>
+                We want all numbers whose distance from 0 is greater than 2.<br><br>
+
+                <strong>Solution:</strong><br>
+                \[|x| > 2 \iff x < -2 \text{ or } x > 2\]<br>
+                This means \(x\) is either less than -2 or greater than 2 (a gap in the middle).
+            </div>
 
             <hr class="hr">
         </section>

@@ -7,28 +7,7 @@ Comprehensive learning resources organized by subject. Each subject contains top
 ### Mathematics
 - [**Mathematics Hub**](Math/index.html) - Comprehensive guide to mathematical foundations and theory
 
-  **Topics:** Set Theory, Mathematical Logic, Functions, Equations & Inequalities, Geometry
-
-### Physics
-  *(Coming Soon)*
-  - Classical Mechanics
-  - Thermodynamics
-  - Electromagnetism
-  - Quantum Mechanics
-
-### Chemistry
-  *(Coming Soon)*
-  - Atomic Structure
-  - Bonding & Molecular Structure
-  - Thermochemistry
-  - Equilibrium & Kinetics
-
-### Computer Science
-  *(Coming Soon)*
-  - Data Structures
-  - Algorithms
-  - Theory of Computation
-  - Artificial Intelligence
+  **Topics:** Algebraic Operations, Set Theory, Mathematical Logic, Functions, Equations & Inequalities, Geometry
 
 ---
 
@@ -49,8 +28,8 @@ See [TEMPLATE.html](TEMPLATE.html), [COMPONENTS.md](COMPONENTS.md), and [new-top
 ```bash
 # Create a new topic (automated)
 cd topics
-python3 new-topic.py Math "Your Topic Name"
+python3 new-topic.py <TOPIC_FOLDER> "Your Topic Name"
 
 # Or manual: copy template and edit
-cp TEMPLATE.html Math/YourTopic.html
+cp TEMPLATE.html <TOPIC_FOLDER>/YourTopic.html
 ```
