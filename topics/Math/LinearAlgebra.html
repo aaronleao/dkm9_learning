@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Algebra - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        :root[data-theme="dark"] {
+            --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+            --border:#404040; --code:#3a3a3a;
+        }
+        :root[data-theme="light"] {
+            --dark:#333; --light:#666; --bg:#f5f5f5; --card:#fff;
+            --border:#e0e0e0; --code:#f0f0f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .theme-toggle {
+            background:none; border:2px solid var(--primary); color:var(--primary); padding:8px 12px;
+            border-radius:6px; cursor:pointer; font-size:1em; transition:all 0.3s; font-weight:600;
+        }
+        .theme-toggle:hover {background-color:var(--primary); color:#fff;}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px; white-space:pre-wrap;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+
+    <script>
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const stored = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Linear Algebra</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#vectors">— Vectors</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#matrices">— Matrices as Transformations</a></li>
+                <li><a href="#gaussian">— Gaussian Elimination</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#determinants">— Determinants & Eigenvalues</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <!-- MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) -->
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : -10,
+                xmax: opts.xmax !== undefined ? opts.xmax : 10,
+                ymin: opts.ymin !== undefined ? opts.ymin : -10,
+                ymax: opts.ymax !== undefined ? opts.ymax : 10,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 5 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 5 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                plot: (f, color, dash) => {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = S.xmin + (S.xmax - S.xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(S.px(x), S.py(y)); started = true; }
+                        else ctx.lineTo(S.px(x), S.py(y));
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                },
+                dot: (x, y, color, r) => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(S.px(x), S.py(y), r || 5, 0, 2 * Math.PI); ctx.fill();
+                },
+                arrow: (x, y, vx, vy, color, lw) => {
+                    const x2 = x + vx, y2 = y + vy;
+                    ctx.strokeStyle = color; ctx.lineWidth = lw || 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(x), S.py(y)); ctx.lineTo(S.px(x2), S.py(y2)); ctx.stroke();
+                    const ang = Math.atan2(S.py(y2) - S.py(y), S.px(x2) - S.px(x));
+                    ctx.beginPath();
+                    ctx.moveTo(S.px(x2), S.py(y2));
+                    ctx.lineTo(S.px(x2) - 8 * Math.cos(ang - 0.4), S.py(y2) - 8 * Math.sin(ang - 0.4));
+                    ctx.moveTo(S.px(x2), S.py(y2));
+                    ctx.lineTo(S.px(x2) - 8 * Math.cos(ang + 0.4), S.py(y2) - 8 * Math.sin(ang + 0.4));
+                    ctx.stroke();
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        </script>
+
+        <!-- ============ BEGINNER LEVEL ============ -->
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3 id="vectors">Vectors</h3>
+            <p><strong>Intuition:</strong> a <a href="https://en.wikipedia.org/wiki/Euclidean_vector" target="_blank" style="color: var(--primary);">vector</a> is an arrow: it has a length and a direction, but no fixed starting point. Forces, velocities, and displacements are all vectors — and they add tip-to-tail.</p>
+            <p><strong>Formal definitions</strong> for \(\mathbf u = (u_1, u_2)\), \(\mathbf v = (v_1, v_2)\):</p>
+            <ul>
+                <li><strong>Sum:</strong> \(\mathbf u + \mathbf v = (u_1 + v_1,\ u_2 + v_2)\) — the parallelogram diagonal</li>
+                <li><strong>Norm (length):</strong> \(\|\mathbf u\| = \sqrt{u_1^2 + u_2^2}\)</li>
+                <li><strong>Dot product:</strong> \(\mathbf u \cdot \mathbf v = u_1 v_1 + u_2 v_2 = \|\mathbf u\|\|\mathbf v\|\cos\theta\)</li>
+            </ul>
+            <p>The dot product's <em>sign</em> is geometric: positive → the vectors point broadly the same way (angle \(< 90°\)); zero → perpendicular; negative → opposing.</p>
+
+            <p><strong>Interactive: vector addition & dot product.</strong> Set each vector's length and angle; the dashed parallelogram construction gives \(\mathbf u + \mathbf v\).</p>
+            <div class="viz-widget" id="vecWidget">
+                <div class="viz-controls">
+                    <label>‖u‖: <span id="vecWidget-luVal"></span>
+                        <input type="range" id="vecWidget-lu" min="0.5" max="3" step="0.1" value="2">
+                    </label>
+                    <label>angle of u: <span id="vecWidget-auVal"></span>
+                        <input type="range" id="vecWidget-au" min="0" max="6.28" step="0.05" value="0.4">
+                    </label>
+                    <label>‖v‖: <span id="vecWidget-lvVal"></span>
+                        <input type="range" id="vecWidget-lv" min="0.5" max="3" step="0.1" value="1.5">
+                    </label>
+                    <label>angle of v: <span id="vecWidget-avVal"></span>
+                        <input type="range" id="vecWidget-av" min="0" max="6.28" step="0.05" value="1.6">
+                    </label>
+                </div>
+                <canvas id="vecWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="vecWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('vecWidget', { xmin: -4.4, xmax: 4.4, ymin: -2.25, ymax: 2.25 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const lu = parseFloat($('lu').value), au = parseFloat($('au').value);
+                    const lv = parseFloat($('lv').value), av = parseFloat($('av').value);
+                    $('luVal').textContent = lu.toFixed(1); $('auVal').textContent = au.toFixed(2);
+                    $('lvVal').textContent = lv.toFixed(1); $('avVal').textContent = av.toFixed(2);
+                    const u = [lu * Math.cos(au), lu * Math.sin(au)];
+                    const v = [lv * Math.cos(av), lv * Math.sin(av)];
+                    const s = [u[0] + v[0], u[1] + v[1]];
+                    // parallelogram construction, dashed
+                    ctx.setLineDash([5, 5]); ctx.strokeStyle = c.grid; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(V.px(u[0]), V.py(u[1])); ctx.lineTo(V.px(s[0]), V.py(s[1])); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(V.px(v[0]), V.py(v[1])); ctx.lineTo(V.px(s[0]), V.py(s[1])); ctx.stroke();
+                    ctx.setLineDash([]);
+                    V.arrow(0, 0, u[0], u[1], c.curve, 2.5);
+                    V.arrow(0, 0, v[0], v[1], c.accent, 2.5);
+                    V.arrow(0, 0, s[0], s[1], c.text, 2.5);
+                    ctx.fillStyle = c.text; ctx.font = 'bold 14px monospace';
+                    ctx.fillText('u', V.px(u[0] * 1.08), V.py(u[1] * 1.08));
+                    ctx.fillText('v', V.px(v[0] * 1.08), V.py(v[1] * 1.08));
+                    ctx.fillText('u+v', V.px(s[0] * 1.05), V.py(s[1] * 1.05));
+                    const dotp = u[0] * v[0] + u[1] * v[1];
+                    const cosT = dotp / (lu * lv);
+                    const deg = Math.acos(Math.max(-1, Math.min(1, cosT))) * 180 / Math.PI;
+                    $('readout').textContent = 'u = (' + u[0].toFixed(2) + ', ' + u[1].toFixed(2) + ')   v = (' + v[0].toFixed(2) + ', ' + v[1].toFixed(2) + ')'
+                        + '   u+v = (' + s[0].toFixed(2) + ', ' + s[1].toFixed(2) + ')\nu·v = ' + dotp.toFixed(3)
+                        + '   angle = ' + deg.toFixed(1) + '°   ('
+                        + (Math.abs(dotp) < 0.05 ? 'perpendicular!' : dotp > 0 ? 'same general direction' : 'opposing directions') + ')';
+                }
+                V.bind(['lu', 'au', 'lv', 'av'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: for \(\mathbf u = (3, 4)\), \(\mathbf v = (2, -1)\)</strong><br><br>
+                <strong>Sum:</strong> \(\mathbf u + \mathbf v = (3+2,\ 4-1) = (5, 3)\).<br>
+                <strong>Norm:</strong> \(\|\mathbf u\| = \sqrt{3^2 + 4^2} = \sqrt{25} = 5\).<br>
+                <strong>Dot product:</strong> \(\mathbf u \cdot \mathbf v = 3(2) + 4(-1) = 2 > 0\) → angle under 90°.<br>
+                <strong>The angle itself:</strong> \(\cos\theta = \frac{2}{5\sqrt5} \approx 0.179 \Rightarrow \theta \approx 79.7°\).
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Forces:</strong> two ropes pulling a load — the net force is the parallelogram diagonal in the widget.</li>
+                    <li><strong>Velocity composition:</strong> a plane's airspeed plus the wind vector = ground velocity.</li>
+                    <li><strong>Similarity search:</strong> recommender systems measure how "aligned" two preference vectors are with exactly the widget's \(\cos\theta\) (cosine similarity).</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Find a vector perpendicular to \((4, 3)\) with the same length.
+                    <details><summary>Solution</summary>
+                    Swap and negate one component: \((-3, 4)\) (or \((3, -4)\)). Check: \(4(-3) + 3(4) = 0\) ✓, norm 5 ✓.
+                    </details>
+                </li>
+                <li>For which \(k\) are \((k, 2)\) and \((3, -6)\) perpendicular?
+                    <details><summary>Solution</summary>
+                    \(3k - 12 = 0 \Rightarrow k = 4\).
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ INTERMEDIATE LEVEL ============ -->
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3 id="matrices">Matrices as Transformations</h3>
+            <p><strong>Intuition:</strong> a <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics)" target="_blank" style="color: var(--primary);">matrix</a> is not a table of numbers — it is a <em>machine that moves space</em>. The 2×2 matrix \(A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}\) sends the basis arrow \(\mathbf e_1 = (1,0)\) to column one \((a, c)\) and \(\mathbf e_2 = (0,1)\) to column two \((b, d)\); everything else follows by linearity — the whole grid deforms accordingly.</p>
+            <p><strong>Matrix–vector product:</strong></p>
+            <p>\[A\mathbf x = \begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = x\begin{pmatrix} a \\ c \end{pmatrix} + y\begin{pmatrix} b \\ d \end{pmatrix}\]</p>
+            <p>— a weighted mix of the columns. Matrix–matrix multiplication is <em>composition</em>: apply one machine, then the other.</p>
+
+            <p><strong>Interactive: watch space deform.</strong> Press Play to animate from the identity \(I\) to your matrix \(A\): the grid bends, the letter-F rides along, and the colored arrows are the images of \(\mathbf e_1, \mathbf e_2\) (the columns!). The readout tracks \(\det A\) — the factor by which areas scale (negative = orientation flips).</p>
+            <div class="viz-widget" id="matWidget">
+                <div class="viz-controls">
+                    <label>a: <span id="matWidget-maVal"></span>
+                        <input type="range" id="matWidget-ma" min="-2" max="2" step="0.1" value="1.2">
+                    </label>
+                    <label>b: <span id="matWidget-mbVal"></span>
+                        <input type="range" id="matWidget-mb" min="-2" max="2" step="0.1" value="0.5">
+                    </label>
+                    <label>c: <span id="matWidget-mcVal"></span>
+                        <input type="range" id="matWidget-mc" min="-2" max="2" step="0.1" value="-0.3">
+                    </label>
+                    <label>d: <span id="matWidget-mdVal"></span>
+                        <input type="range" id="matWidget-md" min="-2" max="2" step="0.1" value="0.9">
+                    </label>
+                    <button class="viz-btn" id="matWidget-play">▶ Play (I → A)</button>
+                </div>
+                <canvas id="matWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="matWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('matWidget', { xmin: -4.4, xmax: 4.4, ymin: -2.25, ymax: 2.25 });
+                const $ = V.$, ctx = V.ctx;
+                let t = 1, running = false, lastTs = null;   // t=1 shows A fully applied
+                const Fshape = [[0,0],[0,1.5],[0.9,1.5],[0,1.5],[0,0.85],[0.7,0.85],[0,0.85],[0,0]];
+                function draw() {
+                    const c = V.colors();
+                    V.clear();
+                    const a = parseFloat($('ma').value), b = parseFloat($('mb').value);
+                    const cc = parseFloat($('mc').value), d = parseFloat($('md').value);
+                    $('maVal').textContent = a.toFixed(1); $('mbVal').textContent = b.toFixed(1);
+                    $('mcVal').textContent = cc.toFixed(1); $('mdVal').textContent = d.toFixed(1);
+                    // interpolated matrix M(t) = (1-t)I + tA
+                    const m11 = (1 - t) + t * a,  m12 = t * b;
+                    const m21 = t * cc,           m22 = (1 - t) + t * d;
+                    const T = (x, y) => [m11 * x + m12 * y, m21 * x + m22 * y];
+                    // transformed grid
+                    ctx.lineWidth = 1;
+                    for (let g = -4; g <= 4; g += 0.5) {
+                        ctx.strokeStyle = (g === 0) ? c.axis : c.grid;
+                        ctx.beginPath();
+                        for (let s2 = -4; s2 <= 4.01; s2 += 0.1) {
+                            const [X, Y] = T(g, s2);
+                            if (s2 === -4) ctx.moveTo(V.px(X), V.py(Y)); else ctx.lineTo(V.px(X), V.py(Y));
+                        }
+                        ctx.stroke();
+                        ctx.beginPath();
+                        for (let s2 = -4; s2 <= 4.01; s2 += 0.1) {
+                            const [X, Y] = T(s2, g);
+                            if (s2 === -4) ctx.moveTo(V.px(X), V.py(Y)); else ctx.lineTo(V.px(X), V.py(Y));
+                        }
+                        ctx.stroke();
+                    }
+                    // letter F
+                    ctx.strokeStyle = c.text; ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    Fshape.forEach(([x, y], i) => {
+                        const [X, Y] = T(x, y);
+                        if (i === 0) ctx.moveTo(V.px(X), V.py(Y)); else ctx.lineTo(V.px(X), V.py(Y));
+                    });
+                    ctx.stroke();
+                    // basis images
+                    const e1 = T(1, 0), e2 = T(0, 1);
+                    V.arrow(0, 0, e1[0], e1[1], c.curve, 3);
+                    V.arrow(0, 0, e2[0], e2[1], c.accent, 3);
+                    ctx.fillStyle = c.text; ctx.font = 'bold 13px monospace';
+                    ctx.fillText('A·e₁ = col 1', V.px(e1[0]) + 8, V.py(e1[1]));
+                    ctx.fillText('A·e₂ = col 2', V.px(e2[0]) + 8, V.py(e2[1]));
+                    const det = a * d - b * cc;
+                    $('readout').textContent = 'A = [' + a.toFixed(1) + ' ' + b.toFixed(1) + '; ' + cc.toFixed(1) + ' ' + d.toFixed(1) + ']'
+                        + '   det A = ad − bc = ' + det.toFixed(3)
+                        + '   → areas × ' + Math.abs(det).toFixed(3)
+                        + (det < 0 ? '  (orientation FLIPPED)' : det === 0 ? '  (space squashed flat!)' : '');
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    if (lastTs !== null) t = Math.min(1, t + (ts - lastTs) / 2000);
+                    lastTs = ts;
+                    draw();
+                    if (t >= 1) { running = false; $('play').textContent = '▶ Play (I → A)'; return; }
+                    requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = true; t = 0; lastTs = null;
+                    $('play').textContent = '⏸ animating…';
+                    requestAnimationFrame(tick);
+                });
+                V.bind(['ma', 'mb', 'mc', 'md'], () => { t = 1; draw(); });
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: multiply \(A\mathbf x\) for \(A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}\), \(\mathbf x = (1, 2)\)</strong><br><br>
+                <strong>Columns view</strong> (what the widget draws): \(A\mathbf x = 1\begin{pmatrix}2\\0\end{pmatrix} + 2\begin{pmatrix}1\\3\end{pmatrix} = \begin{pmatrix}4\\6\end{pmatrix}\) — one of column 1 plus two of column 2.<br><br>
+                <strong>Rows view</strong> (dot products): row 1: \(2(1) + 1(2) = 4\); row 2: \(0(1) + 3(2) = 6\). Same answer, two mental models.
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Computer graphics:</strong> every rotation, scale, and shear of a sprite or 3D model is a matrix; composing transformations = multiplying matrices (the GPU does this billions of times per frame).</li>
+                    <li><strong>Robotics:</strong> joint angles → end-effector position via chains of transformation matrices.</li>
+                    <li><strong>Coordinate changes:</strong> converting between camera, world, and screen coordinates.</li>
+                </ul>
+            </div>
+
+            <h3 id="gaussian">Solving Systems: Gaussian Elimination</h3>
+            <p><strong>The algorithm</strong> (<a href="https://en.wikipedia.org/wiki/Gaussian_elimination" target="_blank" style="color: var(--primary);">Gaussian elimination</a>) solves \(A\mathbf x = \mathbf b\):</p>
+            <div class="example">
+                <strong>1. Forward elimination:</strong> for each column, use the pivot row to zero out every entry below the pivot (row operation \(R_j \leftarrow R_j - k R_{pivot}\)).<br>
+                <strong>2. Pivoting:</strong> if a pivot is 0 (or tiny), swap in a lower row with the largest entry in that column first.<br>
+                <strong>3. Back substitution:</strong> the triangular system solves from the bottom row upward.
+            </div>
+
+            <h4>Geometric Picture</h4>
+            <p>Each equation is a line (2D) or plane (3D); the solution is where they all meet. A row operation replaces one line with a <strong>new line through the same intersection point</strong> — any combination of two equations is still satisfied by their common solution. Elimination is a sequence of rotations of lines about the fixed solution, until each line is axis-parallel and the solution can be read off. The solution never moves; only its description simplifies.</p>
+
+            <p><strong>Interactive (geometric): rotate lines about the solution.</strong> System: \(x + y = 5\), \(2x - y = 4\) (solution \((3,2)\), from <a href="EquationsAndInequalities.html" style="color: var(--primary);">Equations & Inequalities</a>). Each Step animates one row operation — watch the pulsing solution dot stay perfectly still.</p>
+            <div class="viz-widget" id="gaussGeoWidget">
+                <div class="viz-controls">
+                    <button class="viz-btn" id="gaussGeoWidget-step">Step</button>
+                    <button class="viz-btn" id="gaussGeoWidget-reset">Reset</button>
+                </div>
+                <canvas id="gaussGeoWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="gaussGeoWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('gaussGeoWidget', { xmin: -2, xmax: 8, ymin: -1.5, ymax: 5.5 });
+                const $ = V.$, ctx = V.ctx;
+                // rows as [a, b, c] meaning a·x + b·y = c
+                const R0 = [[1, 1, 5], [2, -1, 4]];
+                // stages: after step1: R2 ← R2 − 2R1 → [0, −3, −6]; after step2: R2 ← R2 / −3 → [0,1,2]; after step3: R1 ← R1 − R2 → [1,0,3]
+                const stages = [
+                    { rows: [[1, 1, 5], [2, -1, 4]],  msg: 'Start: x + y = 5   and   2x − y = 4.  Solution (3, 2) marked.' },
+                    { rows: [[1, 1, 5], [0, -3, -6]], msg: 'Step 1: R₂ ← R₂ − 2R₁ → −3y = −6. Line 2 ROTATED about (3,2) to horizontal.' },
+                    { rows: [[1, 1, 5], [0, 1, 2]],   msg: 'Step 2: R₂ ← R₂ / (−3) → y = 2. Same line, normalized.' },
+                    { rows: [[1, 0, 3], [0, 1, 2]],   msg: 'Step 3: R₁ ← R₁ − R₂ → x = 3. Line 1 rotated to vertical. Read off: x = 3, y = 2. ✓' }
+                ];
+                let stage = 0, anim = 1, from = stages[0].rows, to = stages[0].rows, animId = null;
+                function lineAt(row) {
+                    // returns function or vertical marker for a·x + b·y = c
+                    const [a, b, c2] = row;
+                    if (Math.abs(b) < 1e-9) return { vertical: c2 / a };
+                    return { f: x => (c2 - a * x) / b };
+                }
+                function lerpRow(r1, r2, u) { return [0, 1, 2].map(i => r1[i] + (r2[i] - r1[i]) * u); }
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const rows = [lerpRow(from[0], to[0], anim), lerpRow(from[1], to[1], anim)];
+                    [c.curve, c.accent].forEach((col, i) => {
+                        const L = lineAt(rows[i]);
+                        if (L.vertical !== undefined) {
+                            ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+                            ctx.beginPath(); ctx.moveTo(V.px(L.vertical), 0); ctx.lineTo(V.px(L.vertical), V.W.height); ctx.stroke();
+                        } else {
+                            V.plot(L.f, col);
+                        }
+                    });
+                    // the invariant solution, pulsing during animation
+                    const pulse = anim < 1 ? 8 + 3 * Math.sin(Date.now() / 100) : 7;
+                    V.dot(3, 2, c.text, pulse);
+                    ctx.fillStyle = c.text; ctx.font = 'bold 14px monospace';
+                    ctx.fillText('(3, 2) — never moves', V.px(3.3), V.py(2.2));
+                    $('readout').textContent = stages[stage].msg;
+                }
+                function animate() {
+                    anim = Math.min(1, anim + 0.025);
+                    draw();
+                    if (anim < 1) animId = requestAnimationFrame(animate);
+                }
+                $('step').addEventListener('click', () => {
+                    if (stage >= stages.length - 1 || anim < 1) return;
+                    from = stages[stage].rows; stage++; to = stages[stage].rows; anim = 0;
+                    cancelAnimationFrame(animId); animate();
+                });
+                $('reset').addEventListener('click', () => {
+                    stage = 0; anim = 1; from = to = stages[0].rows; draw();
+                });
+                V.bind([], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: full 3×3 elimination</strong> — solve
+                \[\begin{cases} x + y + z = 6 \\ 2x - y + z = 3 \\ x + 2y - z = 2 \end{cases}\]
+                <br><strong>Step 1: \(R_2 \leftarrow R_2 - 2R_1\)</strong> (kill the 2 in column 1):
+                \[\begin{pmatrix} 1 & 1 & 1 & | & 6 \\ 0 & -3 & -1 & | & -9 \\ 1 & 2 & -1 & | & 2 \end{pmatrix}\]
+                <strong>Step 2: \(R_3 \leftarrow R_3 - R_1\)</strong>:
+                \[\begin{pmatrix} 1 & 1 & 1 & | & 6 \\ 0 & -3 & -1 & | & -9 \\ 0 & 1 & -2 & | & -4 \end{pmatrix}\]
+                <strong>Step 3: \(R_3 \leftarrow R_3 + \frac13 R_2\)</strong> (kill the 1 in column 2):
+                \[\begin{pmatrix} 1 & 1 & 1 & | & 6 \\ 0 & -3 & -1 & | & -9 \\ 0 & 0 & -\tfrac73 & | & -7 \end{pmatrix}\]
+                <strong>Step 4: Back substitution</strong> (bottom-up):<br>
+                \(-\frac73 z = -7 \Rightarrow z = 3\);&nbsp;&nbsp; \(-3y - 3 = -9 \Rightarrow y = 2\);&nbsp;&nbsp; \(x + 2 + 3 = 6 \Rightarrow x = 1\).<br>
+                <strong>Solution:</strong> \((1, 2, 3)\) ✓ (verify in all three originals).
+            </div>
+
+            <p><strong>Interactive (algebraic): the same eliminations as row operations.</strong> Step through and watch the matrix become triangular; the pivot entry is bracketed.</p>
+            <div class="viz-widget" id="gaussStepWidget">
+                <div class="viz-controls">
+                    <button class="viz-btn" id="gaussStepWidget-step">Step</button>
+                    <button class="viz-btn" id="gaussStepWidget-reset">Reset</button>
+                </div>
+                <canvas id="gaussStepWidget-canvas" width="820" height="300"></canvas>
+                <p class="viz-readout" id="gaussStepWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('gaussStepWidget');
+                const $ = V.$, ctx = V.ctx;
+                const states = [
+                    { M: [[1,1,1,6],[2,-1,1,3],[1,2,-1,2]],           piv: [0,0], msg: 'Augmented matrix [A|b]. Pivot (1,1) bracketed. Next: R₂ ← R₂ − 2R₁' },
+                    { M: [[1,1,1,6],[0,-3,-1,-9],[1,2,-1,2]],         piv: [0,0], msg: 'Column-1 entry of row 2 eliminated. Next: R₃ ← R₃ − R₁' },
+                    { M: [[1,1,1,6],[0,-3,-1,-9],[0,1,-2,-4]],        piv: [1,1], msg: 'Column 1 done. New pivot (2,2) = −3. Next: R₃ ← R₃ + ⅓R₂' },
+                    { M: [[1,1,1,6],[0,-3,-1,-9],[0,0,-7/3,-7]],      piv: [2,2], msg: 'Upper triangular! Back-substitute: z = 3, then y = 2, then x = 1.' }
+                ];
+                let k = 0;
+                function fmt(v) {
+                    if (Math.abs(v - Math.round(v)) < 1e-9) return String(Math.round(v));
+                    return v.toFixed(2);
+                }
+                function draw() {
+                    const c = V.colors();
+                    V.clear();
+                    const st = states[k];
+                    ctx.font = 'bold 26px monospace';
+                    const colX = [140, 260, 380, 560];
+                    st.M.forEach((row, i) => {
+                        row.forEach((v, j) => {
+                            const isPiv = (i === st.piv[0] && j === st.piv[1]);
+                            ctx.fillStyle = isPiv ? c.accent : c.text;
+                            const s2 = (isPiv ? '[' + fmt(v) + ']' : fmt(v));
+                            ctx.fillText(s2, colX[j] - (isPiv ? 14 : 0), 90 + i * 60);
+                        });
+                        ctx.fillStyle = c.axis;
+                        ctx.fillText('|', 480, 90 + i * 60);
+                    });
+                    ctx.strokeStyle = c.curve; ctx.lineWidth = 3;
+                    ctx.beginPath(); ctx.moveTo(90, 40); ctx.lineTo(75, 40); ctx.lineTo(75, 230); ctx.lineTo(90, 230); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(640, 40); ctx.lineTo(655, 40); ctx.lineTo(655, 230); ctx.lineTo(640, 230); ctx.stroke();
+                    $('readout').textContent = 'step ' + k + '/3 — ' + st.msg;
+                }
+                $('step').addEventListener('click', () => { if (k < states.length - 1) { k++; draw(); } });
+                $('reset').addEventListener('click', () => { k = 0; draw(); });
+                V.bind([], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Circuit analysis:</strong> Kirchhoff's laws produce linear systems in the unknown currents — every SPICE simulation eliminates thousands of them.</li>
+                    <li><strong>Structural engineering:</strong> forces in a truss form a system with one equation per joint.</li>
+                    <li><strong>Least squares:</strong> fitting a model to data reduces to the "normal equations" — a linear system (see <a href="NumericalMethods.html" style="color: var(--primary);">Numerical Methods</a>).</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Solve by elimination: \(2x + y = 7\), \(x - 3y = -7\).
+                    <details><summary>Solution</summary>
+                    \(R_2 \leftarrow R_2 - \frac12 R_1\): \(-\frac72 y = -\frac{21}{2} \Rightarrow y = 3\); then \(2x + 3 = 7 \Rightarrow x = 2\).
+                    </details>
+                </li>
+                <li>What happens geometrically when elimination hits a row \(0 = 0\)? A row \(0 = 5\)?
+                    <details><summary>Solution</summary>
+                    \(0 = 0\): the lines/planes coincide along a whole line → infinitely many solutions. \(0 = 5\): contradiction, the lines are parallel and never meet → no solution.
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ ADVANCED LEVEL ============ -->
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3 id="determinants">Determinants & Eigenvalues</h3>
+            <p><strong>Determinant, geometrically:</strong> \(\det A\) is the factor by which \(A\) scales areas (2D) or volumes (3D); a negative sign means orientation flips; \(\det A = 0\) means space is squashed flat (no inverse!). The matrix widget above shows this live.</p>
+            <div class="example">
+                <strong>2×2:</strong> \(\det\begin{pmatrix} a & b \\ c & d\end{pmatrix} = ad - bc\).<br><br>
+                <strong>3×3 by cofactor expansion (worked):</strong>
+                \[\det\begin{pmatrix} 2 & 1 & 0 \\ 1 & 3 & 1 \\ 0 & 1 & 2 \end{pmatrix}
+                = 2\det\begin{pmatrix}3 & 1\\ 1 & 2\end{pmatrix} - 1\det\begin{pmatrix}1 & 1\\ 0 & 2\end{pmatrix} + 0
+                = 2(6-1) - 1(2-0) = 8\]
+            </div>
+
+            <p><strong>Eigenvalues, geometrically:</strong> a matrix mostly <em>turns</em> vectors. An <a href="https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors" target="_blank" style="color: var(--primary);">eigenvector</a> is a direction the matrix refuses to turn — it only stretches it, by the factor \(\lambda\):</p>
+            <p>\[A\mathbf v = \lambda \mathbf v, \quad \mathbf v \neq 0\]</p>
+
+            <p><strong>Interactive: hunt the eigenvectors.</strong> Press Play: the unit vector \(\mathbf x\) (blue) sweeps a full turn while \(A\mathbf x\) (green) follows. The moment they align, the pair flashes — you've found an eigendirection; the readout shows the stretch factor \(\lambda\).</p>
+            <div class="viz-widget" id="eigenWidget">
+                <div class="viz-controls">
+                    <label>diagonal a: <span id="eigenWidget-eaVal"></span>
+                        <input type="range" id="eigenWidget-ea" min="0.5" max="3" step="0.1" value="2">
+                    </label>
+                    <label>off-diagonal b: <span id="eigenWidget-ebVal"></span>
+                        <input type="range" id="eigenWidget-eb" min="0" max="1.5" step="0.1" value="1">
+                    </label>
+                    <button class="viz-btn" id="eigenWidget-play">▶ Play</button>
+                </div>
+                <canvas id="eigenWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="eigenWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('eigenWidget', { xmin: -4.4, xmax: 4.4, ymin: -2.25, ymax: 2.25 });
+                const $ = V.$, ctx = V.ctx;
+                let th = 0.5, running = false, lastTs = null;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('ea').value), b = parseFloat($('eb').value);
+                    $('eaVal').textContent = a.toFixed(1); $('ebVal').textContent = b.toFixed(1);
+                    // symmetric A = [a b; b a] → eigenvalues a±b, eigenvectors (1,1)/√2 and (1,−1)/√2
+                    const x = [Math.cos(th), Math.sin(th)];
+                    const Ax = [a * x[0] + b * x[1], b * x[0] + a * x[1]];
+                    const cross = x[0] * Ax[1] - x[1] * Ax[0];   // 0 ⟺ parallel
+                    const aligned = Math.abs(cross) < 0.02;
+                    // eigendirections, faint
+                    ctx.setLineDash([4, 6]); ctx.strokeStyle = c.grid; ctx.lineWidth = 1.5;
+                    [[1, 1], [1, -1]].forEach(([ex, ey]) => {
+                        ctx.beginPath();
+                        ctx.moveTo(V.px(-3 * ex / Math.SQRT2), V.py(-3 * ey / Math.SQRT2));
+                        ctx.lineTo(V.px(3 * ex / Math.SQRT2), V.py(3 * ey / Math.SQRT2));
+                        ctx.stroke();
+                    });
+                    ctx.setLineDash([]);
+                    // unit circle traced by x
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    for (let a2 = 0; a2 <= 2 * Math.PI + 0.01; a2 += 0.05) {
+                        const X = V.px(Math.cos(a2)), Y = V.py(Math.sin(a2));
+                        if (a2 === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+                    }
+                    ctx.stroke();
+                    V.arrow(0, 0, x[0], x[1], c.curve, aligned ? 4 : 2.5);
+                    V.arrow(0, 0, Ax[0], Ax[1], c.accent, aligned ? 4 : 2.5);
+                    if (aligned) {
+                        ctx.fillStyle = '#ef4444'; ctx.font = 'bold 18px monospace';
+                        ctx.fillText('EIGENVECTOR!  λ ≈ ' + (Math.hypot(Ax[0], Ax[1]) / 1 * Math.sign(x[0] * Ax[0] + x[1] * Ax[1])).toFixed(2), V.px(0.3), V.py(1.9));
+                    }
+                    ctx.fillStyle = c.text; ctx.font = 'bold 13px monospace';
+                    ctx.fillText('x', V.px(x[0] * 1.12), V.py(x[1] * 1.12));
+                    ctx.fillText('Ax', V.px(Ax[0] * 1.06), V.py(Ax[1] * 1.06));
+                    $('readout').textContent = 'A = [' + a.toFixed(1) + ' ' + b.toFixed(1) + '; ' + b.toFixed(1) + ' ' + a.toFixed(1) + ']'
+                        + '   true eigenpairs: λ₁ = ' + (a + b).toFixed(1) + ' along (1,1),  λ₂ = ' + (a - b).toFixed(1) + ' along (1,−1)'
+                        + '   |   θ = ' + th.toFixed(2);
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    let dt = 0;
+                    if (lastTs !== null) dt = (ts - lastTs) / 1000;
+                    lastTs = ts;
+                    // slow down near alignment so the flash is visible
+                    const a = parseFloat($('ea').value), b = parseFloat($('eb').value);
+                    const x = [Math.cos(th), Math.sin(th)];
+                    const Ax = [a * x[0] + b * x[1], b * x[0] + a * x[1]];
+                    const cross = Math.abs(x[0] * Ax[1] - x[1] * Ax[0]);
+                    th += dt * (cross < 0.15 ? 0.15 : 0.8);
+                    if (th > 2 * Math.PI) th -= 2 * Math.PI;
+                    draw();
+                    requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = !running;
+                    $('play').textContent = running ? '⏸ Pause' : '▶ Play';
+                    lastTs = null;
+                    if (running) requestAnimationFrame(tick);
+                });
+                V.bind(['ea', 'eb'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: eigenvalues of \(A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}\)</strong><br><br>
+                <strong>Step 1: Characteristic polynomial</strong> — eigenvalues make \(A - \lambda I\) singular:
+                \[\det(A - \lambda I) = \det\begin{pmatrix} 2-\lambda & 1 \\ 1 & 2-\lambda \end{pmatrix} = (2-\lambda)^2 - 1 = 0\]
+                <strong>Step 2: Solve</strong> — \((2-\lambda)^2 = 1 \Rightarrow \lambda = 1\) or \(\lambda = 3\).<br><br>
+                <strong>Step 3: Eigenvectors</strong> — for \(\lambda = 3\): \((A - 3I)\mathbf v = 0 \Rightarrow -v_1 + v_2 = 0 \Rightarrow \mathbf v = (1, 1)\).
+                For \(\lambda = 1\): \(v_1 + v_2 = 0 \Rightarrow \mathbf v = (1, -1)\).<br><br>
+                <strong>Step 4: Verify</strong> — \(A(1,1)^T = (3,3)^T = 3(1,1)^T\) ✓ — exactly the directions where the widget flashes.
+            </div>
+
+            <h4>Geometric Picture (power iteration)</h4>
+            <p>Apply \(A\) repeatedly to any starting vector and normalize each time: every application turns the vector a little further toward the <em>dominant</em> eigendirection (largest \(|\lambda|\)), because that component gets amplified the most. After a few iterations the vector settles onto it — this is exactly how PageRank finds the web's dominant eigenvector.</p>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>PageRank:</strong> the web's link matrix has a dominant eigenvector — its entries are the page ranks.</li>
+                    <li><strong>PCA:</strong> the eigenvectors of a data covariance matrix are the directions of maximal variance — dimensionality reduction in one theorem.</li>
+                    <li><strong>Vibration modes:</strong> a bridge's resonant frequencies are eigenvalues; engineers keep them away from footstep and wind frequencies.</li>
+                    <li><strong>Quantum mechanics:</strong> measurable quantities are eigenvalues of operators (see <a href="Functions.html#research" style="color: var(--primary);">Functions § Research</a>).</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Find the eigenvalues of \(\begin{pmatrix} 4 & 2 \\ 1 & 3 \end{pmatrix}\).
+                    <details><summary>Solution</summary>
+                    \((4-\lambda)(3-\lambda) - 2 = \lambda^2 - 7\lambda + 10 = (\lambda-5)(\lambda-2)\) → \(\lambda = 5, 2\).
+                    </details>
+                </li>
+                <li>Why can't a 2×2 rotation matrix (by 90°) have real eigenvalues?
+                    <details><summary>Solution</summary>
+                    A 90° rotation turns <em>every</em> vector — no direction survives unturned, so no real eigenvector exists. (Algebra agrees: \(\lambda^2 + 1 = 0\) has only imaginary roots \(\pm i\).)
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ RESEARCH LEVEL ============ -->
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Abstract Vector Spaces</h3>
+            <p>Everything above survives when "arrows" are replaced by <em>anything</em> obeying the vector axioms: polynomials, audio signals, quantum states, solutions of linear ODEs. Functions form infinite-dimensional vector spaces; the dot product generalizes to inner products like \(\langle f, g\rangle = \int f g\,dx\), and Fourier series are just coordinates in an orthonormal basis.</p>
+
+            <h3>Singular Value Decomposition (SVD)</h3>
+            <p>Every matrix — square or not — factors as \(A = U\Sigma V^T\) with \(U, V\) orthogonal (rotations/reflections) and \(\Sigma\) diagonal (pure stretching): <em>every linear map is rotate → stretch → rotate</em>. Applications: image compression (keep the top-\(k\) singular values), noise reduction, the pseudo-inverse for least squares, and recommender systems (latent factors).</p>
+
+            <h3>Random Matrix Theory</h3>
+            <p>The eigenvalues of large random matrices obey universal laws (Wigner's semicircle, Marchenko–Pastur) that appear in nuclear physics, wireless communication, and the statistics of neural network training — an active research frontier connecting probability, physics, and numerical analysis.</p>
+        </section>
+
+        <!-- ============ SOURCES & REFERENCES ============ -->
+        <section id="sources">
+            <h2>Sources & References</h2>
+
+            <h3>Wikipedia</h3>
+            <ul>
+                <li><a href="https://en.wikipedia.org/wiki/Linear_algebra" target="_blank">Linear Algebra - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Gaussian_elimination" target="_blank">Gaussian Elimination - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors" target="_blank">Eigenvalues and Eigenvectors - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Singular_value_decomposition" target="_blank">Singular Value Decomposition - Wikipedia</a></li>
+            </ul>
+
+            <h3>Academic Papers (arXiv)</h3>
+            <ul>
+                <li><a href="https://arxiv.org/search/?query=randomized+numerical+linear+algebra&searchtype=all" target="_blank">Randomized Numerical Linear Algebra - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=random+matrix+theory&searchtype=all" target="_blank">Random Matrix Theory - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=matrix+factorization&searchtype=all" target="_blank">Matrix Factorization - arXiv Search</a></li>
+            </ul>
+
+            <h3>Textbooks & Bibliography</h3>
+            <ul>
+                <li><strong>Introduction to Linear Algebra</strong> - Gilbert Strang (2016)</li>
+                <li><strong>Linear Algebra Done Right</strong> - Sheldon Axler (2015)</li>
+                <li><strong>Matrix Analysis</strong> - Roger Horn & Charles Johnson (2012)</li>
+                <li><strong>Numerical Linear Algebra</strong> - Lloyd Trefethen & David Bau (1997)</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Linear Algebra | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============ MODULAR: Theme Toggle Component ============
+        const ThemeToggle = (() => {
+            const STORAGE_KEY = 'theme-preference';
+            const LIGHT = 'light';
+            const DARK = 'dark';
+
+            const getSystemPreference = () => {
+                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (prefersDark) return DARK;
+                if (prefersLight) return LIGHT;
+                return DARK;
+            };
+
+            const getPreference = () => {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === LIGHT || stored === DARK) return stored;
+                return getSystemPreference();
+            };
+
+            const setTheme = (theme) => {
+                const validTheme = (theme === LIGHT) ? LIGHT : DARK;
+                document.documentElement.setAttribute('data-theme', validTheme);
+                localStorage.setItem(STORAGE_KEY, validTheme);
+                updateButton(validTheme);
+            };
+
+            const updateButton = (theme) => {
+                const btn = document.getElementById('themeToggle');
+                if (btn) btn.textContent = theme === DARK ? '☀️' : '🌙';
+            };
+
+            const toggle = () => {
+                const current = document.documentElement.getAttribute('data-theme') || getPreference();
+                const next = current === DARK ? LIGHT : DARK;
+                setTheme(next);
+            };
+
+            const init = () => {
+                const preference = getPreference();
+                setTheme(preference);
+                document.getElementById('themeToggle')?.addEventListener('click', toggle);
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem(STORAGE_KEY)) {
+                        setTheme(e.matches ? DARK : LIGHT);
+                    }
+                });
+            };
+
+            return { init };
+        })();
+
+        ThemeToggle.init();
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

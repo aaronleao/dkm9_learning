@@ -1,17 +1,22 @@
 # dkm9_learning
 
-Visualization Aided Learning
+Agentic Visualization Aided Learning
 
 ## Requirements
 
-This project shall have the following requirements.
+This project shall have the following requirements during its development.
 
 
 1. Mermaid diagrams shall be used always.
-2. Latex for mathematical forumalas shall be used always.
-3. Latex version supported by Github shall be used always.
-4. This project shall be compatible with Firefox, Brave, Chrome and LibreWolf browsers.
-5. All topics shall be explained in multiple levels from begining to academis research.
+2. Latex for mathematical formulas shall be used always.
+3. This project shall be compatible with Firefox, Brave, Chrome and LibreWolf browsers.
+4. All topics shall be explained in at least 4 levels:
+    1. Beginner
+    2. Intermediate
+    3. Advanced
+    4. Research.
+5. The development shall be completely agentics
+6. All topics shall be reviewd by humans.
 
 
 ## Topics

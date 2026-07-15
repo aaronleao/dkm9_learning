@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Analysis - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        :root[data-theme="dark"] {
+            --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+            --border:#404040; --code:#3a3a3a;
+        }
+        :root[data-theme="light"] {
+            --dark:#333; --light:#666; --bg:#f5f5f5; --card:#fff;
+            --border:#e0e0e0; --code:#f0f0f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .theme-toggle {
+            background:none; border:2px solid var(--primary); color:var(--primary); padding:8px 12px;
+            border-radius:6px; cursor:pointer; font-size:1em; transition:all 0.3s; font-weight:600;
+        }
+        .theme-toggle:hover {background-color:var(--primary); color:#fff;}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px; white-space:pre-wrap;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+
+    <script>
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const stored = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Real Analysis</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#sequences">— Sequences & Convergence</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#series">— Series</a></li>
+                <li><a href="#rigorous">— Rigorous Limits & Continuity</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#compactness">— Compactness, IVT/EVT, Riemann Integral</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <!-- MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) -->
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : -10,
+                xmax: opts.xmax !== undefined ? opts.xmax : 10,
+                ymin: opts.ymin !== undefined ? opts.ymin : -10,
+                ymax: opts.ymax !== undefined ? opts.ymax : 10,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 5 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 5 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                plot: (f, color, dash) => {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = S.xmin + (S.xmax - S.xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(S.px(x), S.py(y)); started = true; }
+                        else ctx.lineTo(S.px(x), S.py(y));
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                },
+                dot: (x, y, color, r) => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(S.px(x), S.py(y), r || 5, 0, 2 * Math.PI); ctx.fill();
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        </script>
+
+        <!-- ============ BEGINNER LEVEL ============ -->
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+            <p><strong>What real analysis is:</strong> calculus, rebuilt on bedrock. <a href="https://en.wikipedia.org/wiki/Real_analysis" target="_blank" style="color: var(--primary);">Real analysis</a> replaces "gets closer and closer" with airtight ε-definitions, and then proves exactly when the tools of calculus can be trusted — and exhibits the monsters (nowhere-differentiable functions, non-integrable functions) that live just outside the safe zone.</p>
+
+            <h3 id="sequences">Sequences & Convergence</h3>
+            <p><strong>Intuition:</strong> a sequence \((a_n)\) converges to \(L\) if its terms eventually settle into <em>any</em> tolerance band around \(L\) — and stay there forever.</p>
+            <p><strong>Formal definition:</strong></p>
+            <p>\[\lim_{n \to \infty} a_n = L \iff \forall \varepsilon > 0\ \exists N \in \mathbb{N}\ \forall n \geq N: |a_n - L| < \varepsilon\]</p>
+            <p>The quantifier order is the whole game: the tolerance \(\varepsilon\) is the <em>challenge</em>; the threshold \(N\) is the <em>response</em>, allowed to depend on \(\varepsilon\).</p>
+
+            <p><strong>Interactive: the ε-N game.</strong> Pick a sequence and an ε: the band \(L \pm \varepsilon\) is shaded, and the computed \(N\) is marked — every dot to the right of it sits inside the band. For \((-1)^n\), no single \(L\) works: convergence fails.</p>
+            <div class="viz-widget" id="seqWidget">
+                <div class="viz-controls">
+                    <label>sequence: <span id="seqWidget-pickVal"></span>
+                        <input type="range" id="seqWidget-pick" min="0" max="3" step="1" value="0">
+                    </label>
+                    <label>ε: <span id="seqWidget-epsVal"></span>
+                        <input type="range" id="seqWidget-eps" min="0.02" max="1" step="0.02" value="0.2">
+                    </label>
+                </div>
+                <canvas id="seqWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="seqWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('seqWidget', { xmin: -2, xmax: 42, ymin: -1.6, ymax: 3.2 });
+                const $ = V.$, ctx = V.ctx;
+                const seqs = [
+                    { name: '1/n',        a: n => 1 / n,                          L: 0 },
+                    { name: '(−1)ⁿ/n',    a: n => Math.pow(-1, n) / n,            L: 0 },
+                    { name: '(1 + 1/n)ⁿ', a: n => Math.pow(1 + 1 / n, n),         L: Math.E },
+                    { name: '(−1)ⁿ',      a: n => Math.pow(-1, n),                L: null }
+                ];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value), eps = parseFloat($('eps').value);
+                    $('pickVal').textContent = seqs[k].name; $('epsVal').textContent = eps.toFixed(2);
+                    const S2 = seqs[k];
+                    if (S2.L !== null) {
+                        // band L ± ε
+                        ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                        ctx.fillRect(0, V.py(S2.L + eps), V.W.width, V.py(S2.L - eps) - V.py(S2.L + eps));
+                        ctx.globalAlpha = 1;
+                        ctx.setLineDash([5, 5]); ctx.strokeStyle = c.accent; ctx.lineWidth = 1.5;
+                        ctx.beginPath(); ctx.moveTo(0, V.py(S2.L)); ctx.lineTo(V.W.width, V.py(S2.L)); ctx.stroke();
+                        ctx.setLineDash([]);
+                        // find N: first index from which ALL later terms (up to display range) are inside
+                        let N = null;
+                        for (let n0 = 1; n0 <= 40; n0++) {
+                            let allIn = true;
+                            for (let n = n0; n <= 40; n++) if (Math.abs(S2.a(n) - S2.L) >= eps) { allIn = false; break; }
+                            if (allIn) { N = n0; break; }
+                        }
+                        if (N !== null) {
+                            ctx.strokeStyle = c.curve; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+                            ctx.beginPath(); ctx.moveTo(V.px(N - 0.5), 0); ctx.lineTo(V.px(N - 0.5), V.W.height); ctx.stroke();
+                            ctx.setLineDash([]);
+                            ctx.fillStyle = c.text; ctx.font = 'bold 14px monospace';
+                            ctx.fillText('N = ' + N, V.px(N), 25);
+                        }
+                        $('readout').textContent = 'L = ' + S2.L.toFixed(4) + '   ε = ' + eps.toFixed(2)
+                            + (N !== null ? '   →   N = ' + N + ': every aₙ with n ≥ N is inside the band' : '   no N in view yet — shrink ε less or wait longer');
+                    } else {
+                        $('readout').textContent = '(−1)ⁿ DIVERGES: it hops between −1 and +1 forever. For ε < 1 no band around any single L can contain the tail.';
+                    }
+                    // the sequence dots
+                    for (let n = 1; n <= 40; n++) {
+                        const v = S2.a(n);
+                        const inside = S2.L !== null && Math.abs(v - S2.L) < eps;
+                        V.dot(n, v, inside ? c.accent : c.curve, 4);
+                    }
+                }
+                V.bind(['pick', 'eps'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step ε-N proof: \(\frac{1}{n} \to 0\)</strong><br><br>
+                <strong>Step 1: Fix an arbitrary \(\varepsilon > 0\)</strong> (the challenge).<br>
+                <strong>Step 2: Choose the response</strong> — take \(N = \lceil 1/\varepsilon \rceil + 1\), so that \(N > 1/\varepsilon\).<br>
+                <strong>Step 3: Verify</strong> — for every \(n \geq N\):
+                \[|a_n - 0| = \frac{1}{n} \leq \frac{1}{N} < \varepsilon\]
+                Every ε has been answered with a working N, so \(\lim \frac1n = 0\). ∎<br><br>
+                (Try it in the widget: set ε = 0.10 and check it marks N = 11.)
+            </div>
+
+            <div class="example">
+                <strong>Monotone Convergence Theorem:</strong> a sequence that is increasing and bounded above converges (to its least upper bound). This is how \(e\) is born: the widget's \((1 + 1/n)^n\) is increasing and bounded above by 3, so it <em>must</em> converge — its limit is <em>defined</em> to be \(e \approx 2.71828\) (see <a href="Functions.html#exponential-functions" style="color: var(--primary);">Functions § Exponential</a>).
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Prove \(\frac{n}{n+1} \to 1\) with ε-N.
+                    <details><summary>Solution</summary>
+                    \(\left|\frac{n}{n+1} - 1\right| = \frac{1}{n+1} < \varepsilon\) whenever \(n > \frac{1}{\varepsilon} - 1\); choose \(N = \lceil 1/\varepsilon \rceil\). ∎
+                    </details>
+                </li>
+                <li>Does \(a_n = \sin(n)\) converge?
+                    <details><summary>Solution</summary>
+                    No. Its values are dense in \([-1, 1]\), so the tail keeps visiting points ~1 apart — no band of radius \(< \frac12\) around any L can trap it.
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ INTERMEDIATE LEVEL ============ -->
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3 id="series">Series</h3>
+            <p>A <a href="https://en.wikipedia.org/wiki/Series_(mathematics)" target="_blank" style="color: var(--primary);">series</a> \(\sum a_n\) converges iff its <strong>partial sums</strong> \(S_N = \sum_{n=1}^N a_n\) converge as a sequence.</p>
+            <h4>Geometric Picture</h4>
+            <p>A series is a stack of bars of width 1 and height \(a_n\) laid along the n-axis; convergence means the total stacked area is finite. The <strong>comparison test</strong>: your stack fits under a stack already known finite. The <strong>ratio test</strong>: eventually each bar is at most \(r < 1\) times the previous — so the stack fits under a geometric staircase.</p>
+
+            <p><strong>Interactive: the harmonic race.</strong> Compare partial sums of \(\sum 1/n^2\) (converges to \(\pi^2/6 \approx 1.645\)) with the harmonic \(\sum 1/n\) — which crawls, but crawls <em>forever</em>. The bracket marks show the grouping argument: each bundle \([\frac12], [\frac13 + \frac14], [\frac15 + \dots + \frac18], \dots\) contributes at least \(\frac12\).</p>
+            <div class="viz-widget" id="seriesWidget">
+                <div class="viz-controls">
+                    <label>N terms: <span id="seriesWidget-NVal"></span>
+                        <input type="range" id="seriesWidget-N" min="2" max="128" step="1" value="32">
+                    </label>
+                </div>
+                <canvas id="seriesWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="seriesWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('seriesWidget', { xmin: -6, xmax: 134, ymin: -0.4, ymax: 6 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const N = parseInt($('N').value);
+                    $('NVal').textContent = N;
+                    let h = 0, sq = 0;
+                    for (let n = 1; n <= 128; n++) {
+                        const hPrev = h, sqPrev = sq;
+                        h += 1 / n; sq += 1 / (n * n);
+                        if (n <= N) {
+                            V.dot(n, h, c.curve, 3);
+                            V.dot(n, sq, c.accent, 3);
+                        }
+                    }
+                    // grouping brackets for harmonic: [2], [3-4], [5-8], [17-32], ...
+                    ctx.strokeStyle = c.text; ctx.lineWidth = 1.5;
+                    ctx.font = '12px monospace'; ctx.fillStyle = c.text;
+                    let lo = 2;
+                    while (lo <= Math.min(N, 128)) {
+                        const hi = Math.min(2 * (lo - 1), 128);
+                        ctx.beginPath();
+                        ctx.moveTo(V.px(lo - 0.4), V.py(-0.15)); ctx.lineTo(V.px(lo - 0.4), V.py(-0.25));
+                        ctx.lineTo(V.px(hi + 0.4), V.py(-0.25)); ctx.lineTo(V.px(hi + 0.4), V.py(-0.15));
+                        ctx.stroke();
+                        ctx.fillText('≥½', V.px((lo + hi) / 2 - 1), V.py(-0.32));
+                        lo = hi + 1;
+                    }
+                    // π²/6 asymptote
+                    ctx.setLineDash([5, 5]); ctx.strokeStyle = c.accent;
+                    ctx.beginPath(); ctx.moveTo(0, V.py(Math.PI * Math.PI / 6)); ctx.lineTo(V.W.width, V.py(Math.PI * Math.PI / 6)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    let hN = 0, sqN = 0;
+                    for (let n = 1; n <= N; n++) { hN += 1 / n; sqN += 1 / (n * n); }
+                    $('readout').textContent = 'blue: Σ1/n = ' + hN.toFixed(4) + ' (→ ∞, one ½-brick per bracket, forever)'
+                        + '\ngreen: Σ1/n² = ' + sqN.toFixed(4) + ' (→ π²/6 ≈ 1.6449, dashed ceiling)';
+                }
+                V.bind(['N'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: the geometric series</strong><br><br>
+                <strong>Step 1:</strong> \(S_N = 1 + r + \dots + r^N\). Multiply by \(r\): \(rS_N = r + \dots + r^{N+1}\).<br>
+                <strong>Step 2:</strong> Subtract — everything telescopes: \((1 - r)S_N = 1 - r^{N+1}\), so \(S_N = \frac{1 - r^{N+1}}{1 - r}\).<br>
+                <strong>Step 3:</strong> If \(|r| < 1\) then \(r^{N+1} \to 0\):
+                \[\sum_{n=0}^\infty r^n = \frac{1}{1 - r}\]
+            </div>
+            <div class="example">
+                <strong>Step-by-step: harmonic divergence by grouping (the ½-bricks)</strong><br>
+                \[\underbrace{\tfrac12}_{\geq \frac12} + \underbrace{\tfrac13 + \tfrac14}_{\geq \frac24 = \frac12} + \underbrace{\tfrac15 + \tfrac16 + \tfrac17 + \tfrac18}_{\geq \frac48 = \frac12} + \underbrace{\tfrac19 + \dots + \tfrac1{16}}_{\geq \frac{8}{16} = \frac12} + \dots\]
+                Each group is at least ½ because it has \(2^k\) terms, each at least \(\frac{1}{2^{k+1}}\). Infinitely many ½-bricks → the stack grows past every bound. ∎ (These are exactly the widget's brackets.)
+            </div>
+            <div class="example">
+                <strong>Convergence tests as algorithms:</strong><br>
+                <strong>Comparison:</strong> if \(0 \le a_n \le b_n\) and \(\sum b_n\) converges, so does \(\sum a_n\). <em>Worked:</em> \(\frac{1}{n^2 + 7} \le \frac{1}{n^2}\) → converges.<br>
+                <strong>Ratio:</strong> if \(\lim |a_{n+1}/a_n| = r < 1\), converges (absolutely); \(r > 1\) diverges; \(r = 1\) says nothing. <em>Worked:</em> \(\sum \frac{2^n}{n!}\): ratio \(\frac{2}{n+1} \to 0 < 1\) → converges (to \(e^2 - 1\)).
+            </div>
+            <div class="example">
+                <strong>Real-World Applications:</strong> decimal expansions are geometric series (\(0.999\ldots = \sum 9 \cdot 10^{-n} = 1\)); annuity and mortgage formulas; Zeno's paradox resolved (\(\frac12 + \frac14 + \frac18 + \dots = 1\): infinitely many steps, finite total).
+            </div>
+
+            <h3 id="rigorous">Rigorous Limits & Continuity</h3>
+            <p>The ε-δ machinery from <a href="Functions.html#continuous-functions" style="color: var(--primary);">Functions § Continuous</a>, now with teeth. The model proof every student should own:</p>
+            <div class="example">
+                <strong>Step-by-step: \(\lim_{x \to 2} x^2 = 4\), with the bounding trick</strong><br><br>
+                <strong>Step 1: Factor the error</strong> — \(|x^2 - 4| = |x - 2| \cdot |x + 2|\). We control \(|x - 2|\); the nuisance factor \(|x + 2|\) must be tamed.<br>
+                <strong>Step 2: Tame it</strong> — first promise \(\delta \le 1\). Then \(|x - 2| < 1\) forces \(x \in (1, 3)\), so \(|x + 2| < 5\).<br>
+                <strong>Step 3: Choose δ</strong> — \(\delta = \min\left(1, \frac{\varepsilon}{5}\right)\).<br>
+                <strong>Step 4: Verify</strong> — if \(|x - 2| < \delta\):
+                \[|x^2 - 4| = |x - 2||x + 2| < \frac{\varepsilon}{5} \cdot 5 = \varepsilon \;∎\]
+            </div>
+
+            <p><strong>Monsters that sharpen the definitions:</strong></p>
+            <ul>
+                <li><strong>Dirichlet function</strong> \(f(x) = 1\) if \(x\) rational, 0 if irrational — discontinuous <em>everywhere</em>. It cannot be plotted at all: between any two points it takes both values infinitely often; any drawing would be two solid horizontal lines, which is a lie.</li>
+                <li><strong>Thomae's function</strong> \(f(p/q) = 1/q\) (lowest terms), \(f(\text{irrational}) = 0\) — continuous at every irrational, discontinuous at every rational. Proof sketch: near any point, fractions with <em>small</em> denominators (the only ones with large \(f\)-values) are rare, so \(f \to 0\) along almost everything.</li>
+            </ul>
+
+            <p><strong>Uniform vs pointwise continuity:</strong> \(f\) is <strong>uniformly continuous</strong> if one δ works for the whole domain: \(\forall\varepsilon\ \exists\delta\ \forall x, c: |x - c| < \delta \Rightarrow |f(x) - f(c)| < \varepsilon\). The quantifier \(\forall c\) moved <em>after</em> \(\exists\delta\) — that is the entire difference.</p>
+
+            <p><strong>Interactive: watch uniformity fail.</strong> \(f(x) = 1/x\) on \((0, 1)\): keep ε fixed and slide \(c\) toward 0 — the widget's δ shrinks toward zero. No single δ serves all points, so \(1/x\) is continuous but <em>not uniformly</em> continuous on \((0,1)\). (On \([0.1, 1]\), a compact set, it would be — see below.)</p>
+            <div class="viz-widget" id="unifWidget">
+                <div class="viz-controls">
+                    <label>ε: <span id="unifWidget-epsVal"></span>
+                        <input type="range" id="unifWidget-eps" min="0.1" max="2" step="0.05" value="0.5">
+                    </label>
+                    <label>point c: <span id="unifWidget-cptVal"></span>
+                        <input type="range" id="unifWidget-cpt" min="0.06" max="0.95" step="0.01" value="0.5">
+                    </label>
+                </div>
+                <canvas id="unifWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="unifWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('unifWidget', { xmin: -0.1, xmax: 1.2, ymin: -1, ymax: 18 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x > 0.001 ? 1 / x : NaN;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    V.plot(f, c.curve);
+                    const eps = parseFloat($('eps').value), cp = parseFloat($('cpt').value);
+                    $('epsVal').textContent = eps.toFixed(2); $('cptVal').textContent = cp.toFixed(2);
+                    const fc = f(cp);
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                    ctx.fillRect(0, V.py(fc + eps), V.W.width, V.py(fc - eps) - V.py(fc + eps));
+                    ctx.globalAlpha = 1;
+                    let delta = 0;
+                    for (let d = 0.0005; d < 1; d += 0.0005) {
+                        if (cp - d <= 0.001) break;
+                        if (Math.abs(f(cp + d) - fc) >= eps || Math.abs(f(cp - d) - fc) >= eps) break;
+                        delta = d;
+                    }
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.curve;
+                    ctx.fillRect(V.px(cp - delta), 0, V.px(cp + delta) - V.px(cp - delta), V.W.height);
+                    ctx.globalAlpha = 1;
+                    V.dot(cp, fc, c.accent, 5);
+                    $('readout').textContent = 'same ε = ' + eps.toFixed(2) + '   at c = ' + cp.toFixed(2)
+                        + '   →   δ = ' + delta.toFixed(4)
+                        + '\nslide c toward 0: δ collapses — no universal δ exists on (0,1)';
+                }
+                V.bind(['eps', 'cpt'], draw);
+            })();
+            </script>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ ADVANCED LEVEL ============ -->
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3 id="compactness">Compactness, IVT/EVT, and the Riemann Integral</h3>
+            <p><strong>Heine–Borel theorem:</strong> in \(\mathbb{R}^n\), a set is <strong>compact</strong> ⟺ closed and bounded. Compactness is the property that turns "locally controllable" into "globally controllable" — on a compact domain, continuous functions are automatically bounded, attain their extrema (<strong>EVT</strong>), and are uniformly continuous.</p>
+            <p><strong>Why \([a, b]\) matters:</strong> on the non-compact \((0, 1)\), the continuous \(1/x\) is unbounded (no EVT) and, as the widget above shows, not uniformly continuous. Close the interval and every pathology disappears.</p>
+            <p><strong>IVT via bisection:</strong> the proof of the Intermediate Value Theorem <em>is</em> the bisection algorithm from <a href="NumericalMethods.html#bisection" style="color: var(--primary);">Numerical Methods</a>: halve the interval keeping the sign change; the nested intervals shrink to a point (completeness of \(\mathbb{R}\)!), and continuity forces \(f = 0\) there. A rare case where the constructive algorithm and the abstract proof are the same object.</p>
+
+            <h4>The Riemann (Darboux) Integral</h4>
+            <p>For a partition \(P = \{x_0 < \dots < x_n\}\) of \([a,b]\), define the <strong>upper</strong> and <strong>lower sums</strong>:</p>
+            <p>\[U(f, P) = \sum_i \Big(\sup_{[x_{i-1},x_i]} f\Big)\Delta x_i, \qquad L(f, P) = \sum_i \Big(\inf_{[x_{i-1},x_i]} f\Big)\Delta x_i\]</p>
+            <p>\(f\) is <strong>Riemann integrable</strong> iff the ceiling and floor can be squeezed together: \(\inf_P U(f,P) = \sup_P L(f,P)\) — equivalently, \(\forall \varepsilon\ \exists P: U(f,P) - L(f,P) < \varepsilon\).</p>
+
+            <p><strong>Interactive: squeeze the staircases.</strong> Upper rectangles (ceiling) and lower rectangles (floor) for \(f(x) = x^2\); raise \(n\) and watch the gap \(U - L\) go to zero — integrability made visible.</p>
+            <div class="viz-widget" id="darbouxWidget">
+                <div class="viz-controls">
+                    <label>n intervals: <span id="darbouxWidget-nVal"></span>
+                        <input type="range" id="darbouxWidget-n" min="1" max="60" step="1" value="6">
+                    </label>
+                </div>
+                <canvas id="darbouxWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="darbouxWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('darbouxWidget', { xmin: -0.15, xmax: 1.25, ymin: -0.1, ymax: 1.2 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x * x;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const n = parseInt($('n').value);
+                    $('nVal').textContent = n;
+                    const h = 1 / n;
+                    let U = 0, L = 0;
+                    for (let i = 0; i < n; i++) {
+                        const x0 = i * h, x1 = x0 + h;
+                        const lo = f(x0), hi = f(x1);   // f increasing on [0,1]
+                        U += hi * h; L += lo * h;
+                        // upper rectangle (ceiling) — light blue
+                        ctx.globalAlpha = 0.18; ctx.fillStyle = c.curve;
+                        ctx.fillRect(V.px(x0), V.py(hi), V.px(h) - V.px(0), V.py(0) - V.py(hi));
+                        // lower rectangle (floor) — green, drawn over
+                        ctx.fillStyle = c.accent; ctx.globalAlpha = 0.35;
+                        ctx.fillRect(V.px(x0), V.py(lo), V.px(h) - V.px(0), V.py(0) - V.py(lo));
+                        ctx.globalAlpha = 1;
+                    }
+                    V.plot(x => (x >= -0.05 && x <= 1.15) ? f(x) : NaN, c.text);
+                    $('readout').textContent = 'U(f,P) = ' + U.toFixed(5) + '   L(f,P) = ' + L.toFixed(5)
+                        + '   gap U − L = ' + (U - L).toFixed(5) + ' = 1/n exactly'
+                        + '\ngap → 0 as n → ∞  ⇒  x² is Riemann integrable, ∫₀¹x²dx = ⅓';
+                }
+                V.bind(['n'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: upper/lower sums for \(f(x) = x\) on \([0, 1]\), n equal parts</strong><br><br>
+                <strong>Step 1:</strong> On \([\frac{i-1}{n}, \frac{i}{n}]\), \(f\) is increasing: \(\inf = \frac{i-1}{n}\), \(\sup = \frac{i}{n}\).<br>
+                <strong>Step 2:</strong> Sum:
+                \[L = \sum_{i=1}^n \frac{i-1}{n}\cdot\frac1n = \frac{n(n-1)/2}{n^2} = \frac12 - \frac{1}{2n}, \qquad
+                U = \frac12 + \frac{1}{2n}\]
+                <strong>Step 3:</strong> Squeeze — both → \(\frac12\) as \(n \to \infty\), and \(U - L = \frac1n \to 0\), so \(\int_0^1 x\,dx = \frac12\). ∎
+            </div>
+
+            <div class="example">
+                <strong>A function with NO Riemann integral:</strong> the Dirichlet function on \([0,1]\). Every subinterval contains rationals and irrationals, so every upper sum is 1 and every lower sum is 0 — the gap never closes. The ceiling and floor staircases are permanently 1 apart. This failure is the doorway to the research level below.
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Show a monotone function on \([a,b]\) is always Riemann integrable.
+                    <details><summary>Solution</summary>
+                    For equal partitions, \(U - L = \frac{b-a}{n}|f(b) - f(a)|\) (the staircase gaps telescope) → 0. ∎
+                    </details>
+                </li>
+                <li>Why does EVT fail for \(f(x) = x\) on \((0, 1)\)?
+                    <details><summary>Solution</summary>
+                    The candidates for extrema (0 and 1) are not in the open interval — sup and inf exist but are never <em>attained</em>. Compactness (closedness) is exactly what guarantees attainment.
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ RESEARCH LEVEL ============ -->
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Lebesgue Integration</h3>
+            <p>Riemann slices the <em>domain</em>; <a href="https://en.wikipedia.org/wiki/Lebesgue_integration" target="_blank" style="color: var(--primary);">Lebesgue</a> slices the <em>range</em>: "for each height, how much of the domain sits at that height?" — where "how much" is <strong>measure</strong>. The rationals have measure zero (cover the \(n\)-th rational by an interval of length \(\varepsilon/2^n\): total \(< \varepsilon\)), so the Dirichlet function, hopeless for Riemann, integrates trivially to 0. Lebesgue's integral also swaps limits and integrals under far weaker hypotheses (dominated convergence theorem) — the foundation of modern probability and PDE theory.</p>
+
+            <h3>Baire Category</h3>
+            <p>The Baire category theorem says a complete metric space is never a countable union of nowhere-dense sets. Its strange consequence: <em>most</em> continuous functions (in the category sense) are nowhere differentiable — the Weierstrass monster is the rule, not the exception. Smoothness, which calculus treats as normal, is topologically rare.</p>
+        </section>
+
+        <!-- ============ SOURCES & REFERENCES ============ -->
+        <section id="sources">
+            <h2>Sources & References</h2>
+
+            <h3>Wikipedia</h3>
+            <ul>
+                <li><a href="https://en.wikipedia.org/wiki/Real_analysis" target="_blank">Real Analysis - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Riemann_integral" target="_blank">Riemann Integral - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Uniform_continuity" target="_blank">Uniform Continuity - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Lebesgue_integration" target="_blank">Lebesgue Integration - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Heine%E2%80%93Borel_theorem" target="_blank">Heine–Borel Theorem - Wikipedia</a></li>
+            </ul>
+
+            <h3>Academic Papers (arXiv)</h3>
+            <ul>
+                <li><a href="https://arxiv.org/search/?query=real+analysis&searchtype=all" target="_blank">Real Analysis - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=measure+theory&searchtype=all" target="_blank">Measure Theory - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=nowhere+differentiable+functions&searchtype=all" target="_blank">Nowhere Differentiable Functions - arXiv Search</a></li>
+            </ul>
+
+            <h3>Textbooks & Bibliography</h3>
+            <ul>
+                <li><strong>Principles of Mathematical Analysis</strong> - Walter Rudin (1976)</li>
+                <li><strong>Understanding Analysis</strong> - Stephen Abbott (2015)</li>
+                <li><strong>Analysis I</strong> - Terence Tao (2016)</li>
+                <li><strong>Real Analysis</strong> - Halsey Royden & Patrick Fitzpatrick (2010)</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Real Analysis | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============ MODULAR: Theme Toggle Component ============
+        const ThemeToggle = (() => {
+            const STORAGE_KEY = 'theme-preference';
+            const LIGHT = 'light';
+            const DARK = 'dark';
+
+            const getSystemPreference = () => {
+                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (prefersDark) return DARK;
+                if (prefersLight) return LIGHT;
+                return DARK;
+            };
+
+            const getPreference = () => {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === LIGHT || stored === DARK) return stored;
+                return getSystemPreference();
+            };
+
+            const setTheme = (theme) => {
+                const validTheme = (theme === LIGHT) ? LIGHT : DARK;
+                document.documentElement.setAttribute('data-theme', validTheme);
+                localStorage.setItem(STORAGE_KEY, validTheme);
+                updateButton(validTheme);
+            };
+
+            const updateButton = (theme) => {
+                const btn = document.getElementById('themeToggle');
+                if (btn) btn.textContent = theme === DARK ? '☀️' : '🌙';
+            };
+
+            const toggle = () => {
+                const current = document.documentElement.getAttribute('data-theme') || getPreference();
+                const next = current === DARK ? LIGHT : DARK;
+                setTheme(next);
+            };
+
+            const init = () => {
+                const preference = getPreference();
+                setTheme(preference);
+                document.getElementById('themeToggle')?.addEventListener('click', toggle);
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem(STORAGE_KEY)) {
+                        setTheme(e.matches ? DARK : LIGHT);
+                    }
+                });
+            };
+
+            return { init };
+        })();
+
+        ThemeToggle.init();
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

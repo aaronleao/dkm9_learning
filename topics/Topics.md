@@ -7,7 +7,7 @@ Comprehensive learning resources organized by subject. Each subject contains top
 ### Mathematics
 - [**Mathematics Hub**](Math/index.html) - Comprehensive guide to mathematical foundations and theory
 
-  **Topics:** Algebraic Operations, Set Theory, Mathematical Logic, Functions, Equations & Inequalities, Geometry
+  **Topics:** Algebraic Operations, Set Theory, Mathematical Logic, Functions, Equations & Inequalities, Geometry, Calculus, Linear Algebra, Numerical Methods & Analysis, Real Analysis
 
 ---
 

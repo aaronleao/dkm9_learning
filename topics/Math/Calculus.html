@@ -1,16 +1,3 @@
-<!--
-    MATHEMATICS TOPIC TEMPLATE
-    ===========================
-    Use this template for all new topic pages.
-
-    Steps to create a new topic:
-    1. Copy this file to [TopicName].html
-    2. Replace all calculus, Calculus, [TOPIC_DESC] placeholders
-    3. Add your content in the section blocks
-    4. Add sources in the Sources & References section
-    5. Test in all browsers and theme modes
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-    <!-- ============ SHARED STYLES ============ -->
     <style>
-        /* ---- ROOT VARIABLES (Theme System) ---- */
         * {margin:0; padding:0; box-sizing:border-box;}
         :root {
             --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
@@ -42,44 +27,32 @@
             --dark:#333; --light:#666; --bg:#f5f5f5; --card:#fff;
             --border:#e0e0e0; --code:#f0f0f0;
         }
-
-        /* ---- BASE ELEMENTS ---- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height:1.7; color:var(--dark); background:var(--bg);
         }
         .container {max-width:900px; margin:0 auto; padding:20px;}
-
-        /* ---- HEADER ---- */
         header {
             background:linear-gradient(135deg, var(--primary), var(--secondary));
             color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
         }
         header h1 {font-size:2.5em; margin-bottom:10px;}
-
-        /* ---- NAVIGATION ---- */
         nav {
             background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
             display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
         }
         nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
         nav a:hover {color:var(--secondary);}
-
-        /* ---- THEME TOGGLE BUTTON ---- */
         .theme-toggle {
             background:none; border:2px solid var(--primary); color:var(--primary); padding:8px 12px;
             border-radius:6px; cursor:pointer; font-size:1em; transition:all 0.3s; font-weight:600;
         }
         .theme-toggle:hover {background-color:var(--primary); color:#fff;}
-
-        /* ---- TABLE OF CONTENTS ---- */
         .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
         .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
         .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
         .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
         .toc a:hover {color:var(--secondary); text-decoration:underline;}
-
-        /* ---- SECTIONS & CONTENT ---- */
         section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
         h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
         h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
@@ -88,26 +61,27 @@
         ul, ol {margin-left:25px; margin-bottom:15px;}
         li {margin-bottom:8px;}
         strong {color:var(--primary); font-weight:600;}
-
-        /* ---- EXAMPLES & HIGHLIGHTS ---- */
         .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
         .example strong {color:var(--secondary);}
-
-        /* ---- TABLES ---- */
         table {width:100%; border-collapse:collapse; margin:20px 0;}
         th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
         th {background:var(--code); font-weight:600; color:var(--primary);}
         tr:hover {background:var(--code);}
-
-        /* ---- DIAGRAMS & VISUALS ---- */
         .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
-
-        /* ---- FOOTER ---- */
         footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
         footer a {color:var(--primary); text-decoration:none;}
         footer a:hover {text-decoration:underline;}
-
-        /* ---- RESPONSIVE ---- */
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
         @media (max-width:768px) {
             header h1 {font-size:1.8em;}
             nav {flex-direction:column; gap:10px;}
@@ -129,13 +103,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- ============ HEADER ============ -->
         <header>
             <h1>Calculus</h1>
             <p>Comprehensive Guide from Beginner to Research Level</p>
         </header>
 
-        <!-- ============ NAVIGATION ============ -->
         <nav>
             <a href="index.html">← Back to Home</a>
             <div>
@@ -147,28 +119,204 @@
             <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
         </nav>
 
-        <!-- ============ TABLE OF CONTENTS ============ -->
         <div class="toc">
             <h2>Table of Contents</h2>
             <ul>
                 <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#limits">— Limits</a></li>
                 <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#derivatives">— Derivatives</a></li>
+                <li><a href="#integrals">— Integrals & FTC</a></li>
                 <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#gradient">— Partial Derivatives & Gradient</a></li>
+                <li><a href="#green">— Green's Theorem</a></li>
+                <li><a href="#gauss">— Divergence (Gauss) Theorem</a></li>
+                <li><a href="#stokes">— Stokes' Theorem</a></li>
                 <li><a href="#research">Research Level</a></li>
             </ul>
         </div>
+
+        <!-- MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) -->
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : -10,
+                xmax: opts.xmax !== undefined ? opts.xmax : 10,
+                ymin: opts.ymin !== undefined ? opts.ymin : -10,
+                ymax: opts.ymax !== undefined ? opts.ymax : 10,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 5 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 5 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                plot: (f, color, dash) => {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = S.xmin + (S.xmax - S.xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(S.px(x), S.py(y)); started = true; }
+                        else ctx.lineTo(S.px(x), S.py(y));
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                },
+                dot: (x, y, color, r) => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(S.px(x), S.py(y), r || 5, 0, 2 * Math.PI); ctx.fill();
+                },
+                arrow: (x, y, vx, vy, color) => {
+                    const x2 = x + vx, y2 = y + vy;
+                    ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(S.px(x), S.py(y)); ctx.lineTo(S.px(x2), S.py(y2)); ctx.stroke();
+                    const ang = Math.atan2(S.py(y2) - S.py(y), S.px(x2) - S.px(x));
+                    ctx.beginPath();
+                    ctx.moveTo(S.px(x2), S.py(y2));
+                    ctx.lineTo(S.px(x2) - 6 * Math.cos(ang - 0.4), S.py(y2) - 6 * Math.sin(ang - 0.4));
+                    ctx.moveTo(S.px(x2), S.py(y2));
+                    ctx.lineTo(S.px(x2) - 6 * Math.cos(ang + 0.4), S.py(y2) - 6 * Math.sin(ang + 0.4));
+                    ctx.stroke();
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        </script>
 
         <!-- ============ BEGINNER LEVEL ============ -->
         <section id="beginner">
             <h2>Beginner Level</h2>
 
-            <h3>Introduction to calculus</h3>
-            <p>
-                [REPLACE: Start with intuitive, accessible explanation of the topic.
-                Use simple language and everyday examples.]
-            </p>
+            <h3 id="limits">Limits</h3>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Limit_(mathematics)" target="_blank" style="color: var(--primary);">limit</a> asks: "what value is \(f(x)\) <em>heading toward</em> as \(x\) approaches \(c\)?" — regardless of what happens exactly at \(c\). It is the tool that turns "almost" into precise mathematics, and all of calculus is built on it.</p>
+            <p><strong>Formal definition:</strong> \(\lim_{x \to c} f(x) = L\) means: \(\forall \varepsilon > 0\ \exists \delta > 0\) such that \(0 < |x - c| < \delta \Rightarrow |f(x) - L| < \varepsilon\). (Note \(0 < |x - c|\): the point \(c\) itself is excluded — limits don't care about \(f(c)\).)</p>
 
-            <!-- Add subsections, examples, and visuals here -->
+            <p><strong>Interactive: a limit existing where the function doesn't.</strong> \(f(x) = \frac{x^2 - 1}{x - 1}\) is undefined at \(x = 1\) (hole), yet the limit there is 2 — the ε-δ game still works because the definition never asks about \(x = 1\) itself.</p>
+            <div class="viz-widget" id="limWidget">
+                <div class="viz-controls">
+                    <label>ε: <span id="limWidget-epsVal"></span>
+                        <input type="range" id="limWidget-eps" min="0.05" max="2" step="0.05" value="0.5">
+                    </label>
+                    <label>approach point c: <span id="limWidget-cptVal"></span>
+                        <input type="range" id="limWidget-cpt" min="-2" max="3" step="0.05" value="1">
+                    </label>
+                </div>
+                <canvas id="limWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="limWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('limWidget', { xmin: -3, xmax: 4, ymin: -2, ymax: 5 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => Math.abs(x - 1) < 1e-12 ? NaN : (x * x - 1) / (x - 1); // = x + 1 with hole at 1
+                const fLim = x => x + 1;   // limit values (fills the hole)
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    V.plot(f, c.curve);
+                    // the hole at (1, 2)
+                    ctx.fillStyle = c.card; ctx.strokeStyle = c.curve; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(V.px(1), V.py(2), 5, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
+                    const eps = parseFloat($('eps').value), cp = parseFloat($('cpt').value);
+                    $('epsVal').textContent = eps.toFixed(2); $('cptVal').textContent = cp.toFixed(2);
+                    const L = fLim(cp);
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                    ctx.fillRect(0, V.py(L + eps), V.W.width, V.py(L - eps) - V.py(L + eps));
+                    ctx.globalAlpha = 1;
+                    let delta = 0;
+                    for (let d = 0.001; d < 5; d += 0.001) {
+                        const l = fLim(cp - d), r = fLim(cp + d);
+                        if (Math.abs(l - L) >= eps || Math.abs(r - L) >= eps) break;
+                        delta = d;
+                    }
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.curve;
+                    ctx.fillRect(V.px(cp - delta), 0, V.px(cp + delta) - V.px(cp - delta), V.W.height);
+                    ctx.globalAlpha = 1;
+                    $('readout').textContent = 'lim as x→' + cp.toFixed(2) + ' is L = ' + L.toFixed(2)
+                        + '   |   ε = ' + eps.toFixed(2) + ' → δ = ' + delta.toFixed(3)
+                        + (Math.abs(cp - 1) < 0.03 ? '   (works even AT the hole: the limit ignores f(1))' : '');
+                }
+                V.bind(['eps', 'cpt'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: \(\lim_{x \to 1} \frac{x^2 - 1}{x - 1}\)</strong><br><br>
+                <strong>Step 1: Try the numeric table</strong><br>
+                Why? Before algebra, see what the values suggest.<br>
+                <table>
+                    <tr><th>x</th><td>0.9</td><td>0.99</td><td>0.999</td><td>1.001</td><td>1.01</td><td>1.1</td></tr>
+                    <tr><th>f(x)</th><td>1.9</td><td>1.99</td><td>1.999</td><td>2.001</td><td>2.01</td><td>2.1</td></tr>
+                </table>
+                Both sides squeeze toward 2.<br><br>
+                <strong>Step 2: Factor and cancel</strong><br>
+                Why is cancelling allowed? Because the limit only involves \(x \neq 1\), where \(x - 1 \neq 0\):<br>
+                \[\frac{x^2 - 1}{x - 1} = \frac{(x-1)(x+1)}{x - 1} = x + 1 \quad (x \neq 1)\]<br>
+                <strong>Step 3: Evaluate the simplified expression</strong>
+                \[\lim_{x \to 1}(x + 1) = 2\]
+            </div>
+
+            <div class="example">
+                <strong>Limit laws</strong> (valid when the individual limits exist): the limit of a sum/product/quotient is the sum/product/quotient of limits (quotient: denominator limit ≠ 0); constants pull out; and the <strong>squeeze theorem</strong>: if \(g \le f \le h\) near \(c\) and \(g, h\) share the limit \(L\), then \(f \to L\) too.
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Instantaneous speed:</strong> a speedometer reading is the limit of average speed \(\frac{\Delta s}{\Delta t}\) as the stopwatch interval shrinks — the derivative below is exactly this limit.</li>
+                    <li><strong>0/0 forms:</strong> physical formulas often collapse to \(\frac{0}{0}\) at interesting points (e.g., relativistic formulas as \(v \to c\)); limits extract the meaningful value.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Compute \(\lim_{x \to 3} \frac{x^2 - 9}{x - 3}\).
+                    <details><summary>Solution</summary>
+                    Factor: \(\frac{(x-3)(x+3)}{x-3} = x + 3 \to 6\).
+                    </details>
+                </li>
+                <li>Use the squeeze theorem on \(\lim_{x \to 0} x^2 \sin(1/x)\).
+                    <details><summary>Solution</summary>
+                    \(-x^2 \le x^2\sin(1/x) \le x^2\) and both bounds → 0, so the limit is 0.
+                    </details>
+                </li>
+            </ol>
 
             <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
         </section>
@@ -177,13 +325,217 @@
         <section id="intermediate">
             <h2>Intermediate Level</h2>
 
-            <h3>[SUBTOPIC_NAME]</h3>
-            <p>
-                [REPLACE: Dive deeper into properties, methods, and applications.
-                Include formulas, diagrams, and worked examples.]
-            </p>
+            <h3 id="derivatives">Derivatives</h3>
+            <p><strong>Intuition:</strong> the <a href="https://en.wikipedia.org/wiki/Derivative" target="_blank" style="color: var(--primary);">derivative</a> \(f'(a)\) is the slope of the tangent line at \(a\) — the limit of secant slopes (see the animated secant widget in <a href="Functions.html#differentiable-functions" style="color: var(--primary);">Functions § Differentiable</a>):</p>
+            <p>\[f'(a) = \lim_{h \to 0} \frac{f(a + h) - f(a)}{h}\]</p>
 
-            <!-- Add more subsections -->
+            <p><strong>Interactive: a function and its derivative, together.</strong> The dashed green curve is the numerically computed \(f'\); the tangent line at the slider point has exactly that slope. Notice: \(f' = 0\) exactly where \(f\) has flat spots.</p>
+            <div class="viz-widget" id="derivWidget">
+                <div class="viz-controls">
+                    <label>Function: <span id="derivWidget-pickVal"></span>
+                        <input type="range" id="derivWidget-pick" min="0" max="2" step="1" value="2">
+                    </label>
+                    <label>tangent at a: <span id="derivWidget-aVal"></span>
+                        <input type="range" id="derivWidget-a" min="-4" max="4" step="0.1" value="1">
+                    </label>
+                </div>
+                <canvas id="derivWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="derivWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('derivWidget', { xmin: -5, xmax: 5, ymin: -5, ymax: 5 });
+                const $ = V.$, ctx = V.ctx;
+                const funcs = [
+                    { name: 'x²/2',      f: x => x * x / 2 },
+                    { name: '2·sin x',   f: x => 2 * Math.sin(x) },
+                    { name: 'x³/6 − x',  f: x => x * x * x / 6 - x }
+                ];
+                const h = 1e-5;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value), a = parseFloat($('a').value);
+                    $('pickVal').textContent = funcs[k].name; $('aVal').textContent = a.toFixed(1);
+                    const f = funcs[k].f;
+                    const df = x => (f(x + h) - f(x - h)) / (2 * h);   // central difference
+                    V.plot(f, c.curve);
+                    V.plot(df, c.accent, [6, 6]);
+                    // tangent line at a
+                    const s = df(a);
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(V.px(a - 2.5), V.py(f(a) - 2.5 * s));
+                    ctx.lineTo(V.px(a + 2.5), V.py(f(a) + 2.5 * s));
+                    ctx.stroke();
+                    V.dot(a, f(a), c.curve, 6);
+                    V.dot(a, s, c.accent, 5);
+                    $('readout').textContent = 'solid: f = ' + funcs[k].name + '   |   dashed: f′ (numeric)   |   f′(' + a.toFixed(1) + ') = ' + s.toFixed(4);
+                }
+                V.bind(['pick', 'a'], draw);
+            })();
+            </script>
+
+            <h4>Differentiation rules as algorithms</h4>
+            <div class="example">
+                <strong>Power rule:</strong> \(\frac{d}{dx}x^n = nx^{n-1}\).
+                <em>Worked:</em> \(\frac{d}{dx}x^5 = 5x^4\).
+            </div>
+            <div class="example">
+                <strong>Product rule:</strong> \((uv)' = u'v + uv'\).
+                <em>Worked:</em> \(\frac{d}{dx}\big(x^2 \sin x\big) = 2x\sin x + x^2\cos x\).
+            </div>
+            <div class="example">
+                <strong>Quotient rule:</strong> \(\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}\).
+                <em>Worked:</em> \(\frac{d}{dx}\frac{\sin x}{x} = \frac{x\cos x - \sin x}{x^2}\).
+            </div>
+            <div class="example">
+                <strong>Chain rule (algorithm):</strong> to differentiate \(f(g(x))\):<br>
+                <strong>1.</strong> Identify outer \(f\) and inner \(g\).<br>
+                <strong>2.</strong> Differentiate the outer function <em>evaluated at the inner</em>: \(f'(g(x))\).<br>
+                <strong>3.</strong> Multiply by the inner derivative: \(f'(g(x)) \cdot g'(x)\).<br><br>
+                <em>Worked:</em> \(\frac{d}{dx}\sin(x^2)\): outer \(\sin\), inner \(x^2\) → \(\cos(x^2) \cdot 2x\).
+            </div>
+            <h4>Geometric Picture (chain rule)</h4>
+            <p>Composition is a two-stage stretching machine: \(g\) stretches the input axis locally by the factor \(g'(x)\), then \(f\) stretches \(g\)'s output axis by \(f'(g(x))\). A tiny interval of width \(dx\) comes out with width \(f'(g(x)) \cdot g'(x) \, dx\) — <strong>local stretch factors multiply</strong>. That product is the whole chain rule.</p>
+
+            <div class="example">
+                <strong>Step-by-step application: related rates (the sliding ladder)</strong><br><br>
+                A 5 m ladder leans on a wall; its base slides away at 1 m/s. How fast does the top slide down when the base is 3 m out?<br><br>
+                <strong>Step 1: Relate the quantities</strong> — Pythagoras: \(x^2 + y^2 = 25\).<br>
+                <strong>Step 2: Differentiate the relation in time</strong> (chain rule!): \(2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0\).<br>
+                <strong>Step 3: Substitute the snapshot</strong> — \(x = 3 \Rightarrow y = 4\), \(\frac{dx}{dt} = 1\):<br>
+                \[2(3)(1) + 2(4)\frac{dy}{dt} = 0 \Rightarrow \frac{dy}{dt} = -\frac{3}{4} \text{ m/s}\]
+                The top slides down at 0.75 m/s.
+            </div>
+            <div class="example">
+                <strong>Step-by-step application: optimization (best fence)</strong><br><br>
+                100 m of fence, one side along a river (no fence needed). Maximize the rectangular area.<br><br>
+                <strong>Step 1: Model</strong> — sides \(x\) (perpendicular, ×2) and \(y\): \(2x + y = 100\), area \(A = xy = x(100 - 2x)\).<br>
+                <strong>Step 2: Differentiate and find critical points</strong> — \(A'(x) = 100 - 4x = 0 \Rightarrow x = 25\).<br>
+                <strong>Step 3: Check it's a max</strong> — \(A''(x) = -4 < 0\) (concave — see <a href="Functions.html#convex-concave" style="color: var(--primary);">Convexity</a>) ✓. Also check endpoints: \(A(0) = A(50) = 0\).<br>
+                <strong>Answer:</strong> \(x = 25\) m, \(y = 50\) m, \(A = 1250\) m².
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Differentiate \(f(x) = e^{3x}\cos(2x)\).
+                    <details><summary>Solution</summary>
+                    Product + chain: \(f'(x) = 3e^{3x}\cos(2x) - 2e^{3x}\sin(2x) = e^{3x}(3\cos 2x - 2\sin 2x)\).
+                    </details>
+                </li>
+                <li>A spherical balloon inflates at 10 cm³/s. How fast does the radius grow when \(r = 5\) cm?
+                    <details><summary>Solution</summary>
+                    \(V = \frac43\pi r^3 \Rightarrow \frac{dV}{dt} = 4\pi r^2 \frac{dr}{dt}\), so \(\frac{dr}{dt} = \frac{10}{4\pi \cdot 25} = \frac{1}{10\pi} \approx 0.032\) cm/s.
+                    </details>
+                </li>
+            </ol>
+
+            <h3 id="integrals">Integrals & the Fundamental Theorem</h3>
+            <p><strong>Intuition:</strong> the <a href="https://en.wikipedia.org/wiki/Integral" target="_blank" style="color: var(--primary);">definite integral</a> \(\int_a^b f(x)\,dx\) is the signed area under the graph — computed as the limit of sums of thin rectangles (<a href="https://en.wikipedia.org/wiki/Riemann_sum" target="_blank" style="color: var(--primary);">Riemann sums</a>).</p>
+
+            <p><strong>Interactive: Riemann sums for \(\int_0^1 x^2 dx = \frac13\).</strong> Increase \(n\) and watch the rectangle sum converge; switch the sample point (left/mid/right) and compare error sizes.</p>
+            <div class="viz-widget" id="riemannWidget">
+                <div class="viz-controls">
+                    <label>n rectangles: <span id="riemannWidget-nVal"></span>
+                        <input type="range" id="riemannWidget-n" min="1" max="100" step="1" value="8">
+                    </label>
+                    <label>method: <span id="riemannWidget-mVal"></span>
+                        <input type="range" id="riemannWidget-m" min="0" max="2" step="1" value="0">
+                    </label>
+                </div>
+                <canvas id="riemannWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="riemannWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('riemannWidget', { xmin: -0.15, xmax: 1.25, ymin: -0.1, ymax: 1.2 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x * x;
+                const methods = ['left', 'midpoint', 'right'];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const n = parseInt($('n').value), m = parseInt($('m').value);
+                    $('nVal').textContent = n; $('mVal').textContent = methods[m];
+                    const dx = 1 / n;
+                    let sum = 0;
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 1;
+                    for (let i = 0; i < n; i++) {
+                        const xs = i * dx + (m === 0 ? 0 : m === 1 ? dx / 2 : dx);
+                        const hgt = f(xs);
+                        sum += hgt * dx;
+                        ctx.globalAlpha = 0.25; ctx.fillStyle = c.accent;
+                        ctx.fillRect(V.px(i * dx), V.py(hgt), V.px(dx) - V.px(0), V.py(0) - V.py(hgt));
+                        ctx.globalAlpha = 1;
+                        ctx.strokeRect(V.px(i * dx), V.py(hgt), V.px(dx) - V.px(0), V.py(0) - V.py(hgt));
+                    }
+                    V.plot(x => (x >= -0.05 && x <= 1.15) ? f(x) : NaN, c.curve);
+                    const exact = 1 / 3;
+                    $('readout').textContent = methods[m] + ' sum (n=' + n + ') = ' + sum.toFixed(5)
+                        + '   |   exact ∫₀¹x²dx = 0.33333   |   error = ' + Math.abs(sum - exact).toExponential(2);
+                }
+                V.bind(['n', 'm'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: Riemann sum by hand, n = 4 (right endpoints)</strong><br><br>
+                <strong>Step 1:</strong> Split \([0,1]\) into 4 pieces of width \(\Delta x = \frac14\); right endpoints \(\frac14, \frac12, \frac34, 1\).<br>
+                <strong>Step 2:</strong> Sum height × width:
+                \[\left(\tfrac{1}{16} + \tfrac{4}{16} + \tfrac{9}{16} + \tfrac{16}{16}\right)\cdot\tfrac14 = \tfrac{30}{64} = 0.46875\]
+                <strong>Step 3:</strong> Compare: exact is \(1/3 \approx 0.3333\) — right endpoints overshoot an increasing function. The widget shows the error melting as \(n\) grows.
+            </div>
+
+            <h4>The Fundamental Theorem of Calculus (FTC)</h4>
+            <p><strong>Part 1:</strong> if \(F(x) = \int_a^x f(t)\,dt\) (the <em>accumulation</em> function), then \(F'(x) = f(x)\).<br>
+            <strong>Part 2:</strong> \(\int_a^b f(x)\,dx = F(b) - F(a)\) for any antiderivative \(F\) of \(f\).</p>
+            <p><strong>Geometric meaning:</strong> as \(x\) creeps right by \(dx\), the accumulated area grows by a sliver of width \(dx\) and height \(f(x)\) — so <em>the accumulation's growth rate is the curve's height</em>. Derivative and integral are inverse operations.</p>
+
+            <h4>Integration techniques as algorithms</h4>
+            <div class="example">
+                <strong>u-substitution (algorithm):</strong><br>
+                <strong>1.</strong> Choose \(u = g(x)\) so that \(du = g'(x)dx\) appears in the integrand.<br>
+                <strong>2.</strong> Rewrite everything in terms of \(u\) and \(du\).<br>
+                <strong>3.</strong> Integrate in \(u\); substitute back.<br><br>
+                <em>Worked:</em> \(\int 2x\cos(x^2)\,dx\): let \(u = x^2\), \(du = 2x\,dx\) → \(\int \cos u\, du = \sin u + C = \sin(x^2) + C\).
+            </div>
+            <h4>Geometric Picture (u-substitution)</h4>
+            <p>A change of variables is a rubber-sheet re-gridding of the x-axis: \(u = g(x)\) stretches the axis non-uniformly, and the factor \(du = g'(x)\,dx\) is exactly the local stretch factor. The area is carried over unchanged — same area, more convenient shape.</p>
+
+            <div class="example">
+                <strong>Integration by parts (algorithm):</strong> \(\int u\,dv = uv - \int v\,du\).<br>
+                <strong>1.</strong> Pick \(u\) by LIATE (Log, Inverse trig, Algebraic, Trig, Exponential) — the earlier in the list, the better a \(u\).<br>
+                <strong>2.</strong> Everything else is \(dv\); compute \(du\) and \(v\).<br>
+                <strong>3.</strong> Apply the formula; the new integral should be simpler.<br><br>
+                <em>Worked:</em> \(\int x e^x dx\): \(u = x\) (algebraic), \(dv = e^x dx\) → \(du = dx\), \(v = e^x\):
+                \[\int x e^x dx = x e^x - \int e^x dx = (x - 1)e^x + C\]
+            </div>
+            <h4>Geometric Picture (integration by parts)</h4>
+            <p>Plot the curve as points \((u, v)\) and draw the rectangle with corners \((0,0)\) and \((u, v)\): its area \(u \cdot v\) splits into the region swept horizontally (\(\int v\,du\)) plus the region swept vertically (\(\int u\,dv\)). The formula \(\int u\,dv = uv - \int v\,du\) is literally this picture — the rectangle minus one region equals the other.</p>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Distance from speed:</strong> odometer = integral of speedometer.</li>
+                    <li><strong>Work:</strong> \(W = \int F(x)\,dx\) — pumping water, stretching springs.</li>
+                    <li><strong>Probability:</strong> probabilities are areas under density curves (see the normal distribution).</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Evaluate \(\int_0^{\pi/2} \sin x \, dx\).
+                    <details><summary>Solution</summary>
+                    Antiderivative \(-\cos x\): \((-\cos\frac{\pi}{2}) - (-\cos 0) = 0 + 1 = 1\).
+                    </details>
+                </li>
+                <li>Evaluate \(\int x \ln x \, dx\).
+                    <details><summary>Solution</summary>
+                    Parts with \(u = \ln x\), \(dv = x\,dx\): \(\frac{x^2}{2}\ln x - \int \frac{x}{2}dx = \frac{x^2}{2}\ln x - \frac{x^2}{4} + C\).
+                    </details>
+                </li>
+            </ol>
 
             <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
         </section>
@@ -192,13 +544,447 @@
         <section id="advanced">
             <h2>Advanced Level</h2>
 
-            <h3>[SPECIALIZED_TOPIC]</h3>
-            <p>
-                [REPLACE: Cover theoretical depth, specialized applications, and proofs.
-                Target mathematicians and advanced learners.]
-            </p>
+            <h3 id="gradient">Partial Derivatives & the Gradient</h3>
+            <p><strong>Intuition:</strong> for \(f(x, y)\) — a landscape of heights — the <a href="https://en.wikipedia.org/wiki/Gradient" target="_blank" style="color: var(--primary);">gradient</a> \(\nabla f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right)\) is the arrow pointing straight uphill, with length equal to the steepness. It is always perpendicular to the level curves (contour lines).</p>
 
-            <!-- Add advanced subsections -->
+            <p><strong>Interactive: gradient fields with level curves.</strong> Arrows are \(\nabla f\); thin closed curves are level sets. See the arrows cross contour lines at right angles, pointing uphill.</p>
+            <div class="viz-widget" id="gradWidget">
+                <div class="viz-controls">
+                    <label>f(x, y): <span id="gradWidget-pickVal"></span>
+                        <input type="range" id="gradWidget-pick" min="0" max="2" step="1" value="0">
+                    </label>
+                </div>
+                <canvas id="gradWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="gradWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('gradWidget', { xmin: -4, xmax: 4, ymin: -2.05, ymax: 2.05 });
+                const $ = V.$, ctx = V.ctx;
+                const funcs = [
+                    { name: 'x² + y²',      f: (x, y) => x * x + y * y,          gx: (x, y) => 2 * x,  gy: (x, y) => 2 * y },
+                    { name: 'x² − y²',      f: (x, y) => x * x - y * y,          gx: (x, y) => 2 * x,  gy: (x, y) => -2 * y },
+                    { name: 'sin x · cos y', f: (x, y) => Math.sin(x) * Math.cos(y), gx: (x, y) => Math.cos(x) * Math.cos(y), gy: (x, y) => -Math.sin(x) * Math.sin(y) }
+                ];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value);
+                    $('pickVal').textContent = funcs[k].name;
+                    const F = funcs[k];
+                    // level curves by marching squares (coarse: just plot sign changes on a grid)
+                    const levels = k === 0 ? [0.5, 1.5, 3, 5] : k === 1 ? [-2, -1, 0, 1, 2] : [-0.7, -0.3, 0, 0.3, 0.7];
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1.5;
+                    const NX = 164, NY = 84;
+                    levels.forEach(L => {
+                        ctx.beginPath();
+                        for (let i = 0; i < NX; i++) for (let j = 0; j < NY; j++) {
+                            const x0 = V.xmin + (V.xmax - V.xmin) * i / NX, x1 = V.xmin + (V.xmax - V.xmin) * (i + 1) / NX;
+                            const y0 = V.ymin + (V.ymax - V.ymin) * j / NY, y1 = V.ymin + (V.ymax - V.ymin) * (j + 1) / NY;
+                            const v00 = F.f(x0, y0) - L, v10 = F.f(x1, y0) - L, v01 = F.f(x0, y1) - L;
+                            if (v00 * v10 < 0) { const tt = v00 / (v00 - v10); ctx.moveTo(V.px(x0 + tt * (x1 - x0)), V.py(y0)); ctx.lineTo(V.px(x0 + tt * (x1 - x0)) + 0.5, V.py(y0) + 0.5); }
+                            if (v00 * v01 < 0) { const tt = v00 / (v00 - v01); ctx.moveTo(V.px(x0), V.py(y0 + tt * (y1 - y0))); ctx.lineTo(V.px(x0) + 0.5, V.py(y0 + tt * (y1 - y0)) + 0.5); }
+                        }
+                        ctx.stroke();
+                    });
+                    // gradient arrows
+                    for (let gx = V.xmin + 0.5; gx < V.xmax; gx += 0.66) {
+                        for (let gy = V.ymin + 0.3; gy < V.ymax; gy += 0.5) {
+                            let vx = F.gx(gx, gy), vy = F.gy(gx, gy);
+                            const n = Math.hypot(vx, vy) || 1;
+                            const L2 = Math.min(n, 2) / n * 0.22;
+                            V.arrow(gx, gy, vx * L2, vy * L2, c.curve);
+                        }
+                    }
+                    $('readout').textContent = '∇f points uphill, ⟂ to level curves   |   f = ' + funcs[k].name
+                        + (k === 0 ? '   (bowl: all arrows point away from the minimum)' : k === 1 ? '   (saddle at the origin)' : '   (hills and valleys)');
+                }
+                V.bind(['pick'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: gradient and directional derivative of \(f(x,y) = x^2 + y^2\) at \((1, 2)\)</strong><br><br>
+                <strong>Step 1: Partials</strong> — treat the other variable as constant:
+                \(\frac{\partial f}{\partial x} = 2x\), \(\frac{\partial f}{\partial y} = 2y\).<br>
+                <strong>Step 2: Evaluate</strong> — \(\nabla f(1,2) = (2, 4)\).<br>
+                <strong>Step 3: Directional derivative</strong> along unit \(\mathbf{u} = \left(\frac{3}{5}, \frac{4}{5}\right)\):
+                \[D_{\mathbf u}f = \nabla f \cdot \mathbf u = 2\cdot\tfrac35 + 4\cdot\tfrac45 = \tfrac{22}{5} = 4.4\]
+                Steepest possible rate at this point: \(\|\nabla f\| = \sqrt{20} \approx 4.47\) — along the gradient itself.
+            </div>
+
+            <h3 id="green">Green's Theorem</h3>
+            <p><a href="https://en.wikipedia.org/wiki/Green%27s_theorem" target="_blank" style="color: var(--primary);">Green's theorem</a> converts a line integral around a closed curve into a double integral over the enclosed region:</p>
+            <p>\[\oint_{\partial D}(P\,dx + Q\,dy) \;=\; \iint_D\left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)dA\]</p>
+            <ul>
+                <li>\(\partial D\): the boundary curve of region \(D\), traversed counterclockwise</li>
+                <li>\(P, Q\): the components of the vector field \(\mathbf F = (P, Q)\)</li>
+                <li>Left side: the <strong>circulation</strong> — how much the field pushes you around the loop</li>
+                <li>Right side: the <strong>curl</strong> \(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\) (local spin) summed over the inside</li>
+            </ul>
+            <p><strong>The unifying geometric sentence:</strong> <em>add up a local quantity (here: curl) over the inside, and everything cancels except at the boundary — the boundary remembers the sum.</em></p>
+
+            <p><strong>Interactive: watch the proof idea.</strong> The field \(\mathbf F = (-y, x)\) rotates. Green dots circulate around the boundary square. Raise the subdivision slider: every small cell gets its own circulating loop — and on every <em>interior</em> edge, the two neighboring loops run in opposite directions (drawn faded), cancelling exactly. Only the outer boundary survives. Toggle the curl heatmap: here curl \(= 2\) everywhere, so circulation \(= 2 \times\) Area.</p>
+            <div class="viz-widget" id="greenWidget">
+                <div class="viz-controls">
+                    <label>subdivision n×n: <span id="greenWidget-nVal"></span>
+                        <input type="range" id="greenWidget-n" min="1" max="8" step="1" value="1">
+                    </label>
+                    <label><input type="checkbox" id="greenWidget-heat"> curl heatmap</label>
+                    <button class="viz-btn" id="greenWidget-play">▶ Play</button>
+                </div>
+                <canvas id="greenWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="greenWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('greenWidget', { xmin: -4.4, xmax: 4.4, ymin: -2.25, ymax: 2.25 });
+                const $ = V.$, ctx = V.ctx;
+                const P = (x, y) => -y, Q = (x, y) => x;
+                const B = 1.8;                       // boundary square [-B, B]²
+                let t = 0, running = false, lastTs = null;
+                function boundaryPoint(s) {          // s in [0,1) counterclockwise from (-B,-B)
+                    const u = (s % 1 + 1) % 1 * 4;
+                    if (u < 1) return [ -B + 2 * B * u, -B ];
+                    if (u < 2) return [ B, -B + 2 * B * (u - 1) ];
+                    if (u < 3) return [ B - 2 * B * (u - 2), B ];
+                    return [ -B, B - 2 * B * (u - 3) ];
+                }
+                function cellLoop(x0, y0, x1, y1, color, alpha) {
+                    // small counterclockwise circulation arrows on the 4 edges of a cell
+                    ctx.globalAlpha = alpha;
+                    const mx = (x0 + x1) / 2, my = (y0 + y1) / 2, L = (x1 - x0) * 0.3;
+                    V.arrow(mx - L / 2, y0, L, 0, color);      // bottom: →
+                    V.arrow(x1, my - L / 2, 0, L, color);      // right: ↑
+                    V.arrow(mx + L / 2, y1, -L, 0, color);     // top: ←
+                    V.arrow(x0, my + L / 2, 0, -L, color);     // left: ↓
+                    ctx.globalAlpha = 1;
+                }
+                function circulationNumeric() {
+                    let s = 0; const N = 4000;
+                    for (let i = 0; i < N; i++) {
+                        const [x1, y1] = boundaryPoint(i / N), [x2, y2] = boundaryPoint((i + 1) / N);
+                        const mx2 = (x1 + x2) / 2, my2 = (y1 + y2) / 2;
+                        s += P(mx2, my2) * (x2 - x1) + Q(mx2, my2) * (y2 - y1);
+                    }
+                    return s;
+                }
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const n = parseInt($('n').value);
+                    $('nVal').textContent = n + '×' + n;
+                    // curl heatmap: curl = ∂Q/∂x − ∂P/∂y = 2 (uniform, positive → red)
+                    if ($('heat').checked) {
+                        ctx.globalAlpha = 0.2; ctx.fillStyle = '#ef4444';
+                        ctx.fillRect(V.px(-B), V.py(B), V.px(B) - V.px(-B), V.py(-B) - V.py(B));
+                        ctx.globalAlpha = 1;
+                    }
+                    // field arrows
+                    for (let gx = V.xmin + 0.4; gx < V.xmax; gx += 0.7) {
+                        for (let gy = V.ymin + 0.3; gy < V.ymax; gy += 0.55) {
+                            let vx = P(gx, gy), vy = Q(gx, gy);
+                            const nn = Math.hypot(vx, vy) || 1;
+                            const L2 = Math.min(nn, 2.2) / nn * 0.2;
+                            ctx.globalAlpha = 0.5;
+                            V.arrow(gx, gy, vx * L2, vy * L2, c.curve);
+                            ctx.globalAlpha = 1;
+                        }
+                    }
+                    // subdivision cells with circulating loops
+                    const d = 2 * B / n;
+                    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+                        const x0 = -B + i * d, y0 = -B + j * d;
+                        cellLoop(x0, y0, x0 + d, y0 + d, c.accent, n === 1 ? 0.9 : 0.35);
+                    }
+                    // interior edges cancel: overdraw them faded when n > 1
+                    if (n > 1) {
+                        ctx.globalAlpha = 0.12; ctx.strokeStyle = c.axis; ctx.lineWidth = 1;
+                        for (let i = 1; i < n; i++) {
+                            ctx.beginPath(); ctx.moveTo(V.px(-B + i * d), V.py(-B)); ctx.lineTo(V.px(-B + i * d), V.py(B)); ctx.stroke();
+                            ctx.beginPath(); ctx.moveTo(V.px(-B), V.py(-B + i * d)); ctx.lineTo(V.px(B), V.py(-B + i * d)); ctx.stroke();
+                        }
+                        ctx.globalAlpha = 1;
+                    }
+                    // outer boundary, bold
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 3;
+                    ctx.strokeRect(V.px(-B), V.py(B), V.px(B) - V.px(-B), V.py(-B) - V.py(B));
+                    // circulating dots on the boundary
+                    for (let k2 = 0; k2 < 20; k2++) {
+                        const [bx, by] = boundaryPoint(k2 / 20 + t * 0.05);
+                        V.dot(bx, by, c.accent, 4);
+                    }
+                    const circ = circulationNumeric(), area = (2 * B) * (2 * B);
+                    $('readout').textContent = 'circulation ∮F·dr = ' + circ.toFixed(3)
+                        + '   |   ∬curl dA = 2 × Area = 2 × ' + area.toFixed(2) + ' = ' + (2 * area).toFixed(3)
+                        + '   ✓ equal' + (n > 1 ? '   |   interior loops cancel edge-by-edge — only the boundary survives' : '');
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    if (lastTs !== null) t += (ts - lastTs) / 1000;
+                    lastTs = ts;
+                    draw();
+                    requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = !running;
+                    $('play').textContent = running ? '⏸ Pause' : '▶ Play';
+                    lastTs = null;
+                    if (running) requestAnimationFrame(tick);
+                });
+                V.bind(['n', 'heat'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: verify Green's theorem for \(\mathbf F = (-y, x)\) on the unit square \([0,1]^2\)</strong><br><br>
+                <strong>Right side (double integral):</strong>
+                \(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} = 1 - (-1) = 2\), so
+                \(\iint_D 2\,dA = 2 \times 1 = 2\).<br><br>
+                <strong>Left side (line integral), edge by edge counterclockwise:</strong><br>
+                Bottom \((t, 0), t: 0 \to 1\): \(\int P\,dx = \int_0^1 (-0)\,dt = 0\).<br>
+                Right \((1, t)\): \(\int Q\,dy = \int_0^1 1\,dt = 1\).<br>
+                Top \((1-t, 1)\): \(\int P\,dx = \int_0^1 (-1)(-dt) = 1\).<br>
+                Left \((0, 1-t)\): \(\int Q\,dy = \int_0^1 0 \cdot(-dt) = 0\).<br>
+                Total: \(0 + 1 + 1 + 0 = 2\). ✓ Both sides equal 2.
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Planimeter:</strong> the mechanical device that measures area by tracing a shape's <em>boundary</em> — Green's theorem in brass.</li>
+                    <li><strong>Area formula:</strong> \(\text{Area} = \frac12\oint(x\,dy - y\,dx)\) — how GIS software computes polygon areas from vertex lists.</li>
+                    <li><strong>Fluid dynamics:</strong> circulation around a wing section relates to lift (Kutta–Joukowski).</li>
+                </ul>
+            </div>
+
+            <h3 id="gauss">Divergence (Gauss) Theorem</h3>
+            <p>The 2D flux form (what the canvas shows): flux of \(\mathbf F\) out through the boundary = total divergence inside:</p>
+            <p>\[\oint_{\partial D} \mathbf F \cdot \mathbf n \, ds \;=\; \iint_D \nabla\!\cdot\!\mathbf F \, dA\]</p>
+            <p>Full 3D statement (<a href="https://en.wikipedia.org/wiki/Divergence_theorem" target="_blank" style="color: var(--primary);">divergence theorem</a>): \(\oiint_{\partial V} \mathbf F \cdot d\mathbf S = \iiint_V \nabla\!\cdot\!\mathbf F \, dV\) — what flows out through a closed surface equals what is produced inside. Same sentence again: <em>sources summed inside; the boundary remembers.</em></p>
+
+            <p><strong>Interactive:</strong> field 1 is \(\mathbf F = (x, y)\) — a source at the origin (\(\nabla\!\cdot\!\mathbf F = 2\) everywhere): particles stream <em>outward</em> and pierce the circle; each crossing flashes. Field 2 is the rotation \((-y, x)\) — divergence-free: particles circulate and <strong>nothing ever crosses</strong>. Change the radius and check the readout: flux \(= 2\pi r^2\) exactly.</p>
+            <div class="viz-widget" id="gaussWidget">
+                <div class="viz-controls">
+                    <label>field: <span id="gaussWidget-fVal"></span>
+                        <input type="range" id="gaussWidget-f" min="0" max="1" step="1" value="0">
+                    </label>
+                    <label>boundary radius r: <span id="gaussWidget-rVal"></span>
+                        <input type="range" id="gaussWidget-r" min="0.5" max="1.9" step="0.1" value="1.4">
+                    </label>
+                    <button class="viz-btn" id="gaussWidget-play">▶ Play</button>
+                </div>
+                <canvas id="gaussWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="gaussWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('gaussWidget', { xmin: -4.4, xmax: 4.4, ymin: -2.25, ymax: 2.25 });
+                const $ = V.$, ctx = V.ctx;
+                const fields = [
+                    { name: '(x, y) — source, div = 2', P: (x, y) => x, Q: (x, y) => y, div: 2 },
+                    { name: '(−y, x) — rotation, div = 0', P: (x, y) => -y, Q: (x, y) => x, div: 0 }
+                ];
+                const parts = Array.from({ length: 220 }, () => ({
+                    x: (Math.random() - 0.5) * 8.4, y: (Math.random() - 0.5) * 4.2, flash: 0
+                }));
+                let t = 0, running = false, lastTs = null;
+                function draw(dt) {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('f').value), r = parseFloat($('r').value);
+                    $('fVal').textContent = fields[k].name; $('rVal').textContent = r.toFixed(1);
+                    const F = fields[k];
+                    // arrows
+                    for (let gx = V.xmin + 0.4; gx < V.xmax; gx += 0.7) {
+                        for (let gy = V.ymin + 0.3; gy < V.ymax; gy += 0.55) {
+                            let vx = F.P(gx, gy), vy = F.Q(gx, gy);
+                            const nn = Math.hypot(vx, vy) || 1;
+                            const L2 = Math.min(nn, 2.2) / nn * 0.2;
+                            ctx.globalAlpha = 0.4;
+                            V.arrow(gx, gy, vx * L2, vy * L2, c.curve);
+                            ctx.globalAlpha = 1;
+                        }
+                    }
+                    // boundary circle with outward normals
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    for (let a2 = 0; a2 <= 2 * Math.PI + 0.01; a2 += 0.02) {
+                        const X = V.px(r * Math.cos(a2)), Y = V.py(r * Math.sin(a2));
+                        if (a2 === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+                    }
+                    ctx.stroke();
+                    for (let a2 = 0; a2 < 2 * Math.PI; a2 += Math.PI / 8) {
+                        V.arrow(r * Math.cos(a2), r * Math.sin(a2), 0.25 * Math.cos(a2), 0.25 * Math.sin(a2), c.accent);
+                    }
+                    // particles
+                    if (dt) {
+                        parts.forEach(p => {
+                            const r0 = Math.hypot(p.x, p.y);
+                            p.x += F.P(p.x, p.y) * dt * 0.5; p.y += F.Q(p.x, p.y) * dt * 0.5;
+                            const r1 = Math.hypot(p.x, p.y);
+                            if (r0 < r && r1 >= r) p.flash = 0.5;               // crossing!
+                            p.flash = Math.max(0, p.flash - dt);
+                            if (Math.abs(p.x) > 4.4 || Math.abs(p.y) > 2.25 || (k === 0 && r1 < 0.02)) {
+                                p.x = (Math.random() - 0.5) * 1.5; p.y = (Math.random() - 0.5) * 1.5;
+                            }
+                        });
+                    }
+                    parts.forEach(p => {
+                        ctx.fillStyle = p.flash > 0 ? '#ef4444' : c.accent;
+                        ctx.globalAlpha = p.flash > 0 ? 1 : 0.7;
+                        ctx.beginPath(); ctx.arc(V.px(p.x), V.py(p.y), p.flash > 0 ? 4 : 2, 0, 2 * Math.PI); ctx.fill();
+                        ctx.globalAlpha = 1;
+                    });
+                    const fluxExact = F.div * Math.PI * r * r;
+                    $('readout').textContent = 'flux through circle = ∬(∇·F)dA = ' + F.div + ' × πr² = ' + fluxExact.toFixed(3)
+                        + (k === 1 ? '   — divergence-free: particles circulate, none cross' : '   — every crossing you see is flux');
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    let dt = 0;
+                    if (lastTs !== null) dt = Math.min((ts - lastTs) / 1000, 0.05);
+                    lastTs = ts;
+                    t += dt;
+                    draw(dt);
+                    requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = !running;
+                    $('play').textContent = running ? '⏸ Pause' : '▶ Play';
+                    lastTs = null;
+                    if (running) requestAnimationFrame(tick);
+                });
+                V.bind(['f', 'r'], () => draw(0));
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: verify for \(\mathbf F = (x, y)\) on the unit disk</strong><br><br>
+                <strong>Right side:</strong> \(\nabla\!\cdot\!\mathbf F = \frac{\partial x}{\partial x} + \frac{\partial y}{\partial y} = 2\), so \(\iint_D 2\,dA = 2\pi\).<br><br>
+                <strong>Left side:</strong> on the unit circle the outward normal is \(\mathbf n = (\cos\theta, \sin\theta)\) and \(\mathbf F = (\cos\theta, \sin\theta)\), so \(\mathbf F \cdot \mathbf n = \cos^2\theta + \sin^2\theta = 1\):
+                \[\oint \mathbf F \cdot \mathbf n\, ds = \int_0^{2\pi} 1 \cdot d\theta = 2\pi \; ✓\]
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Maxwell's equations:</strong> \(\nabla\!\cdot\!\mathbf E = \rho/\varepsilon_0\) + divergence theorem = Gauss's law: charge inside determines the field through any surrounding surface.</li>
+                    <li><strong>Conservation laws:</strong> mass/energy balance in any control volume of a fluid simulation.</li>
+                    <li><strong>Incompressible flow:</strong> water satisfies \(\nabla\!\cdot\!\mathbf v = 0\) — the widget's field 2.</li>
+                </ul>
+            </div>
+
+            <h3 id="stokes">Stokes' Theorem</h3>
+            <p>The full 3D statement (<a href="https://en.wikipedia.org/wiki/Stokes%27_theorem" target="_blank" style="color: var(--primary);">Stokes' theorem</a>): for an oriented surface \(S\) with boundary curve \(\partial S\),</p>
+            <p>\[\oint_{\partial S} \mathbf F \cdot d\mathbf r \;=\; \iint_S (\nabla \times \mathbf F)\cdot d\mathbf S\]</p>
+            <p>Green's theorem is exactly the flat special case (surface lying in the plane, curl reduced to its vertical component). The proof idea is identical: tile the surface with tiny loops; interior edges cancel; the boundary remembers the total curl.</p>
+
+            <p><strong>Interactive (projected 3D):</strong> a disk-shaped surface tilted by angle α, drawn in orthographic projection. Dots circulate along its boundary; the small loops are the curl sampled on the surface. As you tilt, the projected area — and with it the flux of curl \(\iint(\nabla\times\mathbf F)\cdot d\mathbf S\) — scales with \(\cos\alpha\), while the circulation around the boundary always matches it.</p>
+            <div class="viz-widget" id="stokesWidget">
+                <div class="viz-controls">
+                    <label>tilt α: <span id="stokesWidget-alphaVal"></span>
+                        <input type="range" id="stokesWidget-alpha" min="0" max="1.4" step="0.02" value="0.5">
+                    </label>
+                    <button class="viz-btn" id="stokesWidget-play">▶ Play</button>
+                </div>
+                <canvas id="stokesWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="stokesWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('stokesWidget', { xmin: -4.4, xmax: 4.4, ymin: -2.25, ymax: 2.25 });
+                const $ = V.$, ctx = V.ctx;
+                const R = 1.8;
+                let t = 0, running = false, lastTs = null;
+                // orthographic projection of the tilted disk: (x, y, 0) on the disk plane,
+                // tilted about the x-axis by α: world point (x, y·cosα, y·sinα) → screen (x, y·cosα)
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const al = parseFloat($('alpha').value);
+                    $('alphaVal').textContent = al.toFixed(2) + ' rad (' + (al * 180 / Math.PI).toFixed(0) + '°)';
+                    const ca = Math.cos(al);
+                    // surface (projected ellipse), softly filled
+                    ctx.globalAlpha = 0.12; ctx.fillStyle = c.curve;
+                    ctx.beginPath();
+                    for (let a2 = 0; a2 <= 2 * Math.PI + 0.01; a2 += 0.02) {
+                        const X = V.px(R * Math.cos(a2)), Y = V.py(R * Math.sin(a2) * ca);
+                        if (a2 === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+                    }
+                    ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+                    // curl-loops sampled on the surface: small ellipses, also flattened by cosα
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.6;
+                    for (let lx = -1.3; lx <= 1.31; lx += 0.65) {
+                        for (let ly = -1.3; ly <= 1.31; ly += 0.65) {
+                            if (lx * lx + ly * ly > R * R * 0.85) continue;
+                            ctx.beginPath();
+                            for (let a2 = 0; a2 <= 2 * Math.PI + 0.01; a2 += 0.3) {
+                                const X = V.px(lx + 0.18 * Math.cos(a2)), Y = V.py((ly + 0.18 * Math.sin(a2)) * ca);
+                                if (a2 === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+                            }
+                            ctx.stroke();
+                            // arrowhead showing the loop direction
+                            const hx = lx + 0.18 * Math.cos(t), hy2 = (ly + 0.18 * Math.sin(t)) * ca;
+                            V.dot(hx, hy2, c.accent, 2.5);
+                        }
+                    }
+                    ctx.globalAlpha = 1;
+                    // boundary, bold, with circulating dots
+                    ctx.strokeStyle = c.curve; ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    for (let a2 = 0; a2 <= 2 * Math.PI + 0.01; a2 += 0.02) {
+                        const X = V.px(R * Math.cos(a2)), Y = V.py(R * Math.sin(a2) * ca);
+                        if (a2 === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+                    }
+                    ctx.stroke();
+                    for (let k2 = 0; k2 < 16; k2++) {
+                        const a2 = k2 / 16 * 2 * Math.PI + t * 0.6;
+                        V.dot(R * Math.cos(a2), R * Math.sin(a2) * ca, c.curve, 4);
+                    }
+                    const flux = 2 * Math.PI * R * R * ca;   // for curl = 2·(unit normal), qualitative
+                    $('readout').textContent = 'projected area = πR²·cosα = ' + (Math.PI * R * R * ca).toFixed(3)
+                        + '   |   ∬(∇×F)·dS ∝ cosα = ' + ca.toFixed(3)
+                        + '   |   circulation ∮F·dr tracks it exactly (flux = ' + flux.toFixed(3) + ' for curl 2)';
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    if (lastTs !== null) t += (ts - lastTs) / 1000;
+                    lastTs = ts;
+                    draw();
+                    requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = !running;
+                    $('play').textContent = running ? '⏸ Pause' : '▶ Play';
+                    lastTs = null;
+                    if (running) requestAnimationFrame(tick);
+                });
+                V.bind(['alpha'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Faraday's law:</strong> \(\oint \mathbf E \cdot d\mathbf r = -\frac{d\Phi_B}{dt}\) — the EMF around a wire loop equals the changing magnetic flux through <em>any</em> surface it bounds; Stokes' theorem is why the choice of surface doesn't matter.</li>
+                    <li><strong>Vorticity in fluids:</strong> circulation around a contour measures the total vorticity (curl of velocity) it encloses — the mathematics of smoke rings and hurricanes.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Use Green's theorem to compute the area of the ellipse \(x = a\cos t,\ y = b\sin t\).
+                    <details><summary>Solution</summary>
+                    \(\text{Area} = \frac12\oint(x\,dy - y\,dx) = \frac12\int_0^{2\pi}(ab\cos^2 t + ab\sin^2 t)\,dt = \frac12 \cdot 2\pi ab = \pi ab\).
+                    </details>
+                </li>
+                <li>For \(\mathbf F = (y, -x)\) (clockwise rotation), what is the circulation counterclockwise around any region of area \(A\)?
+                    <details><summary>Solution</summary>
+                    Curl \(= \frac{\partial(-x)}{\partial x} - \frac{\partial y}{\partial y} = -2\), so circulation \(= -2A\) (the field opposes counterclockwise travel).
+                    </details>
+                </li>
+            </ol>
 
             <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
         </section>
@@ -207,13 +993,13 @@
         <section id="research">
             <h2>Research Level</h2>
 
-            <h3>[CURRENT_RESEARCH]</h3>
-            <p>
-                [REPLACE: Explore cutting-edge mathematics, open problems, and modern research.
-                Reference recent papers and active areas of investigation.]
-            </p>
+            <h3>Differential Forms: One Theorem to Rule Them All</h3>
+            <p>The FTC, Green, Gauss, and Stokes are all shadows of the <strong>generalized Stokes theorem</strong>:</p>
+            <p>\[\int_M d\omega = \int_{\partial M} \omega\]</p>
+            <p>where \(\omega\) is a differential \(k\)-form on an oriented \((k{+}1)\)-manifold \(M\) and \(d\) is the exterior derivative. Choose \(M\) an interval and \(\omega = F\) a 0-form → FTC. Choose \(M\) a plane region and \(\omega = P\,dx + Q\,dy\) → Green. Choose \(M\) a solid and \(\omega\) a 2-form → Gauss. In every case, the same sentence holds: <em>the boundary remembers the sum of the local derivative inside.</em></p>
 
-            <!-- Add research topics -->
+            <h3>de Rham Cohomology</h3>
+            <p>Which fields with zero curl are gradients? On a plane with a hole (like \(\mathbf F = \frac{(-y, x)}{x^2+y^2}\), curl-free but with circulation \(2\pi\) around the origin), the answer detects the hole itself. <strong>de Rham cohomology</strong> turns "closed but not exact forms" into a precise algebraic invariant of the shape of space — differential equations detecting topology. This bridge (de Rham's theorem) is a cornerstone of modern geometry and mathematical physics (gauge theory, string theory).</p>
         </section>
 
         <!-- ============ SOURCES & REFERENCES ============ -->
@@ -222,34 +1008,38 @@
 
             <h3>Wikipedia</h3>
             <ul>
-                <li><a href="https://en.wikipedia.org/wiki/Calculus" target="_blank">calculus - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Calculus" target="_blank">Calculus - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Green%27s_theorem" target="_blank">Green's Theorem - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Divergence_theorem" target="_blank">Divergence Theorem - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Stokes%27_theorem" target="_blank">Stokes' Theorem - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus" target="_blank">Fundamental Theorem of Calculus - Wikipedia</a></li>
             </ul>
 
             <h3>Academic Papers (arXiv)</h3>
             <ul>
-                <li><a href="https://arxiv.org/search/?query=calculus&searchtype=all" target="_blank">calculus - arXiv Search</a></li>
-                <!-- Add 2-3 specific paper links -->
+                <li><a href="https://arxiv.org/search/?query=differential+forms&searchtype=all" target="_blank">Differential Forms - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=geometric+integration&searchtype=all" target="_blank">Geometric Integration - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=de+Rham+cohomology&searchtype=all" target="_blank">de Rham Cohomology - arXiv Search</a></li>
             </ul>
 
             <h3>Textbooks & Bibliography</h3>
             <ul>
-                <li><strong>[Book Title]</strong> - Author Name (Year)</li>
-                <!-- Add 3-5 key references -->
+                <li><strong>Calculus on Manifolds</strong> - Michael Spivak (1965)</li>
+                <li><strong>Calculus: Early Transcendentals</strong> - James Stewart (2015)</li>
+                <li><strong>Calculus</strong> - Tom M. Apostol (1967)</li>
+                <li><strong>Vector Calculus</strong> - Jerrold Marsden & Anthony Tromba (2011)</li>
             </ul>
         </section>
 
-        <!-- ============ FOOTER ============ -->
         <footer>
             <p><a href="index.html">← Back to Home</a></p>
-            <p>calculus | Mathematics Learning Platform</p>
+            <p>Calculus | Mathematics Learning Platform</p>
             <p>Built with MathJax and Mermaid</p>
         </footer>
     </div>
 
-    <!-- ============ SHARED SCRIPTS ============ -->
     <script>
         // ============ MODULAR: Theme Toggle Component ============
-        // Follows browser standard: localStorage > system preference > dark mode (default)
         const ThemeToggle = (() => {
             const STORAGE_KEY = 'theme-preference';
             const LIGHT = 'light';

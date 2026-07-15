@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerical Methods & Analysis - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        :root[data-theme="dark"] {
+            --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+            --border:#404040; --code:#3a3a3a;
+        }
+        :root[data-theme="light"] {
+            --dark:#333; --light:#666; --bg:#f5f5f5; --card:#fff;
+            --border:#e0e0e0; --code:#f0f0f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .theme-toggle {
+            background:none; border:2px solid var(--primary); color:var(--primary); padding:8px 12px;
+            border-radius:6px; cursor:pointer; font-size:1em; transition:all 0.3s; font-weight:600;
+        }
+        .theme-toggle:hover {background-color:var(--primary); color:#fff;}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px; white-space:pre-wrap;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+
+    <script>
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const stored = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Numerical Methods & Analysis</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#bisection">— Bisection Method</a></li>
+                <li><a href="#newton">— Newton–Raphson</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#interpolation">— Interpolation & Least Squares</a></li>
+                <li><a href="#quadrature">— Numerical Integration</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#odes">— ODE Solvers: Euler & RK4</a></li>
+                <li><a href="#linsys">— Linear Systems & Conditioning</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <!-- MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) -->
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : -10,
+                xmax: opts.xmax !== undefined ? opts.xmax : 10,
+                ymin: opts.ymin !== undefined ? opts.ymin : -10,
+                ymax: opts.ymax !== undefined ? opts.ymax : 10,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 5 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 5 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                plot: (f, color, dash) => {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = S.xmin + (S.xmax - S.xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(S.px(x), S.py(y)); started = true; }
+                        else ctx.lineTo(S.px(x), S.py(y));
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                },
+                dot: (x, y, color, r) => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(S.px(x), S.py(y), r || 5, 0, 2 * Math.PI); ctx.fill();
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        // NUM-1: small linear solver (Gaussian elimination + partial pivoting), see COMPONENTS.md
+        function solveLinear(A, b) {
+            const n = b.length, M = A.map((r, i) => [...r, b[i]]);
+            for (let col = 0; col < n; col++) {
+                let piv = col;
+                for (let r = col + 1; r < n; r++)
+                    if (Math.abs(M[r][col]) > Math.abs(M[piv][col])) piv = r;
+                [M[col], M[piv]] = [M[piv], M[col]];
+                if (Math.abs(M[col][col]) < 1e-12) return null;
+                for (let r = col + 1; r < n; r++) {
+                    const k = M[r][col] / M[col][col];
+                    for (let cc = col; cc <= n; cc++) M[r][cc] -= k * M[col][cc];
+                }
+            }
+            const x = new Array(n);
+            for (let r = n - 1; r >= 0; r--) {
+                let s = M[r][n];
+                for (let cc = r + 1; cc < n; cc++) s -= M[r][cc] * x[cc];
+                x[r] = s / M[r][r];
+            }
+            return x;
+        }
+        </script>
+
+        <!-- ============ BEGINNER LEVEL ============ -->
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+            <p><strong>What numerical methods are:</strong> most equations arising in practice cannot be solved with formulas. <a href="https://en.wikipedia.org/wiki/Numerical_analysis" target="_blank" style="color: var(--primary);">Numerical analysis</a> designs <em>algorithms</em> that approximate the answer to any desired accuracy — and proves how fast they get there.</p>
+
+            <h3 id="bisection">Root Finding: the Bisection Method</h3>
+            <div class="example">
+                <strong>Algorithm (find a root of continuous \(f\) with \(f(a)\cdot f(b) < 0\)):</strong><br>
+                <strong>1.</strong> Compute the midpoint \(m = (a+b)/2\).<br>
+                <strong>2.</strong> If \(f(a) \cdot f(m) < 0\), the root is in \([a, m]\): set \(b = m\). Otherwise set \(a = m\).<br>
+                <strong>3.</strong> Repeat until \(|b - a| < \) tolerance. The root is trapped forever.
+            </div>
+            <h4>Geometric Picture</h4>
+            <p>The root is an animal trapped in a cage \([a, b]\); the sign change is the proof it's inside (by the <a href="Functions.html#continuous-functions" style="color: var(--primary);">Intermediate Value Theorem</a> — this is why continuity is required). Each step builds a wall at the midpoint and keeps the half that still has the sign change. The cage halves forever: after \(n\) steps its size is \((b-a)/2^n\). <em>The algorithm is a constructive proof of the IVT.</em></p>
+
+            <p><strong>Interactive: trap the root of \(f(x) = x^3 - x - 2\).</strong> Each Step halves the shaded cage; the discarded half flashes red. Exact root ≈ 1.5214.</p>
+            <div class="viz-widget" id="bisectWidget">
+                <div class="viz-controls">
+                    <button class="viz-btn" id="bisectWidget-step">Step</button>
+                    <button class="viz-btn" id="bisectWidget-reset">Reset</button>
+                </div>
+                <canvas id="bisectWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="bisectWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('bisectWidget', { xmin: -0.5, xmax: 2.7, ymin: -4, ymax: 5 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x * x * x - x - 2;
+                let hist = [];
+                function reset() { hist = [{ a: 1, b: 2 }]; draw(); }
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const cur = hist[hist.length - 1];
+                    // cage
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                    ctx.fillRect(V.px(cur.a), 0, V.px(cur.b) - V.px(cur.a), V.W.height);
+                    ctx.globalAlpha = 1;
+                    V.plot(f, c.curve);
+                    // walls + midpoints history
+                    hist.forEach((h, i) => {
+                        ctx.globalAlpha = i === hist.length - 1 ? 1 : 0.3;
+                        ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+                        [h.a, h.b].forEach(X => {
+                            ctx.beginPath(); ctx.moveTo(V.px(X), 0); ctx.lineTo(V.px(X), V.W.height); ctx.stroke();
+                        });
+                        ctx.globalAlpha = 1;
+                    });
+                    // sign labels
+                    ctx.fillStyle = c.text; ctx.font = 'bold 16px monospace';
+                    ctx.fillText(f(cur.a) < 0 ? '−' : '+', V.px(cur.a) - 5, 25);
+                    ctx.fillText(f(cur.b) < 0 ? '−' : '+', V.px(cur.b) - 5, 25);
+                    // error ruler under axis
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 4;
+                    ctx.beginPath(); ctx.moveTo(V.px(cur.a), V.W.height - 12); ctx.lineTo(V.px(cur.b), V.W.height - 12); ctx.stroke();
+                    const n = hist.length - 1;
+                    let table = 'n     a          b          m          f(m)\n';
+                    hist.slice(-5).forEach((h, i) => {
+                        const m = (h.a + h.b) / 2;
+                        table += String(n - Math.min(4, hist.length - 1) + i).padEnd(6)
+                            + h.a.toFixed(6).padEnd(11) + h.b.toFixed(6).padEnd(11)
+                            + m.toFixed(6).padEnd(11) + f(m).toFixed(6) + '\n';
+                    });
+                    $('readout').textContent = table + 'cage size = ' + (cur.b - cur.a).toExponential(3)
+                        + '  (guaranteed error ≤ (b−a)/2ⁿ⁺¹ = ' + ((cur.b - cur.a) / 2).toExponential(3) + ')';
+                }
+                $('step').addEventListener('click', () => {
+                    const cur = hist[hist.length - 1];
+                    const m = (cur.a + cur.b) / 2;
+                    hist.push(f(cur.a) * f(m) < 0 ? { a: cur.a, b: m } : { a: m, b: cur.b });
+                    draw();
+                });
+                $('reset').addEventListener('click', reset);
+                new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+                reset();
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step by hand: 4 iterations for \(x^3 - x - 2\) on \([1, 2]\)</strong>
+                <table>
+                    <tr><th>n</th><th>a</th><th>b</th><th>m</th><th>f(m)</th><th>keep</th></tr>
+                    <tr><td>0</td><td>1</td><td>2</td><td>1.5</td><td>−0.125</td><td>[1.5, 2]</td></tr>
+                    <tr><td>1</td><td>1.5</td><td>2</td><td>1.75</td><td>1.609</td><td>[1.5, 1.75]</td></tr>
+                    <tr><td>2</td><td>1.5</td><td>1.75</td><td>1.625</td><td>0.666</td><td>[1.5, 1.625]</td></tr>
+                    <tr><td>3</td><td>1.5</td><td>1.625</td><td>1.5625</td><td>0.252</td><td>[1.5, 1.5625]</td></tr>
+                </table>
+                <strong>Error bound derivation:</strong> the cage halves each step, so after \(n\) steps the midpoint is within \(\frac{b-a}{2^{n+1}}\) of the root. For 6-decimal accuracy from \([1,2]\): \(2^{-(n+1)} < 10^{-6} \Rightarrow n \geq 19\) steps — guaranteed, no luck needed.
+            </div>
+
+            <h3 id="newton">Root Finding: Newton–Raphson</h3>
+            <div class="example">
+                <strong>Algorithm:</strong><br>
+                <strong>1.</strong> Start with a guess \(x_0\).<br>
+                <strong>2.</strong> Iterate \(x_{n+1} = x_n - \dfrac{f(x_n)}{f'(x_n)}\).<br>
+                <strong>3.</strong> Stop when \(|x_{n+1} - x_n| <\) tolerance.<br><br>
+                <strong>Derivation from the tangent line:</strong> the tangent at \(x_n\) is \(y = f(x_n) + f'(x_n)(x - x_n)\). Setting \(y = 0\) (where the <em>tangent</em> crosses zero) and solving for \(x\) gives exactly the update rule.
+            </div>
+            <h4>Geometric Picture</h4>
+            <p>Stand on the curve at \((x_n, f(x_n))\). The tangent is the best straight-line impersonation of the curve; <em>ride it down</em> to where it crosses the axis and call that \(x_{n+1}\). If the curve were exactly its tangent, one step would finish — quadratic convergence (error roughly <em>squares</em> each step) measures how good the impersonation is. Danger: where \(f' \approx 0\) the tangent is nearly flat and the slide shoots you far away — divergence.</p>
+
+            <p><strong>Interactive: ride the tangents on \(f(x) = x^3 - 2x + 2\).</strong> With \(x_0\) near 0, Newton falls into a 2-cycle (0 → 1 → 0 → …) and never converges — move \(x_0\) below −1 and it homes in on the true root ≈ −1.7693 in a few steps. Old tangents stay faint.</p>
+            <div class="viz-widget" id="newtonWidget">
+                <div class="viz-controls">
+                    <label>x₀: <span id="newtonWidget-x0Val"></span>
+                        <input type="range" id="newtonWidget-x0" min="-2.5" max="2" step="0.05" value="0">
+                    </label>
+                    <button class="viz-btn" id="newtonWidget-step">Step</button>
+                    <button class="viz-btn" id="newtonWidget-reset">Reset</button>
+                </div>
+                <canvas id="newtonWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="newtonWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('newtonWidget', { xmin: -3, xmax: 2.6, ymin: -4, ymax: 6 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x * x * x - 2 * x + 2;
+                const df = x => 3 * x * x - 2;
+                let iters = [];
+                function reset() { iters = [parseFloat($('x0').value)]; draw(); }
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    $('x0Val').textContent = parseFloat($('x0').value).toFixed(2);
+                    V.plot(f, c.curve);
+                    // tangents history
+                    iters.forEach((xn, i) => {
+                        if (i === iters.length - 1 && iters.length > 1) return;
+                        const s = df(xn);
+                        ctx.globalAlpha = 0.25 + 0.55 * (i / Math.max(1, iters.length - 1));
+                        ctx.strokeStyle = c.accent; ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        ctx.moveTo(V.px(V.xmin), V.py(f(xn) + s * (V.xmin - xn)));
+                        ctx.lineTo(V.px(V.xmax), V.py(f(xn) + s * (V.xmax - xn)));
+                        ctx.stroke();
+                        // vertical from axis to curve, then marker
+                        ctx.setLineDash([3, 3]); ctx.strokeStyle = c.axis;
+                        ctx.beginPath(); ctx.moveTo(V.px(xn), V.py(0)); ctx.lineTo(V.px(xn), V.py(f(xn))); ctx.stroke();
+                        ctx.setLineDash([]);
+                        ctx.globalAlpha = 1;
+                        V.dot(xn, 0, c.accent, 4);
+                    });
+                    const last = iters[iters.length - 1];
+                    V.dot(last, 0, c.curve, 6);
+                    let table = 'n    xₙ            f(xₙ)\n';
+                    iters.slice(-5).forEach((xn, i) => {
+                        table += String(iters.length - Math.min(5, iters.length) + i).padEnd(5)
+                            + xn.toFixed(8).padEnd(14) + f(xn).toExponential(3) + '\n';
+                    });
+                    const root = -1.7692923542;
+                    $('readout').textContent = table + '|xₙ − root| = ' + Math.abs(last - root).toExponential(3)
+                        + (Math.abs(last) < 0.01 || Math.abs(last - 1) < 0.01 ? '   ⚠ caught in the 0 ↔ 1 cycle!' : '');
+                }
+                $('step').addEventListener('click', () => {
+                    const xn = iters[iters.length - 1];
+                    if (Math.abs(df(xn)) < 1e-12) return;
+                    iters.push(xn - f(xn) / df(xn));
+                    draw();
+                });
+                $('reset').addEventListener('click', reset);
+                $('x0').addEventListener('input', reset);
+                new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+                reset();
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Worked: hardware square roots.</strong> \(\sqrt a\) is the positive root of \(f(x) = x^2 - a\). Newton: \(x_{n+1} = x_n - \frac{x_n^2 - a}{2x_n} = \frac12\left(x_n + \frac{a}{x_n}\right)\) — the ancient Babylonian method. For \(a = 2\), \(x_0 = 1\): 1 → 1.5 → 1.41667 → 1.4142157 → 1.41421356… Digits <em>double</em> every step (quadratic convergence).
+            </div>
+            <div class="example">
+                <strong>Bisection vs Newton</strong> (same problem, tolerance \(10^{-10}\)):
+                <table>
+                    <tr><th>Method</th><th>Guarantee</th><th>Speed</th><th>Needs</th><th>Iterations (typical)</th></tr>
+                    <tr><td>Bisection</td><td>always converges</td><td>linear (1 bit/step)</td><td>sign change</td><td>~34</td></tr>
+                    <tr><td>Newton</td><td>can cycle/diverge</td><td>quadratic (digits double)</td><td>derivative, good x₀</td><td>~6</td></tr>
+                </table>
+                Practical solvers (e.g. Brent's method) combine both: bisection's safety, Newton-like speed.
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Do two Newton steps for \(f(x) = x^2 - 2\) from \(x_0 = 2\).
+                    <details><summary>Solution</summary>
+                    \(x_1 = \frac12(2 + \frac22) = 1.5\); \(x_2 = \frac12(1.5 + \frac{2}{1.5}) = 1.41\overline{6}\).
+                    </details>
+                </li>
+                <li>How many bisection steps to reach tolerance \(10^{-3}\) from \([0, 8]\)?
+                    <details><summary>Solution</summary>
+                    \(8/2^n < 10^{-3} \Rightarrow 2^n > 8000 \Rightarrow n = 13\).
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ INTERMEDIATE LEVEL ============ -->
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3 id="interpolation">Interpolation & Least Squares</h3>
+            <p><strong>Interpolation</strong> threads a curve exactly <em>through</em> data points; <strong>least squares</strong> threads a simple curve <em>near</em> noisy points. <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" style="color: var(--primary);">Lagrange's formula</a> for \(n{+}1\) points:</p>
+            <p>\[p(x) = \sum_{i=0}^{n} y_i\,\ell_i(x), \qquad \ell_i(x) = \prod_{j \neq i}\frac{x - x_j}{x_i - x_j}\]</p>
+            <h4>Geometric Picture</h4>
+            <p>Each basis polynomial \(\ell_i\) is a <em>switch</em>: it equals 1 at its own node \(x_i\) and 0 at every other node. The interpolant is a superposition — each data point broadcasts its own bump, and at each node all the other bumps are silent. For least squares: each data point pays a penalty equal to the <em>actual square</em> built on its vertical miss; fitting means tilting the line until the total square area is smallest ("normal equations" = the residual ends up perpendicular to the model space).</p>
+
+            <p><strong>Interactive:</strong> drag the four y-values. Mode 0 shows the interpolating cubic through all points (computed by solving the Vandermonde system with <code>solveLinear</code>); mode 1 shows the least-squares <em>line</em> with each residual drawn as a literal square — adjust and watch the total area; the dashed line is the optimal fit.</p>
+            <div class="viz-widget" id="interpWidget">
+                <div class="viz-controls">
+                    <label>y₁: <span id="interpWidget-y1Val"></span>
+                        <input type="range" id="interpWidget-y1" min="-3" max="3" step="0.1" value="1">
+                    </label>
+                    <label>y₂: <span id="interpWidget-y2Val"></span>
+                        <input type="range" id="interpWidget-y2" min="-3" max="3" step="0.1" value="2.4">
+                    </label>
+                    <label>y₃: <span id="interpWidget-y3Val"></span>
+                        <input type="range" id="interpWidget-y3" min="-3" max="3" step="0.1" value="1.6">
+                    </label>
+                    <label>y₄: <span id="interpWidget-y4Val"></span>
+                        <input type="range" id="interpWidget-y4" min="-3" max="3" step="0.1" value="3">
+                    </label>
+                    <label>mode: <span id="interpWidget-modeVal"></span>
+                        <input type="range" id="interpWidget-mode" min="0" max="1" step="1" value="0">
+                    </label>
+                </div>
+                <canvas id="interpWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="interpWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('interpWidget', { xmin: -1, xmax: 7, ymin: -4, ymax: 4.2 });
+                const $ = V.$, ctx = V.ctx;
+                const xs = [0.5, 2, 4, 5.5];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const ys = [1, 2, 3, 4].map(i => parseFloat($('y' + i).value));
+                    [1, 2, 3, 4].forEach(i => $('y' + i + 'Val').textContent = ys[i - 1].toFixed(1));
+                    const mode = parseInt($('mode').value);
+                    $('modeVal').textContent = mode === 0 ? 'interpolate (cubic)' : 'least-squares line';
+                    if (mode === 0) {
+                        // Vandermonde solve for cubic coefficients
+                        const A = xs.map(x => [1, x, x * x, x * x * x]);
+                        const co = solveLinear(A, ys);
+                        if (co) {
+                            V.plot(x => co[0] + co[1] * x + co[2] * x * x + co[3] * x * x * x, c.curve);
+                            $('readout').textContent = 'p(x) = ' + co[0].toFixed(3) + ' + ' + co[1].toFixed(3) + 'x + '
+                                + co[2].toFixed(3) + 'x² + ' + co[3].toFixed(3) + 'x³   — passes EXACTLY through all 4 points';
+                        }
+                    } else {
+                        // least squares line: normal equations for [1, x]
+                        const n = xs.length;
+                        const Sx = xs.reduce((a, b) => a + b, 0), Sy = ys.reduce((a, b) => a + b, 0);
+                        const Sxx = xs.reduce((a, b) => a + b * b, 0), Sxy = xs.reduce((a, x, i) => a + x * ys[i], 0);
+                        const sol = solveLinear([[n, Sx], [Sx, Sxx]], [Sy, Sxy]);
+                        const b0 = sol[0], m = sol[1];
+                        // residual squares (literal!)
+                        let ssr = 0;
+                        xs.forEach((x, i) => {
+                            const yhat = b0 + m * x, r = ys[i] - yhat;
+                            ssr += r * r;
+                            const side = Math.abs(r);
+                            ctx.globalAlpha = 0.2; ctx.fillStyle = c.accent;
+                            // square with side |r|, drawn beside the residual segment
+                            const x0p = V.px(x), y0p = V.py(Math.min(ys[i], yhat));
+                            const sidePx = Math.abs(V.py(0) - V.py(side));
+                            ctx.fillRect(x0p, y0p - (ys[i] > yhat ? 0 : 0), sidePx, Math.abs(V.py(ys[i]) - V.py(yhat)));
+                            ctx.globalAlpha = 1;
+                            ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+                            ctx.beginPath(); ctx.moveTo(V.px(x), V.py(ys[i])); ctx.lineTo(V.px(x), V.py(yhat)); ctx.stroke();
+                        });
+                        V.plot(x => b0 + m * x, c.curve);
+                        $('readout').textContent = 'fit: y = ' + m.toFixed(3) + 'x + ' + b0.toFixed(3)
+                            + '   |   total square area SSR = ' + ssr.toFixed(4)
+                            + '   (the normal equations minimize exactly this)';
+                    }
+                    xs.forEach((x, i) => V.dot(x, ys[i], c.text, 6));
+                }
+                V.bind(['y1', 'y2', 'y3', 'y4', 'mode'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: Lagrange through (0, 1), (1, 3), (2, 2)</strong><br><br>
+                <strong>Step 1: Build the three switches</strong><br>
+                \(\ell_0 = \frac{(x-1)(x-2)}{(0-1)(0-2)} = \frac{(x-1)(x-2)}{2}\), &nbsp;
+                \(\ell_1 = \frac{x(x-2)}{1(1-2)} = -x(x-2)\), &nbsp;
+                \(\ell_2 = \frac{x(x-1)}{2(2-1)} = \frac{x(x-1)}{2}\)<br><br>
+                <strong>Step 2: Superpose with the data as weights</strong>
+                \[p(x) = 1\cdot\ell_0 + 3\cdot\ell_1 + 2\cdot\ell_2 = -\tfrac32 x^2 + \tfrac72 x + 1\]
+                <strong>Step 3: Verify</strong> — \(p(0)=1\) ✓, \(p(1)=3\) ✓, \(p(2)=2\) ✓.
+            </div>
+            <div class="example">
+                <strong>Step-by-step: normal equations for the least-squares line</strong><br><br>
+                Minimize \(S(m, b) = \sum_i (y_i - mx_i - b)^2\).
+                Set both partials to zero (calculus meets linear algebra):<br>
+                \(\frac{\partial S}{\partial b} = -2\sum(y_i - mx_i - b) = 0\) → \(nb + m\sum x_i = \sum y_i\)<br>
+                \(\frac{\partial S}{\partial m} = -2\sum x_i(y_i - mx_i - b) = 0\) → \(b\sum x_i + m\sum x_i^2 = \sum x_i y_i\)<br>
+                Two linear equations in \((b, m)\) — solved in the widget by <code>solveLinear</code>.
+            </div>
+            <p><strong>Runge's warning:</strong> interpolating <em>many</em> equally spaced points with one high-degree polynomial makes the "switches" ring violently near the interval ends (Runge phenomenon). Practice uses piecewise cubics (splines) — the technology behind fonts and CAD — or Chebyshev-spaced nodes.</p>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong> sensor calibration curves, financial trendlines, font rendering (spline interpolation of glyph outlines), GPS track smoothing.
+            </div>
+
+            <h3 id="quadrature">Numerical Integration</h3>
+            <p>Approximating \(\int_a^b f\,dx\) with ever-better "bricks": rectangles (midpoint), tilted-roof <strong>trapezoids</strong>, and parabolic roof tiles (<strong>Simpson</strong>). Error orders per panel width \(h\): midpoint & trapezoid \(O(h^2)\), Simpson \(O(h^4)\).</p>
+
+            <p><strong>Interactive: four methods on \(\int_0^1 x^2 dx = \frac13\).</strong> Same \(n\), very different errors — Simpson's parabolas hug the curve so well the error is invisible almost immediately.</p>
+            <div class="viz-widget" id="quadWidget">
+                <div class="viz-controls">
+                    <label>n panels: <span id="quadWidget-nVal"></span>
+                        <input type="range" id="quadWidget-n" min="1" max="40" step="1" value="4">
+                    </label>
+                    <label>method: <span id="quadWidget-mVal"></span>
+                        <input type="range" id="quadWidget-m" min="0" max="3" step="1" value="0">
+                    </label>
+                </div>
+                <canvas id="quadWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="quadWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('quadWidget', { xmin: -0.15, xmax: 1.25, ymin: -0.1, ymax: 1.2 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x * x;
+                const names = ['left rectangles', 'midpoint', 'trapezoid', 'Simpson'];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const n = parseInt($('n').value), m = parseInt($('m').value);
+                    $('nVal').textContent = n; $('mVal').textContent = names[m];
+                    const h = 1 / n;
+                    let sum = 0;
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 1.5;
+                    for (let i = 0; i < n; i++) {
+                        const x0 = i * h, x1 = x0 + h;
+                        if (m <= 1) {
+                            const xs = m === 0 ? x0 : (x0 + x1) / 2;
+                            const hgt = f(xs);
+                            sum += hgt * h;
+                            ctx.globalAlpha = 0.25; ctx.fillStyle = c.accent;
+                            ctx.fillRect(V.px(x0), V.py(hgt), V.px(h) - V.px(0), V.py(0) - V.py(hgt));
+                            ctx.globalAlpha = 1;
+                            ctx.strokeRect(V.px(x0), V.py(hgt), V.px(h) - V.px(0), V.py(0) - V.py(hgt));
+                        } else if (m === 2) {
+                            sum += (f(x0) + f(x1)) / 2 * h;
+                            ctx.globalAlpha = 0.25; ctx.fillStyle = c.accent;
+                            ctx.beginPath();
+                            ctx.moveTo(V.px(x0), V.py(0)); ctx.lineTo(V.px(x0), V.py(f(x0)));
+                            ctx.lineTo(V.px(x1), V.py(f(x1))); ctx.lineTo(V.px(x1), V.py(0));
+                            ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1; ctx.stroke();
+                        } else {
+                            // Simpson per panel: parabola through x0, mid, x1
+                            const xm2 = (x0 + x1) / 2;
+                            sum += h / 6 * (f(x0) + 4 * f(xm2) + f(x1));
+                            ctx.globalAlpha = 0.25; ctx.fillStyle = c.accent;
+                            ctx.beginPath(); ctx.moveTo(V.px(x0), V.py(0));
+                            for (let u = 0; u <= 1.001; u += 0.05) {
+                                // quadratic through the three samples (Lagrange on [0, .5, 1])
+                                const L0 = 2 * (u - 0.5) * (u - 1), L1 = -4 * u * (u - 1), L2 = 2 * u * (u - 0.5);
+                                const y = f(x0) * L0 + f(xm2) * L1 + f(x1) * L2;
+                                ctx.lineTo(V.px(x0 + u * h), V.py(y));
+                            }
+                            ctx.lineTo(V.px(x1), V.py(0)); ctx.closePath(); ctx.fill();
+                            ctx.globalAlpha = 1; ctx.stroke();
+                        }
+                    }
+                    V.plot(x => (x >= -0.05 && x <= 1.15) ? f(x) : NaN, c.curve);
+                    $('readout').textContent = names[m] + ' (n=' + n + ') = ' + sum.toFixed(8)
+                        + '   exact = 0.33333333   error = ' + Math.abs(sum - 1 / 3).toExponential(2);
+                }
+                V.bind(['n', 'm'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Worked, n = 4 on \(\int_0^1 x^2dx\):</strong><br>
+                <strong>Trapezoid:</strong> \(\frac{h}{2}[f(0) + 2f(\frac14) + 2f(\frac12) + 2f(\frac34) + f(1)] = \frac{1}{8}[0 + \frac18 + \frac12 + \frac98 + 1] = 0.34375\) (error 1.04×10⁻²).<br>
+                <strong>Simpson:</strong> exact for polynomials up to degree 3, so it returns \(\frac13\) exactly — error 0. That's the \(O(h^4)\) advantage.
+            </div>
+            <div class="example">
+                <strong>Real-World Applications:</strong> distance from sampled GPS speed, probabilities from density functions, energy from power meters — any "area under sampled data" question.
+            </div>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ ADVANCED LEVEL ============ -->
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3 id="odes">ODE Solvers: Euler & Runge–Kutta</h3>
+            <p>An initial value problem \(y' = f(x, y),\ y(x_0) = y_0\) asks: given the local slope rule, reconstruct the path.</p>
+            <div class="example">
+                <strong>Euler's method (algorithm):</strong> \(y_{n+1} = y_n + h\,f(x_n, y_n)\) — take the current slope, walk straight for one step \(h\). Error \(O(h)\).<br><br>
+                <strong>RK4 (algorithm):</strong> sample the slope four times per step —
+                \(k_1\) at the start; \(k_2, k_3\) at the midpoint (using \(k_1\), then \(k_2\)); \(k_4\) at the end (using \(k_3\)) — then walk the weighted average:
+                \[y_{n+1} = y_n + \tfrac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)\]
+                Error \(O(h^4)\): halving \(h\) cuts the error 16-fold.
+            </div>
+            <h4>Geometric Picture</h4>
+            <p>The ODE paints a <strong>slope field</strong> — a tiny compass needle at every point of the plane (drawn in the widget's background). <strong>Euler</strong> is a hiker who checks the compass only every \(h\) kilometers and walks straight between checks: on curved paths he systematically cuts corners and drifts. <strong>RK4</strong> is the smarter hiker who <em>scouts</em>: he checks the compass at the start, twice at the midpoint, and at the far end, then walks the averaged direction. Four compass checks per step buy four orders of accuracy.</p>
+
+            <p><strong>Interactive: \(y' = y,\ y(0) = 1\) (exact: \(e^x\), dashed).</strong> Step both hikers with the same \(h\) and compare their errors at \(x = 1\) in the readout. Then shrink \(h\) and watch Euler improve linearly, RK4 dramatically.</p>
+            <div class="viz-widget" id="odeWidget">
+                <div class="viz-controls">
+                    <label>step h: <span id="odeWidget-hVal"></span>
+                        <input type="range" id="odeWidget-h" min="0.05" max="0.5" step="0.05" value="0.25">
+                    </label>
+                    <button class="viz-btn" id="odeWidget-step">Step</button>
+                    <button class="viz-btn" id="odeWidget-reset">Reset</button>
+                </div>
+                <canvas id="odeWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="odeWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('odeWidget', { xmin: -0.2, xmax: 2.2, ymin: -0.5, ymax: 8 });
+                const $ = V.$, ctx = V.ctx;
+                const f = (x, y) => y;
+                let eul = [], rk = [];
+                function reset() { eul = [[0, 1]]; rk = [[0, 1]]; draw(); }
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const h = parseFloat($('h').value);
+                    $('hVal').textContent = h.toFixed(2);
+                    // slope field
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = 0; gx < 2.2; gx += 0.2) {
+                        for (let gy = 0.5; gy < 8; gy += 0.7) {
+                            const s = f(gx, gy);
+                            const L = 0.07 / Math.hypot(1, s);
+                            ctx.beginPath();
+                            ctx.moveTo(V.px(gx - L), V.py(gy - L * s));
+                            ctx.lineTo(V.px(gx + L), V.py(gy + L * s));
+                            ctx.stroke();
+                        }
+                    }
+                    V.plot(x => x >= 0 ? Math.exp(x) : NaN, c.text, [6, 6]);
+                    const polyline = (pts, color) => {
+                        ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                        ctx.beginPath();
+                        pts.forEach(([x, y], i) => {
+                            if (i === 0) ctx.moveTo(V.px(x), V.py(y)); else ctx.lineTo(V.px(x), V.py(y));
+                        });
+                        ctx.stroke();
+                        pts.forEach(([x, y]) => V.dot(x, y, color, 3.5));
+                    };
+                    polyline(eul, c.accent);
+                    polyline(rk, c.curve);
+                    const at1 = pts => {
+                        let best = null;
+                        pts.forEach(([x, y]) => { if (Math.abs(x - 1) < 1e-9) best = y; });
+                        return best;
+                    };
+                    const e1 = at1(eul), r1 = at1(rk);
+                    $('readout').textContent = 'green: Euler   blue: RK4   dashed: exact eˣ\n'
+                        + 'Euler y(' + eul[eul.length - 1][0].toFixed(2) + ') = ' + eul[eul.length - 1][1].toFixed(6)
+                        + '     RK4 y(' + rk[rk.length - 1][0].toFixed(2) + ') = ' + rk[rk.length - 1][1].toFixed(6)
+                        + (e1 !== null ? '\nerror at x=1:  Euler ' + Math.abs(e1 - Math.E).toExponential(2) + '   RK4 ' + (r1 !== null ? Math.abs(r1 - Math.E).toExponential(2) : '—') : '');
+                }
+                $('step').addEventListener('click', () => {
+                    const h = parseFloat($('h').value);
+                    const [xe, ye] = eul[eul.length - 1];
+                    if (xe < 2) eul.push([xe + h, ye + h * f(xe, ye)]);
+                    const [xr, yr] = rk[rk.length - 1];
+                    if (xr < 2) {
+                        const k1 = f(xr, yr);
+                        const k2 = f(xr + h / 2, yr + h / 2 * k1);
+                        const k3 = f(xr + h / 2, yr + h / 2 * k2);
+                        const k4 = f(xr + h, yr + h * k3);
+                        rk.push([xr + h, yr + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4)]);
+                    }
+                    draw();
+                });
+                $('reset').addEventListener('click', reset);
+                $('h').addEventListener('input', reset);
+                new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+                reset();
+            })();
+            </script>
+
+            <p><strong>The energy-drift picture (pendulum):</strong> for the frictionless pendulum \(\theta'' = -\sin\theta\), the true orbit in phase space \((\theta, \theta')\) is a closed loop (energy conserved). Euler's corner-cutting systematically <em>gains</em> energy — its orbit spirals outward — while RK4's stays closed for ages. This is why physics engines and orbital mechanics never use plain Euler.</p>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong> game physics engines, spacecraft trajectory planning, epidemic models (SIR), circuit simulation (SPICE integrates ODEs), weather prediction.
+            </div>
+
+            <h3 id="linsys">Linear Systems Revisited: LU & Conditioning</h3>
+            <div class="example">
+                <strong>LU factorization:</strong> Gaussian elimination, recorded. Each elimination step is an elementary matrix; collecting them gives \(A = LU\) with \(L\) lower-triangular (the multipliers) and \(U\) upper-triangular (the result). <em>Worked 3×3</em> (same system as <a href="LinearAlgebra.html#gaussian" style="color: var(--primary);">Linear Algebra § Gaussian elimination</a>): the multipliers used there (2, 1, −⅓) drop straight into
+                \[L = \begin{pmatrix}1 & 0 & 0\\ 2 & 1 & 0\\ 1 & -\tfrac13 & 1\end{pmatrix},\quad
+                U = \begin{pmatrix}1 & 1 & 1\\ 0 & -3 & -1\\ 0 & 0 & -\tfrac73\end{pmatrix}\]
+                Once factored, each new right-hand side costs only two triangular solves.<br><br>
+                <strong>Geometric picture:</strong> each elimination step is a <em>shear</em> of space; \(L\) is the record of shears, \(U\) the sheared result.
+            </div>
+            <div class="example">
+                <strong>Jacobi iteration (algorithm):</strong> solve row \(i\) for its own diagonal unknown, using the <em>previous</em> iterate for the others:
+                \[x_i^{(k+1)} = \frac{1}{a_{ii}}\Big(b_i - \sum_{j \neq i} a_{ij}x_j^{(k)}\Big)\]
+                Converges if \(A\) is strictly <strong>diagonally dominant</strong> (each diagonal beats the rest of its row).<br><br>
+                <strong>Geometric picture (cobweb):</strong> in 2D, from the current guess move horizontally onto line 1, then vertically onto line 2, repeat — a staircase spiraling <em>into</em> the intersection when dominance holds, <em>out</em> when it fails.
+            </div>
+            <div class="example">
+                <strong>Conditioning (worked):</strong> solve
+                \[\begin{cases} x + y = 2 \\ x + 1.001y = 2.001 \end{cases} \Rightarrow (x, y) = (1, 1)\]
+                Now nudge one data value by 0.1%: right side \(2.001 \to 2.003\) gives \((x, y) = (-1, 3)\). A 0.1% data change moved the answer by 200% — the lines are nearly parallel, so their crossing leaps at the slightest wiggle. The <strong>condition number</strong> \(\kappa(A) = \|A\|\|A^{-1}\|\) (here ≈ 4000) is exactly this amplification factor. Near-perpendicular lines (\(\kappa \approx 1\)) barely react.
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Run two Jacobi iterations on \(4x + y = 9,\ x + 3y = 7\) from \((0, 0)\).
+                    <details><summary>Solution</summary>
+                    \(x^{(1)} = 9/4 = 2.25,\ y^{(1)} = 7/3 \approx 2.333\); \(x^{(2)} = (9 - 2.333)/4 \approx 1.667,\ y^{(2)} = (7 - 2.25)/3 \approx 1.583\). Converging to \((2, 5/3)\).
+                    </details>
+                </li>
+                <li>Why is bisection immune to bad conditioning, but Newton is not?
+                    <details><summary>Solution</summary>
+                    Bisection uses only <em>signs</em>, which tiny perturbations rarely flip far from the root; Newton divides by \(f'(x_n)\), amplifying errors wherever the tangent is flat.
+                    </details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ RESEARCH LEVEL ============ -->
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Krylov Subspace Methods</h3>
+            <p>For systems with millions of unknowns (PDE discretizations), even LU is too expensive. <strong>Krylov methods</strong> (Conjugate Gradient, GMRES) search for the solution inside the growing subspace \(\text{span}\{b, Ab, A^2b, \dots\}\), touching \(A\) only through matrix–vector products — perfect for sparse matrices. Preconditioning (transforming the system to have a friendlier spectrum) is where much of the research lives.</p>
+
+            <h3>Randomized Numerical Linear Algebra</h3>
+            <p>Random projections can sketch a huge matrix down to a small one while provably preserving its important directions — enabling fast approximate SVD and least squares on data too large to read twice. A very active field connecting numerical analysis with probability and theoretical CS.</p>
+
+            <h3>Structure-Preserving (Geometric) Integrators</h3>
+            <p>Symplectic integrators (used in planetary simulations) preserve the geometric invariants of Hamiltonian systems — the reason million-year solar-system simulations don't spiral apart like the Euler pendulum. Designing integrators that respect energy, symplectic form, or constraints exactly is modern numerical analysis at its most geometric.</p>
+        </section>
+
+        <!-- ============ SOURCES & REFERENCES ============ -->
+        <section id="sources">
+            <h2>Sources & References</h2>
+
+            <h3>Wikipedia</h3>
+            <ul>
+                <li><a href="https://en.wikipedia.org/wiki/Numerical_analysis" target="_blank">Numerical Analysis - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Newton%27s_method" target="_blank">Newton's Method - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods" target="_blank">Runge–Kutta Methods - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Condition_number" target="_blank">Condition Number - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank">Lagrange Polynomial - Wikipedia</a></li>
+            </ul>
+
+            <h3>Academic Papers (arXiv)</h3>
+            <ul>
+                <li><a href="https://arxiv.org/search/?query=numerical+analysis&searchtype=all" target="_blank">Numerical Analysis - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=randomized+numerical+linear+algebra&searchtype=all" target="_blank">Randomized NLA - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=symplectic+integrators&searchtype=all" target="_blank">Symplectic Integrators - arXiv Search</a></li>
+            </ul>
+
+            <h3>Textbooks & Bibliography</h3>
+            <ul>
+                <li><strong>Numerical Analysis</strong> - Richard Burden & Douglas Faires (2015)</li>
+                <li><strong>Numerical Mathematics</strong> - Alfio Quarteroni et al. (2007)</li>
+                <li><strong>Numerical Recipes</strong> - William Press et al. (2007)</li>
+                <li><strong>Numerical Linear Algebra</strong> - Lloyd Trefethen & David Bau (1997)</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Numerical Methods & Analysis | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============ MODULAR: Theme Toggle Component ============
+        const ThemeToggle = (() => {
+            const STORAGE_KEY = 'theme-preference';
+            const LIGHT = 'light';
+            const DARK = 'dark';
+
+            const getSystemPreference = () => {
+                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (prefersDark) return DARK;
+                if (prefersLight) return LIGHT;
+                return DARK;
+            };
+
+            const getPreference = () => {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === LIGHT || stored === DARK) return stored;
+                return getSystemPreference();
+            };
+
+            const setTheme = (theme) => {
+                const validTheme = (theme === LIGHT) ? LIGHT : DARK;
+                document.documentElement.setAttribute('data-theme', validTheme);
+                localStorage.setItem(STORAGE_KEY, validTheme);
+                updateButton(validTheme);
+            };
+
+            const updateButton = (theme) => {
+                const btn = document.getElementById('themeToggle');
+                if (btn) btn.textContent = theme === DARK ? '☀️' : '🌙';
+            };
+
+            const toggle = () => {
+                const current = document.documentElement.getAttribute('data-theme') || getPreference();
+                const next = current === DARK ? LIGHT : DARK;
+                setTheme(next);
+            };
+
+            const init = () => {
+                const preference = getPreference();
+                setTheme(preference);
+                document.getElementById('themeToggle')?.addEventListener('click', toggle);
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem(STORAGE_KEY)) {
+                        setTheme(e.matches ? DARK : LIGHT);
+                    }
+                });
+            };
+
+            return { init };
+        })();
+
+        ThemeToggle.init();
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

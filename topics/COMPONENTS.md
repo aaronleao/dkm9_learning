@@ -314,6 +314,33 @@ block. Keep everything else verbatim.
 </script>
 ```
 
+### VIZ-0F — VizCore factory (page-level variant of VIZ-0)
+
+When a page hosts **several** widgets, don't repeat the VIZ-0 boilerplate per
+widget. Instead paste ONE page-level `VizCore(widgetId, opts)` factory `<script>`
+right after the TOC, and keep each widget's own script short:
+
+```js
+(function () {
+    const V = VizCore('myWidget', { xmin: -5, xmax: 5 });   // options override defaults
+    const $ = V.$, ctx = V.ctx;
+    function draw() {
+        const c = V.colors();
+        V.clear(); V.readRange(); V.drawAxes(c);
+        // read sliders, V.plot(f, c.curve), V.dot(...), set $('readout')
+    }
+    V.bind(['myParam', 'xmin', 'xmax'], draw);   // wires inputs + theme observer + first draw
+})();
+```
+
+The factory exposes: `W, ctx, $, xmin/xmax/ymin/ymax, px(), py(), colors(),
+readRange(), clear(), drawAxes(c), plot(f, color, dash), dot(x, y, color, r),
+arrow(x, y, vx, vy, color)` (pages add what they need) `and bind(ids, draw)`.
+Reference implementations: `Math/Functions.html`, `Math/Calculus.html`,
+`Math/LinearAlgebra.html`, `Math/NumericalMethods.html`, `Math/RealAnalysis.html`
+— copy the factory from any of them. `Functions.html`'s `linWidget` additionally
+keeps the full self-contained VIZ-0 form as the canonical single-widget example.
+
 ### VIZ-1 — Parametric function plotter (worked instance: linear function)
 
 VIZ-0 specialized with parameter sliders. Full worked instance for
