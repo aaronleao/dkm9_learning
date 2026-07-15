@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Theory - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #4CAF50;
+            --dark-text: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --code-bg: #f0f0f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --dark-text: #e0e0e0;
+                --light-text: #b0b0b0;
+                --background: #1a1a1a;
+                --card-bg: #2d2d2d;
+                --border-color: #404040;
+                --code-bg: #3a3a3a;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        .toc {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .toc h2 {
+            color: var(--primary-color);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: var(--dark-text);
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--code-bg);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        tr:hover {
+            background-color: var(--code-bg);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background-color: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .example {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .example strong {
+            color: var(--secondary-color);
+        }
+
+        .hr-line {
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 40px 0;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--light-text);
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Set Theory</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3>What is a Set?</h3>
+            <p>A <strong>set</strong> is a collection of distinct objects, called <strong>elements</strong> or <strong>members</strong>. Sets are one of the most fundamental concepts in mathematics.</p>
+
+            <h4>Basic Notation</h4>
+            <ul>
+                <li>Sets are typically denoted by capital letters: \(A\), \(B\), \(C\)</li>
+                <li>Elements are denoted by lowercase letters: \(a\), \(b\), \(c\)</li>
+                <li>If \(a\) is an element of set \(A\), we write: \(a \in A\)</li>
+                <li>If \(a\) is not an element of set \(A\), we write: \(a \notin A\)</li>
+            </ul>
+
+            <h4>Representation Methods</h4>
+            <p><strong>Roster Method (Listing Method)</strong></p>
+            <p>\[A = \{1, 2, 3, 4, 5\}\]</p>
+
+            <p><strong>Set-builder Notation</strong></p>
+            <p>\[A = \{x \mid x \text{ is a positive integer less than 6}\}\]</p>
+
+            <h4>Example Sets</h4>
+            <p>\[\mathbb{N} = \{1, 2, 3, 4, ...\} \text{ (Natural numbers)}\]</p>
+            <p>\[\mathbb{Z} = \{..., -2, -1, 0, 1, 2, ...\} \text{ (Integers)}\]</p>
+            <p>\[\mathbb{Q} = \left\{\frac{p}{q} \mid p, q \in \mathbb{Z}, q \neq 0\right\} \text{ (Rational numbers)}\]</p>
+            <p>\[\mathbb{R} \text{ (Real numbers)}\]</p>
+
+            <h3>Basic Set Operations</h3>
+            <div class="mermaid">
+                graph TD
+                    A["Set Operations"] --> B["Union: A ∪ B"]
+                    A --> C["Intersection: A ∩ B"]
+                    A --> D["Complement: A'"]
+                    A --> E["Difference: A - B"]
+            </div>
+
+            <h4>Union</h4>
+            <p>The <strong>union</strong> of sets \(A\) and \(B\) is the set of all elements that are in \(A\) or \(B\) or both:</p>
+            <p>\[A \cup B = \{x \mid x \in A \text{ or } x \in B\}\]</p>
+            <div class="example">
+                <strong>Example:</strong> If \(A = \{1, 2, 3\}\) and \(B = \{3, 4, 5\}\), then \(A \cup B = \{1, 2, 3, 4, 5\}\)
+            </div>
+
+            <h4>Intersection</h4>
+            <p>The <strong>intersection</strong> of sets \(A\) and \(B\) is the set of all elements that are in both \(A\) and \(B\):</p>
+            <p>\[A \cap B = \{x \mid x \in A \text{ and } x \in B\}\]</p>
+            <div class="example">
+                <strong>Example:</strong> If \(A = \{1, 2, 3\}\) and \(B = \{3, 4, 5\}\), then \(A \cap B = \{3\}\)
+            </div>
+
+            <h4>Complement</h4>
+            <p>The <strong>complement</strong> of set \(A\) (denoted \(A^c\) or \(\overline{A}\)) is the set of all elements not in \(A\):</p>
+            <p>\[A^c = \{x \mid x \notin A\}\]</p>
+
+            <h4>Difference</h4>
+            <p>The <strong>difference</strong> \(A - B\) (or \(A \setminus B\)) is the set of elements in \(A\) that are not in \(B\):</p>
+            <p>\[A - B = \{x \mid x \in A \text{ and } x \notin B\}\]</p>
+
+            <div class="hr-line"></div>
+        </section>
+
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3>Set Properties and Laws</h3>
+
+            <h4>Cardinality</h4>
+            <p>The <strong>cardinality</strong> of a set \(A\), denoted \(|A|\) or \(\#A\), is the number of elements in the set.</p>
+            <div class="example">
+                <strong>Example:</strong> If \(A = \{1, 2, 3\}\), then \(|A| = 3\)
+            </div>
+
+            <h4>Special Sets</h4>
+            <ul>
+                <li><strong>Empty Set</strong> (Null Set): \(\emptyset\) or \(\{\}\) - the set containing no elements, \(|\emptyset| = 0\)</li>
+                <li><strong>Finite Set</strong>: A set with a limited number of elements</li>
+                <li><strong>Infinite Set</strong>: A set with unlimited number of elements</li>
+                <li><strong>Subset</strong>: \(A \subseteq B\) means every element of \(A\) is also in \(B\)</li>
+                <li><strong>Proper Subset</strong>: \(A \subset B\) means \(A \subseteq B\) and \(A \neq B\)</li>
+            </ul>
+
+            <h4>De Morgan's Laws</h4>
+            <p>\[(A \cup B)^c = A^c \cap B^c\]</p>
+            <p>\[(A \cap B)^c = A^c \cup B^c\]</p>
+
+            <h4>Distributive Laws</h4>
+            <p>\[A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\]</p>
+            <p>\[A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\]</p>
+
+            <h3>Power Set</h3>
+            <p>The <strong>power set</strong> of \(A\), denoted \(\mathcal{P}(A)\), is the set of all subsets of \(A\):</p>
+            <p>\[\mathcal{P}(A) = \{X \mid X \subseteq A\}\]</p>
+            <div class="example">
+                <strong>Example:</strong> If \(A = \{1, 2\}\), then:
+                \[\mathcal{P}(A) = \{\emptyset, \{1\}, \{2\}, \{1, 2\}\}\]
+                If \(|A| = n\), then \(|\mathcal{P}(A)| = 2^n\)
+            </div>
+
+            <h3>Cartesian Product</h3>
+            <p>The <strong>Cartesian product</strong> of sets \(A\) and \(B\), denoted \(A \times B\), is:</p>
+            <p>\[A \times B = \{(a, b) \mid a \in A \text{ and } b \in B\}\]</p>
+            <div class="example">
+                <strong>Example:</strong> If \(A = \{1, 2\}\) and \(B = \{a, b, c\}\), then:
+                \[A \times B = \{(1, a), (1, b), (1, c), (2, a), (2, b), (2, c)\}\]
+            </div>
+
+            <div class="hr-line"></div>
+        </section>
+
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3>Equivalence Relations</h3>
+            <p>A relation \(R\) on a set \(A\) is an <strong>equivalence relation</strong> if it is:</p>
+            <ol>
+                <li><strong>Reflexive</strong>: \(aRa\) for all \(a \in A\)</li>
+                <li><strong>Symmetric</strong>: If \(aRb\), then \(bRa\)</li>
+                <li><strong>Transitive</strong>: If \(aRb\) and \(bRc\), then \(aRc\)</li>
+            </ol>
+
+            <h4>Equivalence Classes</h4>
+            <p>If \(R\) is an equivalence relation on \(A\), the <strong>equivalence class</strong> of \(a\), denoted \([a]\), is:</p>
+            <p>\[[a] = \{x \in A \mid xRa\}\]</p>
+
+            <h3>Partitions</h3>
+            <p>A <strong>partition</strong> of a set \(A\) is a collection of non-empty subsets \(\{A_1, A_2, ..., A_n\}\) such that:</p>
+            <ul>
+                <li>\(A_i \cap A_j = \emptyset\) for \(i \neq j\) (disjoint)</li>
+                <li>\(A_1 \cup A_2 \cup ... \cup A_n = A\) (union covers \(A\))</li>
+            </ul>
+
+            <div class="hr-line"></div>
+        </section>
+
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Set Theory Axioms (ZFC)</h3>
+            <p>The <strong>Zermelo-Fraenkel with Choice (ZFC)</strong> axioms form the foundation of modern set theory:</p>
+            <ol>
+                <li><strong>Axiom of Extensionality</strong>: Two sets are equal if they have the same elements</li>
+                <li><strong>Axiom of Empty Set</strong>: There exists an empty set</li>
+                <li><strong>Axiom of Pairing</strong>: For any sets \(a\) and \(b\), there exists a set \(\{a, b\}\)</li>
+                <li><strong>Axiom of Union</strong>: For any set \(A\), there exists \(\bigcup A\)</li>
+                <li><strong>Axiom of Power Set</strong>: For any set \(A\), there exists \(\mathcal{P}(A)\)</li>
+                <li><strong>Axiom of Infinity</strong>: There exists an infinite set</li>
+                <li><strong>Axiom of Specification</strong>: \(\{x \in A \mid P(x)\}\) is a set for property \(P\)</li>
+                <li><strong>Axiom of Replacement</strong>: Image of a set under a function is a set</li>
+                <li><strong>Axiom of Foundation</strong>: Every non-empty set has an element disjoint from it</li>
+                <li><strong>Axiom of Choice</strong>: For any collection of non-empty sets, a choice function exists</li>
+            </ol>
+
+            <h3>Countability</h3>
+            <p>A set is <strong>countably infinite</strong> if its elements can be put into one-to-one correspondence with \(\mathbb{N}\).</p>
+            <p>A set is <strong>uncountably infinite</strong> if no such correspondence exists.</p>
+            <p><strong>Cantor's Diagonal Argument</strong> proves \(\mathbb{R}\) is uncountable: if \(\mathbb{R}\) were countable, we could list all reals as \(r_1, r_2, r_3, ...\), but constructing the diagonal number \(0.d_1d_2d_3...\) (where \(d_i\) differs from the \(i\)-th digit of \(r_i\)) gives a real not in the list.</p>
+
+            <h3>Large Cardinal Axioms</h3>
+            <p><strong>Inaccessible Cardinals</strong> extend the notion of "large" cardinals in higher-order set theory and have profound implications for consistency of formal systems.</p>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Set Theory | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

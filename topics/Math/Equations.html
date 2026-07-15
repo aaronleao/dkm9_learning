@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equations - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        .hr {height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Equations</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3>What is an Equation?</h3>
+            <p>An <strong>equation</strong> is a mathematical statement asserting that two expressions are equal. The symbol \(=\) indicates equality.</p>
+            <p>\[\text{Left Side} = \text{Right Side}\]</p>
+
+            <h3>Linear Equations in One Variable</h3>
+            <p>A <strong>linear equation in one variable</strong> has the form:</p>
+            <p>\[ax + b = c\]</p>
+            <p>where \(a \neq 0\).</p>
+            <p><strong>Solution method:</strong> Isolate \(x\) by performing the same operation on both sides.</p>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(2x + 3 = 7\)<br>
+                \[2x + 3 = 7\]
+                \[2x = 4\]
+                \[x = 2\]
+            </div>
+
+            <h3>Quadratic Equations</h3>
+            <p>A <strong>quadratic equation</strong> has the form:</p>
+            <p>\[ax^2 + bx + c = 0\]</p>
+            <p>where \(a \neq 0\).</p>
+
+            <h4>Quadratic Formula</h4>
+            <p>The solutions to \(ax^2 + bx + c = 0\) are:</p>
+            <p>\[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]</p>
+            <p>The expression \(\Delta = b^2 - 4ac\) is called the <strong>discriminant</strong>:</p>
+            <ul>
+                <li>If \(\Delta > 0\): two distinct real solutions</li>
+                <li>If \(\Delta = 0\): one repeated real solution</li>
+                <li>If \(\Delta < 0\): no real solutions (two complex solutions)</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(x^2 - 5x + 6 = 0\)<br>
+                \[x = \frac{5 \pm \sqrt{25 - 24}}{2} = \frac{5 \pm 1}{2}\]
+                Solutions: \(x = 3\) or \(x = 2\)
+            </div>
+
+            <h4>Factoring Method</h4>
+            <p>If \(ax^2 + bx + c = (px + q)(rx + s)\), then solutions are found by setting each factor to zero.</p>
+            <div class="example">
+                <strong>Example:</strong> \(x^2 - 5x + 6 = (x - 2)(x - 3) = 0\) gives \(x = 2\) or \(x = 3\)
+            </div>
+
+            <hr class="hr">
+        </section>
+
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3>Systems of Linear Equations</h3>
+            <p>A <strong>system of linear equations</strong> consists of multiple linear equations with multiple variables.</p>
+
+            <h4>Substitution Method</h4>
+            <p>Solve one equation for a variable, substitute into the other equation.</p>
+            <div class="example">
+                <strong>Example:</strong>
+                \[\begin{cases}
+                x + y = 5 \\
+                2x - y = 4
+                \end{cases}\]
+                From the first equation: \(y = 5 - x\)<br>
+                Substitute: \(2x - (5 - x) = 4 \Rightarrow 3x = 9 \Rightarrow x = 3\)<br>
+                Then: \(y = 5 - 3 = 2\)
+            </div>
+
+            <h4>Elimination Method</h4>
+            <p>Multiply equations by constants to eliminate variables, then add/subtract.</p>
+
+            <h3>Polynomial Equations</h3>
+            <p>A <strong>polynomial equation</strong> of degree \(n\) has the form:</p>
+            <p>\[a_nx^n + a_{n-1}x^{n-1} + ... + a_1x + a_0 = 0\]</p>
+
+            <h4>Rational Root Theorem</h4>
+            <p>If a polynomial with integer coefficients has a rational root \(\frac{p}{q}\) (in lowest terms), then:</p>
+            <ul>
+                <li>\(p\) divides the constant term \(a_0\)</li>
+                <li>\(q\) divides the leading coefficient \(a_n\)</li>
+            </ul>
+
+            <h3>Exponential Equations</h3>
+            <p>An <strong>exponential equation</strong> contains variables in the exponent:</p>
+            <p>\[a^x = b\]</p>
+            <p><strong>Solution method:</strong> Take logarithms of both sides.</p>
+            <p>\[x = \frac{\log(b)}{\log(a)}\]</p>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(2^x = 8\)<br>
+                \[x = \log_2(8) = 3\] (since \(2^3 = 8\))
+            </div>
+
+            <h3>Logarithmic Equations</h3>
+            <p>A <strong>logarithmic equation</strong> contains logarithms:</p>
+            <p>\[\log_b(x) = c\]</p>
+            <p><strong>Solution method:</strong> Convert to exponential form.</p>
+            <p>\[x = b^c\]</p>
+
+            <hr class="hr">
+        </section>
+
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3>Algebraic Equations and Field Extensions</h3>
+            <p>An <strong>algebraic equation</strong> is a polynomial equation:</p>
+            <p>\[P(x) = 0\]</p>
+            <p>where \(P(x) \in F[x]\) for a field \(F\).</p>
+
+            <h3>Galois Theory</h3>
+            <p><strong>Galois theory</strong> studies the relationship between polynomial equations and group theory.</p>
+            <p><strong>Key Result:</strong> A polynomial of degree 5 or higher cannot generally be solved by radicals (Abel-Ruffini theorem).</p>
+
+            <h3>Diophantine Equations</h3>
+            <p>A <strong>Diophantine equation</strong> is a polynomial equation where we seek integer (or rational) solutions.</p>
+            <p><strong>Linear Diophantine Equation:</strong> \(ax + by = c\) has integer solutions if and only if \(\gcd(a, b) \mid c\).</p>
+
+            <h3>Fermat's Last Theorem</h3>
+            <p>The equation:</p>
+            <p>\[x^n + y^n = z^n\]</p>
+            <p>has no positive integer solutions for \(n \geq 3\).</p>
+            <p>Proved by Andrew Wiles in 1995, this was one of the most famous unsolved problems in mathematics.</p>
+
+            <hr class="hr">
+        </section>
+
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Elliptic Curves</h3>
+            <p>An <strong>elliptic curve</strong> is a smooth projective curve defined by:</p>
+            <p>\[y^2 = x^3 + ax + b\]</p>
+            <p>where \(4a^3 + 27b^2 \neq 0\) (non-singular condition).</p>
+            <p>Elliptic curves form an <strong>abelian group</strong> and are fundamental in:</p>
+            <ul>
+                <li>Number theory</li>
+                <li>Algebraic geometry</li>
+                <li>Cryptography</li>
+                <li>Fermat's Last Theorem proof</li>
+            </ul>
+
+            <h3>Modular Forms and Taniyama-Shimura Conjecture</h3>
+            <p>The <strong>Taniyama-Shimura-Weil conjecture</strong> (proved by Wiles) states that every elliptic curve over \(\mathbb{Q}\) is modular. This equivalence was crucial for proving Fermat's Last Theorem.</p>
+
+            <h3>Transcendental Number Theory</h3>
+            <p>A <strong>transcendental number</strong> is a complex number that is not algebraic.</p>
+            <p><strong>Examples:</strong> \(\pi\) and \(e\) are transcendental (Hermite and Lindemann).</p>
+            <p><strong>Lindemann-Weierstrass Theorem:</strong> If \(\alpha_1, ..., \alpha_n\) are algebraic numbers that are linearly independent over \(\mathbb{Q}\), then \(e^{\alpha_1}, ..., e^{\alpha_n}\) are algebraically independent over \(\mathbb{Q}\).</p>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Equations | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

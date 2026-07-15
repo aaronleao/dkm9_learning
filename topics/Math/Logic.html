@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Logic - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #4CAF50;
+            --dark-text: #333;
+            --light-text: #666;
+            --background: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --code-bg: #f0f0f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --dark-text: #e0e0e0;
+                --light-text: #b0b0b0;
+                --background: #1a1a1a;
+                --card-bg: #2d2d2d;
+                --border-color: #404040;
+                --code-bg: #3a3a3a;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        .toc {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .toc h2 {
+            color: var(--primary-color);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: var(--dark-text);
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--code-bg);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        tr:hover {
+            background-color: var(--code-bg);
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background-color: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .example {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .example strong {
+            color: var(--secondary-color);
+        }
+
+        .hr-line {
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 40px 0;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--light-text);
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mathematical Logic</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3>What is Logic?</h3>
+            <p><strong>Mathematical logic</strong> is the study of reasoning and proof. It provides the foundation for all mathematics by formalizing the rules of valid reasoning.</p>
+
+            <h3>Propositions and Truth Values</h3>
+            <p>A <strong>proposition</strong> (or <strong>statement</strong>) is a declarative sentence that is either true or false (not both).</p>
+            <p><strong>Examples:</strong></p>
+            <ul>
+                <li>"2 + 2 = 4" is a proposition (true)</li>
+                <li>"3 > 7" is a proposition (false)</li>
+                <li>"Is it raining?" is not a proposition (it's a question)</li>
+            </ul>
+
+            <h4>Truth Tables</h4>
+            <p>Truth values are denoted:</p>
+            <ul>
+                <li>\(T\) or \(1\) for true</li>
+                <li>\(F\) or \(0\) for false</li>
+            </ul>
+
+            <h3>Logical Operators</h3>
+
+            <h4>Negation (NOT)</h4>
+            <p>The <strong>negation</strong> of proposition \(P\), denoted \(\neg P\) or \(\overline{P}\), is true when \(P\) is false and vice versa.</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(\neg P\)</th></tr>
+                <tr><td>T</td><td>F</td></tr>
+                <tr><td>F</td><td>T</td></tr>
+            </table>
+
+            <h4>Conjunction (AND)</h4>
+            <p>The <strong>conjunction</strong> of propositions \(P\) and \(Q\), denoted \(P \land Q\), is true only when both \(P\) and \(Q\) are true.</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \land Q\)</th></tr>
+                <tr><td>T</td><td>T</td><td>T</td></tr>
+                <tr><td>T</td><td>F</td><td>F</td></tr>
+                <tr><td>F</td><td>T</td><td>F</td></tr>
+                <tr><td>F</td><td>F</td><td>F</td></tr>
+            </table>
+
+            <h4>Disjunction (OR)</h4>
+            <p>The <strong>disjunction</strong> of propositions \(P\) and \(Q\), denoted \(P \lor Q\), is true when at least one of \(P\) or \(Q\) is true.</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \lor Q\)</th></tr>
+                <tr><td>T</td><td>T</td><td>T</td></tr>
+                <tr><td>T</td><td>F</td><td>T</td></tr>
+                <tr><td>F</td><td>T</td><td>T</td></tr>
+                <tr><td>F</td><td>F</td><td>F</td></tr>
+            </table>
+
+            <h4>Conditional (Implication)</h4>
+            <p>The <strong>conditional</strong> or <strong>implication</strong> \(P \rightarrow Q\) (read "if \(P\) then \(Q\)") is false only when \(P\) is true and \(Q\) is false.</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \rightarrow Q\)</th></tr>
+                <tr><td>T</td><td>T</td><td>T</td></tr>
+                <tr><td>T</td><td>F</td><td>F</td></tr>
+                <tr><td>F</td><td>T</td><td>T</td></tr>
+                <tr><td>F</td><td>F</td><td>T</td></tr>
+            </table>
+            <p>Key insight: A conditional with false premise is always true.</p>
+
+            <h4>Biconditional</h4>
+            <p>The <strong>biconditional</strong> \(P \leftrightarrow Q\) (read "\(P\) if and only if \(Q\)") is true when \(P\) and \(Q\) have the same truth value.</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \leftrightarrow Q\)</th></tr>
+                <tr><td>T</td><td>T</td><td>T</td></tr>
+                <tr><td>T</td><td>F</td><td>F</td></tr>
+                <tr><td>F</td><td>T</td><td>F</td></tr>
+                <tr><td>F</td><td>F</td><td>T</td></tr>
+            </table>
+
+            <h3>Logical Equivalence</h3>
+            <p>Two propositions are <strong>logically equivalent</strong>, denoted \(\equiv\), if they have the same truth value in all cases.</p>
+            <div class="example">
+                <strong>Example:</strong> \(\neg(P \land Q) \equiv (\neg P \lor \neg Q)\) (De Morgan's Law)
+            </div>
+
+            <div class="hr-line"></div>
+        </section>
+
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3>Quantifiers</h3>
+
+            <h4>Universal Quantifier</h4>
+            <p>The <strong>universal quantifier</strong> \(\forall\) (read "for all") denotes that a property holds for all elements in a domain.</p>
+            <p>\[\forall x \in D: P(x)\]</p>
+            <p>reads as "for all \(x\) in domain \(D\), property \(P(x)\) holds."</p>
+            <div class="example">
+                <strong>Example:</strong> \(\forall x \in \mathbb{R}: x^2 \geq 0\) (all real numbers squared are non-negative)
+            </div>
+
+            <h4>Existential Quantifier</h4>
+            <p>The <strong>existential quantifier</strong> \(\exists\) (read "there exists") denotes that a property holds for at least one element.</p>
+            <p>\[\exists x \in D: P(x)\]</p>
+            <p>reads as "there exists an \(x\) in domain \(D\) such that property \(P(x)\) holds."</p>
+            <div class="example">
+                <strong>Example:</strong> \(\exists x \in \mathbb{R}: x^2 = 4\) (there exists a real number whose square is 4)
+            </div>
+
+            <h4>Negation of Quantified Statements</h4>
+            <p>\[\neg(\forall x: P(x)) \equiv \exists x: \neg P(x)\]</p>
+            <p>\[\neg(\exists x: P(x)) \equiv \forall x: \neg P(x)\]</p>
+
+            <h3>Logical Laws and Tautologies</h3>
+            <p>A <strong>tautology</strong> is a proposition that is always true regardless of the truth values of its components.</p>
+
+            <h4>Commutative Laws</h4>
+            <p>\[P \land Q \equiv Q \land P\]</p>
+            <p>\[P \lor Q \equiv Q \lor P\]</p>
+
+            <h4>Associative Laws</h4>
+            <p>\[(P \land Q) \land R \equiv P \land (Q \land R)\]</p>
+            <p>\[(P \lor Q) \lor R \equiv P \lor (Q \lor R)\]</p>
+
+            <h4>Distributive Laws</h4>
+            <p>\[P \land (Q \lor R) \equiv (P \land Q) \lor (P \land R)\]</p>
+            <p>\[P \lor (Q \land R) \equiv (P \lor Q) \land (P \lor R)\]</p>
+
+            <h4>De Morgan's Laws</h4>
+            <p>\[\neg(P \land Q) \equiv \neg P \lor \neg Q\]</p>
+            <p>\[\neg(P \lor Q) \equiv \neg P \land \neg Q\]</p>
+
+            <h3>Implication and Contrapositive</h3>
+            <p>For an implication \(P \rightarrow Q\):</p>
+            <ul>
+                <li><strong>Contrapositive:</strong> \(\neg Q \rightarrow \neg P\) is logically equivalent to \(P \rightarrow Q\)</li>
+                <li><strong>Converse:</strong> \(Q \rightarrow P\) is not necessarily equivalent</li>
+                <li><strong>Inverse:</strong> \(\neg P \rightarrow \neg Q\) is not necessarily equivalent</li>
+            </ul>
+            <p>\[P \rightarrow Q \equiv \neg Q \rightarrow \neg P\]</p>
+
+            <div class="hr-line"></div>
+        </section>
+
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3>Predicate Logic</h3>
+            <p><strong>Predicate logic</strong> extends propositional logic with predicates and quantifiers, allowing more expressive statements.</p>
+            <p>A <strong>predicate</strong> is a function \(P: D \rightarrow \{T, F\}\) that assigns truth values to elements of a domain.</p>
+
+            <h4>First-Order Logic (FOL)</h4>
+            <p>First-order logic includes:</p>
+            <ul>
+                <li>Variables: \(x, y, z, ...\)</li>
+                <li>Constants: \(a, b, c, ...\)</li>
+                <li>Predicates: \(P(x), Q(x, y), ...\)</li>
+                <li>Functions: \(f(x), g(x, y), ...\)</li>
+                <li>Quantifiers: \(\forall\), \(\exists\)</li>
+                <li>Logical operators: \(\neg\), \(\land\), \(\lor\), \(\rightarrow\), \(\leftrightarrow\)</li>
+            </ul>
+            <div class="example">
+                <strong>Example:</strong> The statement "all humans are mortal" can be expressed as:
+                \[\forall x: \text{Human}(x) \rightarrow \text{Mortal}(x)\]
+            </div>
+
+            <h4>Logical Consequence</h4>
+            <p>A set of propositions \(\Gamma\) <strong>logically entails</strong> a proposition \(\phi\), denoted \(\Gamma \vDash \phi\), if whenever all propositions in \(\Gamma\) are true, \(\phi\) must be true.</p>
+
+            <h3>Proof Techniques</h3>
+
+            <h4>Direct Proof</h4>
+            <p>To prove \(P \rightarrow Q\), assume \(P\) is true and show \(Q\) must be true.</p>
+
+            <h4>Proof by Contradiction</h4>
+            <p>To prove \(P\), assume \(\neg P\) and derive a contradiction, concluding \(P\) must be true.</p>
+
+            <h4>Proof by Contrapositive</h4>
+            <p>To prove \(P \rightarrow Q\), prove \(\neg Q \rightarrow \neg P\) instead.</p>
+
+            <h4>Mathematical Induction</h4>
+            <p>To prove \(P(n)\) for all \(n \in \mathbb{N}\):</p>
+            <ol>
+                <li><strong>Base case</strong>: Show \(P(1)\) is true</li>
+                <li><strong>Inductive step</strong>: Assume \(P(k)\) is true, show \(P(k+1)\) must be true</li>
+            </ol>
+
+            <div class="hr-line"></div>
+        </section>
+
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Gödel's Incompleteness Theorems</h3>
+            <p><strong>Gödel's First Incompleteness Theorem:</strong> In any consistent formal system \(\mathcal{S}\) that is powerful enough to express arithmetic, there exists a true proposition that cannot be proven within \(\mathcal{S}\).</p>
+            <p><strong>Gödel's Second Incompleteness Theorem:</strong> A consistent formal system \(\mathcal{S}\) cannot prove its own consistency.</p>
+            <p>These theorems have profound implications for the foundations of mathematics and show fundamental limits to formal mathematical systems.</p>
+
+            <h3>Gödel Numbers and Self-Reference</h3>
+            <p>Gödel introduced a method of encoding logical formulas as natural numbers (Gödel numbering), enabling formulas to refer to themselves and proving the incompleteness theorems.</p>
+
+            <h3>Model Theory</h3>
+            <p><strong>Model theory</strong> studies the relationship between formal languages and mathematical structures:</p>
+            <ul>
+                <li>A <strong>model</strong> is a structure that interprets a formal language</li>
+                <li><strong>Semantics</strong> defines how formulas are evaluated in models</li>
+                <li><strong>Completeness</strong>: A formal system is complete if every true statement is provable</li>
+            </ul>
+            <p><strong>Gödel's Completeness Theorem:</strong> For first-order logic, a proposition is true in all models if and only if it is provable.</p>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Mathematical Logic | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

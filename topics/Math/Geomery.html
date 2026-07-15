@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        .hr {height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Geometry</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3>What is Geometry?</h3>
+            <p><strong>Geometry</strong> is the study of shapes, sizes, positions, and properties of figures in space. The word comes from Greek: "geo" (earth) and "metria" (measurement).</p>
+
+            <h3>Basic Geometric Objects</h3>
+            <div class="mermaid">
+                graph TD
+                    A["Geometric Objects"] --> B["Point"]
+                    A --> C["Line"]
+                    A --> D["Ray"]
+                    A --> E["Line Segment"]
+                    A --> F["Plane"]
+                    A --> G["Angle"]
+            </div>
+
+            <ul>
+                <li><strong>Point:</strong> A location with no size or dimension (denoted by capital letters)</li>
+                <li><strong>Line:</strong> A straight path extending infinitely in both directions</li>
+                <li><strong>Ray:</strong> A line segment that extends infinitely in one direction</li>
+                <li><strong>Line Segment:</strong> A portion of a line between two endpoints</li>
+                <li><strong>Plane:</strong> A flat surface extending infinitely in all directions</li>
+                <li><strong>Angle:</strong> The measure of rotation between two rays sharing a common endpoint</li>
+            </ul>
+
+            <h3>Angles</h3>
+
+            <h4>Angle Measure</h4>
+            <p>Angles are measured in <strong>degrees</strong> (\(^\circ\)) or <strong>radians</strong> (rad).</p>
+            <p>\[360^\circ = 2\pi \text{ rad}\]</p>
+            <p>\[1 \text{ radian} = \frac{180^\circ}{\pi}\]</p>
+
+            <h4>Types of Angles</h4>
+            <ul>
+                <li><strong>Acute Angle:</strong> \(0^\circ < \theta < 90^\circ\)</li>
+                <li><strong>Right Angle:</strong> \(\theta = 90^\circ\)</li>
+                <li><strong>Obtuse Angle:</strong> \(90^\circ < \theta < 180^\circ\)</li>
+                <li><strong>Straight Angle:</strong> \(\theta = 180^\circ\)</li>
+            </ul>
+
+            <h3>Basic Shapes</h3>
+
+            <h4>Triangles</h4>
+            <p>A <strong>triangle</strong> is a polygon with three sides and three angles.</p>
+            <p><strong>Triangle Inequality:</strong> The sum of any two sides must be greater than the third side.</p>
+            <p><strong>Angle Sum:</strong> \(\alpha + \beta + \gamma = 180^\circ\)</p>
+            <p><strong>Area:</strong> \(A = \frac{1}{2} \times \text{base} \times \text{height}\)</p>
+
+            <h4>Quadrilaterals</h4>
+            <p>A <strong>quadrilateral</strong> is a polygon with four sides.</p>
+            <p><strong>Angle Sum:</strong> \(\alpha + \beta + \gamma + \delta = 360^\circ\)</p>
+            <ul>
+                <li><strong>Square:</strong> All sides equal, all angles \(90^\circ\), Area = \(s^2\)</li>
+                <li><strong>Rectangle:</strong> Opposite sides equal, all angles \(90^\circ\), Area = \(l \times w\)</li>
+                <li><strong>Parallelogram:</strong> Opposite sides parallel, Area = base × height</li>
+                <li><strong>Trapezoid:</strong> One pair of parallel sides, Area = \(\frac{1}{2}(b_1 + b_2) \times h\)</li>
+            </ul>
+
+            <h4>Circles</h4>
+            <p>A <strong>circle</strong> is the set of all points equidistant from a center point.</p>
+            <ul>
+                <li><strong>Circumference:</strong> \(C = 2\pi r\) or \(C = \pi d\)</li>
+                <li><strong>Area:</strong> \(A = \pi r^2\)</li>
+                <li><strong>Arc Length:</strong> \(s = r\theta\) (where \(\theta\) in radians)</li>
+                <li><strong>Sector Area:</strong> \(A = \frac{1}{2}r^2\theta\)</li>
+            </ul>
+
+            <hr class="hr">
+        </section>
+
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3>Coordinate Geometry</h3>
+            <p>A <strong>coordinate system</strong> assigns numbers (coordinates) to points in space.</p>
+
+            <h4>Cartesian Coordinates (2D)</h4>
+            <p>A point \(P\) is represented as \((x, y)\) where:</p>
+            <ul>
+                <li>\(x\) is the horizontal coordinate</li>
+                <li>\(y\) is the vertical coordinate</li>
+            </ul>
+            <p><strong>Distance Formula:</strong> The distance between \(P_1(x_1, y_1)\) and \(P_2(x_2, y_2)\) is:</p>
+            <p>\[d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}\]</p>
+            <p><strong>Midpoint Formula:</strong> The midpoint of segment from \(P_1(x_1, y_1)\) to \(P_2(x_2, y_2)\) is:</p>
+            <p>\[M = \left(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2}\right)\]</p>
+
+            <h3>Conic Sections</h3>
+            <p><strong>Conic sections</strong> are curves formed by intersecting a plane with a cone.</p>
+
+            <h4>Circle</h4>
+            <p>Standard form: \((x - h)^2 + (y - k)^2 = r^2\)</p>
+            <p>Center: \((h, k)\), Radius: \(r\)</p>
+
+            <h4>Ellipse</h4>
+            <p>Standard form: \(\frac{(x - h)^2}{a^2} + \frac{(y - k)^2}{b^2} = 1\)</p>
+            <ul>
+                <li>Center: \((h, k)\)</li>
+                <li>Semi-major axis: \(a\)</li>
+                <li>Semi-minor axis: \(b\) (assuming \(a > b\))</li>
+                <li>Area: \(A = \pi ab\)</li>
+            </ul>
+
+            <h4>Parabola</h4>
+            <p>Standard form (vertex at origin, opening right): \(y^2 = 4px\)</p>
+            <ul>
+                <li>Vertex: \((0, 0)\)</li>
+                <li>Focus: \((p, 0)\)</li>
+                <li>Directrix: \(x = -p\)</li>
+            </ul>
+
+            <h4>Hyperbola</h4>
+            <p>Standard form: \(\frac{(x - h)^2}{a^2} - \frac{(y - k)^2}{b^2} = 1\)</p>
+            <ul>
+                <li>Center: \((h, k)\)</li>
+                <li>Vertices: \((h \pm a, k)\)</li>
+                <li>Asymptotes: \(y - k = \pm\frac{b}{a}(x - h)\)</li>
+            </ul>
+
+            <h3>Solid Geometry (3D)</h3>
+
+            <h4>3D Coordinates</h4>
+            <p>A point \(P\) in 3D space is represented as \((x, y, z)\).</p>
+            <p><strong>Distance:</strong> \(d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}\)</p>
+
+            <h4>Common Solids</h4>
+            <ul>
+                <li><strong>Sphere:</strong> Volume: \(V = \frac{4}{3}\pi r^3\), Surface Area: \(A = 4\pi r^2\)</li>
+                <li><strong>Cylinder:</strong> Volume: \(V = \pi r^2 h\), Surface Area: \(A = 2\pi r^2 + 2\pi rh\)</li>
+                <li><strong>Cone:</strong> Volume: \(V = \frac{1}{3}\pi r^2 h\), Surface Area: \(A = \pi r^2 + \pi r\ell\)</li>
+                <li><strong>Rectangular Prism:</strong> Volume: \(V = lwh\), Surface Area: \(A = 2(lw + lh + wh)\)</li>
+            </ul>
+
+            <hr class="hr">
+        </section>
+
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3>Differential Geometry</h3>
+            <p><strong>Differential geometry</strong> studies curves and surfaces using calculus.</p>
+
+            <h4>Curves</h4>
+            <p>A <strong>parametric curve</strong> is given by:</p>
+            <p>\[\mathbf{r}(t) = (x(t), y(t), z(t))\]</p>
+            <p><strong>Tangent Vector (Velocity):</strong></p>
+            <p>\[\mathbf{r}'(t) = \left(\frac{dx}{dt}, \frac{dy}{dt}, \frac{dz}{dt}\right)\]</p>
+            <p><strong>Curvature</strong> measures how quickly a curve changes direction:</p>
+            <p>\[\kappa = \frac{|\mathbf{r}'(t) \times \mathbf{r}''(t)|}{|\mathbf{r}'(t)|^3}\]</p>
+
+            <h4>Surfaces</h4>
+            <p>A <strong>parametric surface</strong> is given by:</p>
+            <p>\[\mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v))\]</p>
+            <p><strong>Normal Vector:</strong></p>
+            <p>\[\mathbf{n} = \frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v}\]</p>
+
+            <h3>Riemannian Geometry</h3>
+            <p>A <strong>Riemannian manifold</strong> is a smooth manifold with a metric tensor \(g_{ij}\) defining distances.</p>
+            <p>The distance between infinitesimally close points is:</p>
+            <p>\[ds^2 = \sum_{i,j} g_{ij} dx^i dx^j\]</p>
+
+            <hr class="hr">
+        </section>
+
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Algebraic Geometry</h3>
+            <p><strong>Algebraic geometry</strong> studies geometric objects defined by polynomial equations.</p>
+
+            <h4>Algebraic Varieties</h4>
+            <p>An <strong>algebraic variety</strong> \(V\) is the zero set of polynomials.</p>
+
+            <h4>Bezout's Theorem</h4>
+            <p>Two algebraic curves of degrees \(d_1\) and \(d_2\) in the projective plane intersect in exactly \(d_1 \cdot d_2\) points (counting multiplicities and points at infinity).</p>
+
+            <h3>Non-Euclidean Geometry</h3>
+
+            <h4>Hyperbolic Geometry</h4>
+            <p><strong>Hyperbolic geometry</strong> violates Euclid's parallel postulate. In hyperbolic space:</p>
+            <ul>
+                <li><strong>Sum of angles in a triangle</strong> is less than \(180^\circ\)</li>
+                <li><strong>Parallel lines</strong> diverge</li>
+                <li><strong>Isoperimetric inequality:</strong> \(L^2 > 4\pi A\) (where \(L\) is perimeter, \(A\) is area)</li>
+            </ul>
+
+            <h4>Elliptic Geometry</h4>
+            <p><strong>Elliptic geometry</strong> (like a sphere's surface):</p>
+            <ul>
+                <li><strong>Sum of angles in a triangle</strong> is greater than \(180^\circ\)</li>
+                <li><strong>No parallel lines</strong> exist</li>
+                <li>Modeled on the sphere \(S^2\)</li>
+            </ul>
+
+            <h4>Curvature Characterization</h4>
+            <ul>
+                <li><strong>Euclidean:</strong> Gaussian curvature \(K = 0\)</li>
+                <li><strong>Hyperbolic:</strong> Gaussian curvature \(K < 0\) (constant)</li>
+                <li><strong>Elliptic:</strong> Gaussian curvature \(K > 0\) (constant)</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Geometry | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

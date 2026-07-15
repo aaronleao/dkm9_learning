@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inequalities - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        .hr {height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Inequalities</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3>What is an Inequality?</h3>
+            <p>An <strong>inequality</strong> is a mathematical statement comparing two expressions that may not be equal. Inequalities use relation symbols:</p>
+            <ul>
+                <li>\(>\) (greater than)</li>
+                <li>\(<\) (less than)</li>
+                <li>\(\geq\) (greater than or equal to)</li>
+                <li>\(\leq\) (less than or equal to)</li>
+            </ul>
+
+            <h3>Linear Inequalities</h3>
+            <p>A <strong>linear inequality in one variable</strong> has the form:</p>
+            <p>\[ax + b > c \quad \text{or} \quad ax + b < c\]</p>
+
+            <h4>Solving Linear Inequalities</h4>
+            <p>The solution process is similar to equations, with one key difference:</p>
+            <p><strong>When multiplying or dividing by a negative number, flip the inequality sign.</strong></p>
+
+            <div class="example">
+                <strong>Example 1:</strong> Solve \(2x + 3 > 7\)<br>
+                \[2x > 4\]
+                \[x > 2\]
+            </div>
+
+            <div class="example">
+                <strong>Example 2:</strong> Solve \(-3x + 5 < 11\)<br>
+                \[-3x < 6\]
+                \[x > -2\] (inequality flipped!)
+            </div>
+
+            <h3>Absolute Value Inequalities</h3>
+            <p>The <strong>absolute value</strong> \(|x|\) represents the distance from 0 on the number line.</p>
+
+            <h4>Case 1: \(|x| < a\) (where \(a > 0\))</h4>
+            <p>\[|x| < a \iff -a < x < a\]</p>
+            <div class="example">
+                <strong>Example:</strong> \(|x| < 3\) means \(-3 < x < 3\)
+            </div>
+
+            <h4>Case 2: \(|x| > a\) (where \(a > 0\))</h4>
+            <p>\[|x| > a \iff x < -a \text{ or } x > a\]</p>
+            <div class="example">
+                <strong>Example:</strong> \(|x| > 2\) means \(x < -2\) or \(x > 2\)
+            </div>
+
+            <hr class="hr">
+        </section>
+
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3>Quadratic Inequalities</h3>
+            <p>A <strong>quadratic inequality</strong> has the form:</p>
+            <p>\[ax^2 + bx + c > 0 \quad \text{(or} < 0, \geq 0, \leq 0\text{)}\]</p>
+            <p>where \(a \neq 0\).</p>
+
+            <h4>Solution Method</h4>
+            <ol>
+                <li>Find roots of \(ax^2 + bx + c = 0\) using the quadratic formula</li>
+                <li>Determine the sign of \(a\) (opens up if \(a > 0\), down if \(a < 0\))</li>
+                <li>Determine where the parabola is above/below the x-axis</li>
+            </ol>
+
+            <div class="example">
+                <strong>Example:</strong> Solve \(x^2 - 5x + 6 > 0\)<br>
+                Roots: \(x = 2, x = 3\) (from \((x-2)(x-3) = 0\))<br>
+                Since \(a = 1 > 0\) (opens up), the parabola is positive when \(x < 2\) or \(x > 3\).<br>
+                <strong>Solution:</strong> \((-\infty, 2) \cup (3, \infty)\)
+            </div>
+
+            <h3>Rational Inequalities</h3>
+            <p>A <strong>rational inequality</strong> has variables in denominators:</p>
+            <p>\[\frac{p(x)}{q(x)} > 0\]</p>
+
+            <h4>Critical Points</h4>
+            <p>Critical points occur where:</p>
+            <ul>
+                <li>Numerator \(p(x) = 0\)</li>
+                <li>Denominator \(q(x) = 0\) (undefined, vertical asymptote)</li>
+            </ul>
+
+            <h3>Classical Inequalities</h3>
+
+            <h4>Arithmetic Mean - Geometric Mean (AM-GM)</h4>
+            <p>For positive numbers \(a_1, a_2, ..., a_n\):</p>
+            <p>\[\frac{a_1 + a_2 + ... + a_n}{n} \geq \sqrt[n]{a_1 \cdot a_2 \cdot ... \cdot a_n}\]</p>
+            <p>with equality if and only if \(a_1 = a_2 = ... = a_n\).</p>
+
+            <h4>Cauchy-Schwarz Inequality</h4>
+            <p>For real numbers \(a_1, ..., a_n\) and \(b_1, ..., b_n\):</p>
+            <p>\[(a_1b_1 + a_2b_2 + ... + a_nb_n)^2 \leq (a_1^2 + a_2^2 + ... + a_n^2)(b_1^2 + b_2^2 + ... + b_n^2)\]</p>
+
+            <h4>Triangle Inequality</h4>
+            <p>For any real numbers or vectors \(a\) and \(b\):</p>
+            <p>\[|a + b| \leq |a| + |b|\]</p>
+
+            <hr class="hr">
+        </section>
+
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3>Real Analysis Inequalities</h3>
+
+            <h4>Hölder's Inequality</h4>
+            <p>For \(p, q > 1\) with \(\frac{1}{p} + \frac{1}{q} = 1\):</p>
+            <p>\[\sum_{i=1}^{n} |a_i b_i| \leq \left(\sum_{i=1}^{n} |a_i|^p\right)^{1/p} \left(\sum_{i=1}^{n} |b_i|^q\right)^{1/q}\]</p>
+
+            <h4>Minkowski's Inequality</h4>
+            <p>\[\left(\sum_{i=1}^{n} |a_i + b_i|^p\right)^{1/p} \leq \left(\sum_{i=1}^{n} |a_i|^p\right)^{1/p} + \left(\sum_{i=1}^{n} |b_i|^p\right)^{1/p}\]</p>
+
+            <h3>Partial Order and Lattices</h3>
+            <p>A <strong>partial order</strong> \(\leq\) on a set \(P\) is a relation that is:</p>
+            <ol>
+                <li><strong>Reflexive:</strong> \(a \leq a\)</li>
+                <li><strong>Antisymmetric:</strong> If \(a \leq b\) and \(b \leq a\), then \(a = b\)</li>
+                <li><strong>Transitive:</strong> If \(a \leq b\) and \(b \leq c\), then \(a \leq c\)</li>
+            </ol>
+
+            <h3>Operator Inequalities in Functional Analysis</h3>
+            <p>For bounded linear operators \(A\), \(B\) on a Hilbert space:</p>
+            <p>\[\|A + B\| \leq \|A\| + \|B\|\]</p>
+
+            <hr class="hr">
+        </section>
+
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3>Variational Inequalities</h3>
+            <p>A <strong>variational inequality</strong> problem seeks \(u \in K\) such that:</p>
+            <p>\[\langle Au - f, v - u \rangle \geq 0 \quad \forall v \in K\]</p>
+            <p>Variational inequalities model:</p>
+            <ul>
+                <li>Contact problems in mechanics</li>
+                <li>Obstacle problems</li>
+                <li>Optimal control</li>
+                <li>Complementarity problems</li>
+            </ul>
+
+            <h3>Integral Inequalities</h3>
+
+            <h4>Jensen's Inequality</h4>
+            <p>For a convex function \(\phi\):</p>
+            <p>\[\phi\left(\frac{1}{b-a}\int_a^b f(x)dx\right) \leq \frac{1}{b-a}\int_a^b \phi(f(x))dx\]</p>
+
+            <h4>Grönwall's Inequality</h4>
+            <p>If \(u(t) \leq f(t) + \int_0^t c(s)u(s)ds\) for continuous functions, then:</p>
+            <p>\[u(t) \leq f(t)e^{\int_0^t c(s)ds}\]</p>
+
+            <h3>Matrix Inequalities</h3>
+            <p>For Hermitian matrices \(A\), \(B\):</p>
+            <p><strong>Löwner Partial Order:</strong> \(A \leq B\) if \(B - A\) is positive semidefinite.</p>
+        </section>
+
+        <footer>
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Inequalities | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>
