@@ -11,6 +11,11 @@ Reusable HTML snippets for consistent styling across all topic pages.
 </div>
 ```
 
+### Subsection Divider (for merged topics)
+```html
+<div class="subsection-title">Topic Name</div>
+```
+
 ### Horizontal Divider
 ```html
 <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
@@ -161,6 +166,7 @@ Each topic follows 4 levels:
 | `.mermaid` | Diagram container | Yes, uses --code |
 | `.toc` | Table of contents box | Yes, uses --card, --primary |
 | `.theme-toggle` | Theme switch button | Yes, uses --primary |
+| `.subsection-title` | Section divider in merged topics | Yes, uses --primary, --secondary |
 | All semantic HTML | Headings, text, links | Yes, all use CSS variables |
 
 ## Best Practices
