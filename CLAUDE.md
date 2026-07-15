@@ -18,10 +18,17 @@
 
 **File Organization:**
 ```
-topics/Math/
-├── index.html           (landing page)
-├── Set.html, Logic.html, Functions.html
-├── Equations.html, Inequations.html, Geomery.html
+topics/
+├── Topics.md              (meta topic index: Math, Physics, Chemistry, CS)
+├── TEMPLATE.html          (shared template for all subjects)
+├── COMPONENTS.md          (reusable HTML snippets library)
+├── new-topic.py           (Python 3 automated topic creator)
+├── Math/
+│   ├── index.html         (Math hub landing page)
+│   ├── Set.html, Logic.html, Functions.html, ...
+├── Physics/               (future)
+├── Chemistry/             (future)
+└── ComputerScience/       (future)
 ```
 
 **LaTeX Formulas:** Inline using `\(` ... `\)` or display `\[` ... `\]`  
@@ -41,17 +48,35 @@ Why: Commits are hard to undo; user controls what enters history.
 
 ## Adding Content - HARD REQUIREMENTS
 
-1. Create HTML file with 4 learning levels (see existing topics as template)
-2. Use MathJax for formulas: `\(inline\)` or `\[display\]`
-3. Use Mermaid for key diagrams only
-4. Add navigation links back to `index.html`
-5. Update `Topics.md` with new topic link
-6. **🔴 REQUIRED: Add "Sources & References" section at end of each topic:**
-   - Wikipedia link to the topic
-   - 2-3 academic papers from arxiv.org (use: `https://arxiv.org/search/?query=topic+name`)
-   - Textbook references or bibliography entries
-   - Follow format: Title, Author, Year, URL
-7. Test in browser before staging
+**Use TEMPLATE.html for all new topics** (eliminates code duplication):
+1. Create new topic with Python helper (recommended):
+   ```bash
+   cd topics
+   python3 new-topic.py Subject "Your Topic Name"
+   ```
+2. Or manually copy: `cp topics/TEMPLATE.html topics/Subject/YourTopic.html`
+3. Replace all `[PLACEHOLDER]` variables with your content
+4. Follow 4-level structure: Beginner → Intermediate → Advanced → Research
+5. Use components from `topics/COMPONENTS.md` for consistency
+
+**Content Requirements:**
+- Use MathJax for formulas: `\(inline\)` or `\[display\]`
+- Use Mermaid for key diagrams (not required, but recommended)
+- Add navigation links back to `index.html`
+- Update `Topics.md` with new topic link
+
+**🔴 REQUIRED: Add "Sources & References" section:**
+- Wikipedia link to the topic
+- 2-3 academic papers from arxiv.org
+- 3-5 textbook references
+- Use format: `<strong>Title</strong> - Author (Year)`
+
+**Testing before commit:**
+- All 4 browsers: Firefox, Brave, Chrome, LibreWolf
+- Both themes: Light and dark mode
+- Mobile responsive: 768px breakpoint
+- MathJax formulas render correctly
+- Mermaid diagrams display properly
 
 ## Resources
 

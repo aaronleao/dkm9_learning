@@ -54,7 +54,11 @@ Every topic page **MUST** include a "Sources & References" section with:
 - Diagrams must display properly in Mermaid
 - Browser compatibility: Firefox, Brave, Chrome, LibreWolf
 - Responsive design for mobile devices
-- Dark mode support
+- **REQUIRED: Dark mode support with toggle button** in header
+  - Light/dark theme toggle button in top-right corner
+  - Theme preference saved to localStorage
+  - System preference auto-detected on first visit
+- **Use modular components** for reusability (theme toggle, navigation, etc.)
 
 ### Development Environment
 

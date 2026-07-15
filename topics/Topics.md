@@ -1,14 +1,56 @@
 # Topics
 
-## Mathematics
+Comprehensive learning resources organized by subject. Each subject contains topics progressing from beginner to research level, with visual diagrams (Mermaid), mathematical notation (MathJax), and source references (Wikipedia, arXiv, textbooks).
 
-- [**Mathematics Hub**](Math/index.html) - Comprehensive guide with interactive HTML content powered by MathJax
+## Meta Topics (By Subject)
 
-### Core Topics (HTML)
+### Mathematics
+- [**Mathematics Hub**](Math/index.html) - Comprehensive guide to mathematical foundations and theory
 
-- [Set Theory](Math/Set.html) - Foundations, operations, axiomatics
-- [Mathematical Logic](Math/Logic.html) - Propositions, quantifiers, proof theory
-- [Functions](Math/Functions.html) - Mappings, transformations, functional analysis
-- [Equations](Math/Equations.html) - Linear, polynomial, transcendental, Diophantine
-- [Inequalities](Math/Inequations.html) - Systems, classical inequalities, variational
-- [Geometry](Math/Geomery.html) - Coordinate, differential, non-Euclidean
+  **Topics:** Set Theory, Mathematical Logic, Functions, Equations, Inequalities, Geometry
+
+### Physics
+  *(Coming Soon)*
+  - Classical Mechanics
+  - Thermodynamics
+  - Electromagnetism
+  - Quantum Mechanics
+
+### Chemistry
+  *(Coming Soon)*
+  - Atomic Structure
+  - Bonding & Molecular Structure
+  - Thermochemistry
+  - Equilibrium & Kinetics
+
+### Computer Science
+  *(Coming Soon)*
+  - Data Structures
+  - Algorithms
+  - Theory of Computation
+  - Artificial Intelligence
+
+---
+
+## How to Navigate
+
+1. **Select a subject** from the list above
+2. **Click the hub** to see all topics in that subject
+3. **Choose a topic** and select your learning level:
+   - **Beginner** - Start here for foundational understanding
+   - **Intermediate** - Build skills and applications
+   - **Advanced** - Theoretical depth and specialization
+   - **Research** - Cutting-edge topics and open problems
+
+## Adding New Topics
+
+See [TEMPLATE.html](TEMPLATE.html), [COMPONENTS.md](COMPONENTS.md), and [new-topic.py](new-topic.py) in the topics directory.
+
+```bash
+# Create a new topic (automated)
+cd topics
+python3 new-topic.py Math "Your Topic Name"
+
+# Or manual: copy template and edit
+cp TEMPLATE.html Math/YourTopic.html
+```
