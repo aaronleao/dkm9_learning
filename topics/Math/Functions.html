@@ -62,6 +62,17 @@
         footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
         footer a {color:var(--primary); text-decoration:none;}
         footer a:hover {text-decoration:underline;}
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
         @media (max-width:768px) {
             header h1 {font-size:1.8em;}
             nav {flex-direction:column; gap:10px;}
@@ -102,11 +113,105 @@
             <h2>Table of Contents</h2>
             <ul>
                 <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#linear-functions">— Linear Functions</a></li>
+                <li><a href="#quadratic-functions">— Quadratic Functions</a></li>
+                <li><a href="#polynomial-functions">— Polynomial Functions</a></li>
+                <li><a href="#rational-functions">— Rational Functions</a></li>
+                <li><a href="#even-odd">— Even/Odd & Monotonicity</a></li>
                 <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#exponential-functions">— Exponential Functions</a></li>
+                <li><a href="#logarithmic-functions">— Logarithmic Functions</a></li>
+                <li><a href="#trigonometric-functions">— Trigonometric Functions</a></li>
+                <li><a href="#inverse-functions">— Inverse Functions</a></li>
+                <li><a href="#composition-transformations">— Composition & Transformations</a></li>
                 <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#continuous-functions">— Continuous Functions</a></li>
+                <li><a href="#differentiable-functions">— Differentiable Functions</a></li>
+                <li><a href="#convex-concave">— Convex & Concave Functions</a></li>
                 <li><a href="#research">Research Level</a></li>
             </ul>
         </div>
+
+        <!-- ============ MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) ============
+             Shared by all widgets on this page except linWidget, which carries the full
+             VIZ-0 boilerplate verbatim as the on-page reference implementation. -->
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : -10,
+                xmax: opts.xmax !== undefined ? opts.xmax : 10,
+                ymin: opts.ymin !== undefined ? opts.ymin : -10,
+                ymax: opts.ymax !== undefined ? opts.ymax : 10,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                readRange: () => {
+                    if ($('xmin')) { S.xmin = parseFloat($('xmin').value); if ($('xminVal')) $('xminVal').textContent = S.xmin; }
+                    if ($('xmax')) { S.xmax = parseFloat($('xmax').value); if ($('xmaxVal')) $('xmaxVal').textContent = S.xmax; }
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 5 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 5 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                plot: (f, color, dash) => {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = S.xmin + (S.xmax - S.xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(S.px(x), S.py(y)); started = true; }
+                        else ctx.lineTo(S.px(x), S.py(y));
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                },
+                dot: (x, y, color, r) => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(S.px(x), S.py(y), r || 5, 0, 2 * Math.PI); ctx.fill();
+                },
+                label: (txt, x, y, c) => {
+                    ctx.fillStyle = c.text; ctx.font = '13px monospace';
+                    ctx.fillText(txt, S.px(x), S.py(y));
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        </script>
 
         <section id="beginner">
             <h2>Beginner Level</h2>
@@ -129,50 +234,513 @@
 
             <h3>Common Functions</h3>
 
-            <h4>Linear Functions</h4>
+            <h4 id="linear-functions">Linear Functions</h4>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Linear_function" target="_blank" style="color: var(--primary);">linear function</a> models any quantity that changes at a <em>constant rate</em>: every extra unit of input adds the same amount to the output. Think of a taxi meter — a fixed starting fee, plus a fixed price for every kilometer.</p>
+            <p><strong>Formal definition:</strong></p>
             <p>\[f(x) = mx + b\]</p>
             <ul>
-                <li>\(m\) is the slope</li>
-                <li>\(b\) is the y-intercept</li>
-                <li>Graph is a straight line</li>
+                <li>\(m\) is the <strong>slope</strong>: the change in \(f(x)\) per unit change in \(x\) (rise over run)</li>
+                <li>\(b\) is the <strong>y-intercept</strong>: the value \(f(0)\), where the line crosses the y-axis</li>
+                <li>The graph is a straight line</li>
             </ul>
+
+            <p><strong>Interactive plot:</strong> drag the knobs for \(m\) and \(b\) and the range bars. The green dot marks the y-intercept; the triangle shows run = 1, rise = \(m\).</p>
+            <!-- Widget: linWidget — interactive linear function plotter -->
+            <div class="viz-widget" id="linWidget">
+                <div class="viz-controls">
+                    <label>Slope m: <span id="linWidget-mVal"></span>
+                        <input type="range" id="linWidget-m" min="-5" max="5" step="0.1" value="2">
+                    </label>
+                    <label>Intercept b: <span id="linWidget-bVal"></span>
+                        <input type="range" id="linWidget-b" min="-10" max="10" step="0.5" value="3">
+                    </label>
+                    <label>x-min: <span id="linWidget-xminVal"></span>
+                        <input type="range" id="linWidget-xmin" min="-20" max="0" step="0.5" value="-10">
+                    </label>
+                    <label>x-max: <span id="linWidget-xmaxVal"></span>
+                        <input type="range" id="linWidget-xmax" min="0" max="20" step="0.5" value="10">
+                    </label>
+                </div>
+                <canvas id="linWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="linWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const W = document.getElementById('linWidget-canvas');
+                const ctx = W.getContext('2d');
+                function themeColors() {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc'
+                    };
+                }
+                const $ = id => document.getElementById('linWidget-' + id);
+                let xmin = -10, xmax = 10, ymin = -10, ymax = 10;
+                const px = x => (x - xmin) / (xmax - xmin) * W.width;
+                const py = y => W.height - (y - ymin) / (ymax - ymin) * W.height;
+                function drawAxes(c) {
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(xmin); gx <= xmax; gx++) {
+                        ctx.beginPath(); ctx.moveTo(px(gx), 0); ctx.lineTo(px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(ymin); gy <= ymax; gy++) {
+                        ctx.beginPath(); ctx.moveTo(0, py(gy)); ctx.lineTo(W.width, py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(px(0), 0); ctx.lineTo(px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, py(0)); ctx.lineTo(W.width, py(0)); ctx.stroke();
+                }
+                function plot(f, c, color) {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = xmin + (xmax - xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(px(x), py(y)); started = true; }
+                        else ctx.lineTo(px(x), py(y));
+                    }
+                    ctx.stroke();
+                }
+                function draw() {
+                    const c = themeColors();
+                    ctx.clearRect(0, 0, W.width, W.height);
+                    xmin = parseFloat($('xmin').value); xmax = parseFloat($('xmax').value);
+                    $('xminVal').textContent = xmin; $('xmaxVal').textContent = xmax;
+                    drawAxes(c);
+                    const m = parseFloat($('m').value), b = parseFloat($('b').value);
+                    $('mVal').textContent = m.toFixed(1); $('bVal').textContent = b.toFixed(1);
+                    const f = x => m * x + b;
+                    plot(f, c, c.curve);
+                    // y-intercept dot
+                    ctx.fillStyle = c.accent;
+                    ctx.beginPath(); ctx.arc(px(0), py(b), 6, 0, 2 * Math.PI); ctx.fill();
+                    // slope triangle: run = 1 (from x=1 to x=2), rise = m
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(px(1), py(f(1)));
+                    ctx.lineTo(px(2), py(f(1)));
+                    ctx.lineTo(px(2), py(f(2)));
+                    ctx.stroke();
+                    ctx.fillStyle = c.text; ctx.font = '13px monospace';
+                    ctx.fillText('run=1', px(1.5) - 20, py(f(1)) + 16);
+                    ctx.fillText('rise=' + m.toFixed(1), px(2) + 6, py((f(1) + f(2)) / 2));
+                    $('readout').textContent = `f(x) = ${m.toFixed(1)}x + ${b.toFixed(1)}   |   y-intercept: (0, ${b.toFixed(1)})`;
+                }
+                ['m', 'b', 'xmin', 'xmax'].forEach(id => $(id).addEventListener('input', draw));
+                new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+                draw();
+            })();
+            </script>
+
             <div class="example">
-                <strong>Example:</strong> \(f(x) = 2x - 3\)
+                <strong>Step-by-step: Find the line through \((1, 5)\) and \((3, 11)\)</strong><br><br>
+                <strong>Step 1: Compute the slope</strong><br>
+                Why? The slope is the rate of change between any two points on the line.<br>
+                \[m = \frac{y_2 - y_1}{x_2 - x_1} = \frac{11 - 5}{3 - 1} = \frac{6}{2} = 3\]<br>
+                <strong>Step 2: Find the intercept b</strong><br>
+                Why? We know \(f(x) = 3x + b\); substitute either known point to pin down \(b\). Using \((1, 5)\):<br>
+                \[5 = 3(1) + b \Rightarrow b = 2\]<br>
+                <strong>Step 3: Write and verify</strong><br>
+                \[f(x) = 3x + 2\]
+                Check with the other point: \(f(3) = 3(3) + 2 = 11\) ✓
             </div>
 
-            <h4>Quadratic Functions</h4>
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Taxi fare (worked):</strong> base fare €3.50 plus €1.20/km: \(C(d) = 1.2d + 3.5\). A 8 km ride costs \(C(8) = 1.2(8) + 3.5 = 13.10\) euros.</li>
+                    <li><strong>Temperature conversion:</strong> \(F(c) = \tfrac{9}{5}c + 32\) — slope \(9/5\), intercept 32.</li>
+                    <li><strong>Ohm's law:</strong> \(V = RI\) — voltage is linear in current with slope \(R\) and intercept 0.</li>
+                    <li><strong>Linear depreciation:</strong> asset value \(V(t) = V_0 - kt\) (negative slope).</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Find the linear function through \((-2, 1)\) and \((4, 13)\).
+                    <details><summary>Solution</summary>
+                    \(m = \frac{13 - 1}{4 - (-2)} = \frac{12}{6} = 2\). Then \(1 = 2(-2) + b \Rightarrow b = 5\). So \(f(x) = 2x + 5\). Check: \(f(4) = 13\) ✓
+                    </details>
+                </li>
+                <li>A phone plan costs $20/month plus $0.05 per minute. Write the cost function and find the cost of 300 minutes.
+                    <details><summary>Solution</summary>
+                    \(C(t) = 0.05t + 20\). \(C(300) = 0.05(300) + 20 = 15 + 20 = \$35\).
+                    </details>
+                </li>
+            </ol>
+
+            <h4 id="quadratic-functions">Quadratic Functions</h4>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Quadratic_function" target="_blank" style="color: var(--primary);">quadratic function</a> models quantities whose <em>rate of change itself changes at a constant rate</em> — like a thrown ball, whose speed changes steadily under gravity. Its graph is a parabola: perfectly symmetric around its turning point.</p>
+            <p><strong>Formal definition:</strong></p>
             <p>\[f(x) = ax^2 + bx + c \quad (a \neq 0)\]</p>
             <ul>
-                <li>Graph is a parabola</li>
-                <li>Vertex at \(x = -\frac{b}{2a}\)</li>
+                <li>Graph is a <strong>parabola</strong>, opening up if \(a > 0\), down if \(a < 0\)</li>
+                <li><strong>Vertex</strong> (turning point) at \(x_v = -\frac{b}{2a}\)</li>
+                <li><strong>Discriminant</strong> \(\Delta = b^2 - 4ac\) counts real roots: two if \(\Delta > 0\), one if \(\Delta = 0\), none if \(\Delta < 0\)</li>
             </ul>
+
+            <p><strong>Interactive plot:</strong> the green dot is the vertex; root dots appear when \(\Delta \ge 0\). Slide \(a\) through 0 to see the parabola degenerate into a line.</p>
+            <div class="viz-widget" id="quadWidget">
+                <div class="viz-controls">
+                    <label>a: <span id="quadWidget-qaVal"></span>
+                        <input type="range" id="quadWidget-qa" min="-3" max="3" step="0.1" value="1">
+                    </label>
+                    <label>b: <span id="quadWidget-qbVal"></span>
+                        <input type="range" id="quadWidget-qb" min="-10" max="10" step="0.5" value="-4">
+                    </label>
+                    <label>c: <span id="quadWidget-qcVal"></span>
+                        <input type="range" id="quadWidget-qc" min="-10" max="10" step="0.5" value="3">
+                    </label>
+                    <label>x-min: <span id="quadWidget-xminVal"></span>
+                        <input type="range" id="quadWidget-xmin" min="-20" max="0" step="0.5" value="-10">
+                    </label>
+                    <label>x-max: <span id="quadWidget-xmaxVal"></span>
+                        <input type="range" id="quadWidget-xmax" min="0" max="20" step="0.5" value="10">
+                    </label>
+                </div>
+                <canvas id="quadWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="quadWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('quadWidget');
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.readRange(); V.drawAxes(c);
+                    const a = parseFloat($('qa').value), b = parseFloat($('qb').value), cc = parseFloat($('qc').value);
+                    $('qaVal').textContent = a.toFixed(1); $('qbVal').textContent = b.toFixed(1); $('qcVal').textContent = cc.toFixed(1);
+                    const f = x => a * x * x + b * x + cc;
+                    V.plot(f, c.curve);
+                    if (Math.abs(a) < 0.05) {
+                        $('readout').textContent = 'a = 0 → not quadratic any more: this is the LINE f(x) = ' + b.toFixed(1) + 'x + ' + cc.toFixed(1);
+                        return;
+                    }
+                    const xv = -b / (2 * a), yv = f(xv);
+                    V.dot(xv, yv, c.accent, 6);
+                    V.label('vertex (' + xv.toFixed(2) + ', ' + yv.toFixed(2) + ')', xv + 0.3, yv - 0.5, c);
+                    const disc = b * b - 4 * a * cc;
+                    let rootTxt = 'Δ = ' + disc.toFixed(2) + ' → no real roots';
+                    if (disc >= 0) {
+                        const r1 = (-b - Math.sqrt(disc)) / (2 * a), r2 = (-b + Math.sqrt(disc)) / (2 * a);
+                        V.dot(r1, 0, c.curve, 5); V.dot(r2, 0, c.curve, 5);
+                        rootTxt = 'Δ = ' + disc.toFixed(2) + ' → roots x = ' + Math.min(r1, r2).toFixed(3) + ', ' + Math.max(r1, r2).toFixed(3);
+                    }
+                    $('readout').textContent = 'f(x) = ' + a.toFixed(1) + 'x² + ' + b.toFixed(1) + 'x + ' + cc.toFixed(1)
+                        + '   |   vertex x = −b/2a = ' + xv.toFixed(3) + '   |   ' + rootTxt;
+                }
+                V.bind(['qa', 'qb', 'qc', 'xmin', 'xmax'], draw);
+            })();
+            </script>
+
             <div class="example">
-                <strong>Example:</strong> \(f(x) = x^2 - 4x + 3\)
+                <strong>Step-by-step: Completing the square for \(f(x) = x^2 - 4x + 3\)</strong><br><br>
+                <strong>Step 1: Group the \(x\)-terms</strong><br>
+                Why? We want to force \(x^2 - 4x\) to look like a perfect square \((x - h)^2\).<br>
+                \[f(x) = (x^2 - 4x) + 3\]<br>
+                <strong>Step 2: Add and subtract \((b/2)^2\)</strong><br>
+                Why? \((x-2)^2 = x^2 - 4x + 4\), so \(x^2 - 4x\) is a perfect square that is <em>missing</em> the constant \(4 = (4/2)^2\). We add it and immediately subtract it, changing nothing:<br>
+                \[f(x) = (x^2 - 4x + 4) - 4 + 3\]<br>
+                <strong>Step 3: Factor the perfect square</strong><br>
+                \[f(x) = (x - 2)^2 - 1\]<br>
+                <strong>Step 4: Read off the vertex</strong><br>
+                Why? \((x-2)^2 \geq 0\) always, and equals 0 exactly at \(x = 2\). So the minimum is at \((2, -1)\) — matching \(x_v = -b/2a = 4/2 = 2\). ✓
             </div>
 
-            <h4>Polynomial Functions</h4>
-            <p>\[f(x) = a_nx^n + a_{n-1}x^{n-1} + ... + a_1x + a_0\]</p>
-            <p>where \(n\) is the degree (highest power).</p>
+            <p><strong>Geometric Picture (algebra tiles):</strong> \(x^2 + bx\) is literally a square of side \(x\) plus a \(b \times x\) strip. Cut the strip in half and hang the two halves on the right and bottom edges of the square: you get an almost-square of side \(x + b/2\), missing only its tiny \((b/2)^2\) corner. "Completing the square" means paying that missing corner — that is exactly the \(+\,(b/2)^2\) in Step 2.</p>
 
-            <h4>Rational Functions</h4>
-            <p>\[f(x) = \frac{p(x)}{q(x)}\]</p>
-            <p>where \(p\) and \(q\) are polynomials and \(q(x) \neq 0\).</p>
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Projectile motion (worked):</strong> a ball thrown up at \(v_0 = 20\) m/s from height 1.5 m: \(h(t) = -4.9t^2 + 20t + 1.5\). It lands when \(h(t) = 0\): \(t = \frac{-20 - \sqrt{400 + 4(4.9)(1.5)}}{2(-4.9)} \approx 4.156\) s. Peak at \(t_v = \frac{20}{9.8} \approx 2.04\) s, height \(h(2.04) \approx 21.9\) m.</li>
+                    <li><strong>Profit maximization:</strong> revenue \(R(p) = p(1000 - 50p)\) is a downward parabola — the best price sits at the vertex.</li>
+                    <li><strong>Parabolic reflectors:</strong> satellite dishes and headlights use the parabola's focusing property.</li>
+                </ul>
+            </div>
 
-            <h3>Function Properties</h3>
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Complete the square for \(f(x) = 2x^2 + 8x + 5\) and give the vertex.
+                    <details><summary>Solution</summary>
+                    \(f(x) = 2(x^2 + 4x) + 5 = 2(x^2 + 4x + 4) - 8 + 5 = 2(x+2)^2 - 3\). Vertex \((-2, -3)\).
+                    </details>
+                </li>
+                <li>For which values of \(k\) does \(x^2 + kx + 9 = 0\) have exactly one real root?
+                    <details><summary>Solution</summary>
+                    One root ⟺ \(\Delta = k^2 - 36 = 0\) ⟺ \(k = \pm 6\).
+                    </details>
+                </li>
+            </ol>
+
+            <h4 id="polynomial-functions">Polynomial Functions</h4>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Polynomial" target="_blank" style="color: var(--primary);">polynomial</a> is a sum of power terms — the workhorse of applied mathematics, because polynomials can bend as many times as their degree allows while staying smooth and easy to compute.</p>
+            <p><strong>Formal definition:</strong></p>
+            <p>\[f(x) = a_nx^n + a_{n-1}x^{n-1} + \dots + a_1x + a_0, \quad a_n \neq 0\]</p>
+            <p>where \(n\) is the <strong>degree</strong> (highest power). A degree-\(n\) polynomial has at most \(n\) real roots and at most \(n-1\) turning points.</p>
+
+            <p><strong>Interactive plot:</strong> change the degree and watch the end behavior flip with the parity of \(n\) and the sign of the leading coefficient (annotated in the corners).</p>
+            <div class="viz-widget" id="polyWidget">
+                <div class="viz-controls">
+                    <label>Degree n: <span id="polyWidget-degVal"></span>
+                        <input type="range" id="polyWidget-deg" min="1" max="6" step="1" value="3">
+                    </label>
+                    <label>Leading coeff a<sub>n</sub>: <span id="polyWidget-anVal"></span>
+                        <input type="range" id="polyWidget-an" min="-2" max="2" step="0.1" value="0.5">
+                    </label>
+                    <label>x² coeff: <span id="polyWidget-c2Val"></span>
+                        <input type="range" id="polyWidget-c2" min="-5" max="5" step="0.5" value="0">
+                    </label>
+                    <label>x coeff: <span id="polyWidget-c1Val"></span>
+                        <input type="range" id="polyWidget-c1" min="-5" max="5" step="0.5" value="-3">
+                    </label>
+                    <label>constant: <span id="polyWidget-c0Val"></span>
+                        <input type="range" id="polyWidget-c0" min="-5" max="5" step="0.5" value="0">
+                    </label>
+                </div>
+                <canvas id="polyWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="polyWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('polyWidget', { xmin: -5, xmax: 5 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const n = parseInt($('deg').value), an = parseFloat($('an').value);
+                    const c2 = parseFloat($('c2').value), c1 = parseFloat($('c1').value), c0 = parseFloat($('c0').value);
+                    $('degVal').textContent = n; $('anVal').textContent = an.toFixed(1);
+                    $('c2Val').textContent = c2.toFixed(1); $('c1Val').textContent = c1.toFixed(1); $('c0Val').textContent = c0.toFixed(1);
+                    const f = x => an * Math.pow(x, n) + (n > 2 ? c2 * x * x : 0) + (n > 1 ? c1 * x : 0) + c0;
+                    V.plot(f, c.curve);
+                    // end-behavior annotations in the corners
+                    ctx.fillStyle = c.text; ctx.font = 'bold 20px monospace';
+                    const eff = Math.abs(an) < 0.05 ? 0 : an;
+                    const left = (eff === 0) ? '·' : ((n % 2 === 0) === (eff > 0) ? '↑' : (n % 2 === 0 ? '↓' : (eff > 0 ? '↓' : '↑')));
+                    const right = (eff === 0) ? '·' : (eff > 0 ? '↑' : '↓');
+                    ctx.fillText('x→−∞: ' + left, 15, 30);
+                    ctx.fillText('x→+∞: ' + right, V.W.width - 130, 30);
+                    $('readout').textContent = (Math.abs(an) < 0.05)
+                        ? 'leading coefficient ≈ 0 → degree drops!'
+                        : 'f(x) = ' + an.toFixed(1) + 'x^' + n
+                          + (n > 2 && c2 ? ' + ' + c2.toFixed(1) + 'x²' : '')
+                          + (n > 1 && c1 ? ' + ' + c1.toFixed(1) + 'x' : '')
+                          + (c0 ? ' + ' + c0.toFixed(1) : '');
+                }
+                V.bind(['deg', 'an', 'c2', 'c1', 'c0'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: End behavior rules</strong><br>
+                For large \(|x|\), the leading term \(a_nx^n\) dominates everything else. Four cases:<br><br>
+                <table>
+                    <tr><th>Degree \(n\)</th><th>\(a_n > 0\)</th><th>\(a_n < 0\)</th></tr>
+                    <tr><td>even</td><td>both ends ↑ (like \(x^2\))</td><td>both ends ↓</td></tr>
+                    <tr><td>odd</td><td>left ↓, right ↑ (like \(x^3\))</td><td>left ↑, right ↓</td></tr>
+                </table>
+            </div>
+
+            <div class="example">
+                <strong>Step-by-step: Factor \(f(x) = x^3 - 2x^2 - 5x + 6\) completely</strong><br><br>
+                <strong>Step 1: Hunt for a rational root</strong><br>
+                Why? By the rational root theorem, any rational root divides the constant 6: try \(\pm1, \pm2, \pm3, \pm6\).<br>
+                \(f(1) = 1 - 2 - 5 + 6 = 0\) ✓ — so \((x - 1)\) is a factor.<br><br>
+                <strong>Step 2: Divide out the factor</strong><br>
+                Why? Polynomial division reduces the degree so we can finish with the quadratic formula.<br>
+                \[x^3 - 2x^2 - 5x + 6 = (x - 1)(x^2 - x - 6)\]<br>
+                <strong>Step 3: Factor the quadratic</strong><br>
+                \(x^2 - x - 6 = (x - 3)(x + 2)\)<br><br>
+                <strong>Result:</strong> \(f(x) = (x - 1)(x - 3)(x + 2)\); roots \(x = 1, 3, -2\).
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Open-box volume (worked setup):</strong> cut squares of side \(x\) from the corners of a 20×20 cm sheet and fold: \(V(x) = x(20 - 2x)^2\), a cubic. Reading its graph (or later, calculus) gives the best cut \(x = 10/3\) cm.</li>
+                    <li><strong>Bézier curves:</strong> every font glyph and vector graphic is stitched from cubic polynomials.</li>
+                    <li><strong>Polynomial regression:</strong> fitting curved trends in data.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>What is the maximum number of turning points of a degree-5 polynomial, and why?
+                    <details><summary>Solution</summary>
+                    4. Turning points happen where \(f'(x) = 0\); the derivative has degree 4, hence at most 4 real roots.
+                    </details>
+                </li>
+                <li>Factor \(f(x) = x^3 - 7x + 6\).
+                    <details><summary>Solution</summary>
+                    \(f(1) = 0\), divide: \(x^3 - 7x + 6 = (x-1)(x^2 + x - 6) = (x-1)(x+3)(x-2)\).
+                    </details>
+                </li>
+            </ol>
+
+            <h4 id="rational-functions">Rational Functions</h4>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Rational_function" target="_blank" style="color: var(--primary);">rational function</a> is a ratio of polynomials. Ratios blow up where the denominator vanishes — that is where the graph tears apart into branches separated by <strong>asymptotes</strong>.</p>
+            <p><strong>Formal definition:</strong></p>
+            <p>\[f(x) = \frac{p(x)}{q(x)}, \quad q(x) \neq 0\]</p>
+            <ul>
+                <li><strong>Vertical asymptote</strong> at every root of \(q\) that is not cancelled by \(p\)</li>
+                <li><strong>Horizontal asymptote</strong> from comparing degrees of \(p\) and \(q\)</li>
+                <li><strong>Hole</strong> (removable point) where a factor cancels</li>
+            </ul>
+
+            <p><strong>Interactive plot:</strong> the Möbius family \(f(x) = \frac{ax + b}{cx + d}\). Dashed lines are the vertical asymptote \(x = -d/c\) and horizontal asymptote \(y = a/c\).</p>
+            <div class="viz-widget" id="ratWidget">
+                <div class="viz-controls">
+                    <label>a: <span id="ratWidget-raVal"></span>
+                        <input type="range" id="ratWidget-ra" min="-5" max="5" step="0.5" value="1">
+                    </label>
+                    <label>b: <span id="ratWidget-rbVal"></span>
+                        <input type="range" id="ratWidget-rb" min="-5" max="5" step="0.5" value="2">
+                    </label>
+                    <label>c: <span id="ratWidget-rcVal"></span>
+                        <input type="range" id="ratWidget-rc" min="-5" max="5" step="0.5" value="1">
+                    </label>
+                    <label>d: <span id="ratWidget-rdVal"></span>
+                        <input type="range" id="ratWidget-rd" min="-5" max="5" step="0.5" value="-1">
+                    </label>
+                </div>
+                <canvas id="ratWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="ratWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('ratWidget');
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('ra').value), b = parseFloat($('rb').value);
+                    const cc = parseFloat($('rc').value), d = parseFloat($('rd').value);
+                    $('raVal').textContent = a.toFixed(1); $('rbVal').textContent = b.toFixed(1);
+                    $('rcVal').textContent = cc.toFixed(1); $('rdVal').textContent = d.toFixed(1);
+                    const f = x => (a * x + b) / (cc * x + d);
+                    let asyTxt = '';
+                    if (Math.abs(cc) > 1e-9) {
+                        const vx = -d / cc, hy = a / cc;
+                        ctx.strokeStyle = c.accent; ctx.lineWidth = 1.5; ctx.setLineDash([6, 6]);
+                        ctx.beginPath(); ctx.moveTo(V.px(vx), 0); ctx.lineTo(V.px(vx), V.W.height); ctx.stroke();
+                        ctx.beginPath(); ctx.moveTo(0, V.py(hy)); ctx.lineTo(V.W.width, V.py(hy)); ctx.stroke();
+                        ctx.setLineDash([]);
+                        asyTxt = 'vertical asymptote x = ' + vx.toFixed(2) + '   |   horizontal asymptote y = ' + hy.toFixed(2);
+                    } else {
+                        asyTxt = 'c = 0 → no vertical asymptote: this is the LINE (a·x + b)/d';
+                    }
+                    V.plot(f, c.curve);
+                    $('readout').textContent = 'f(x) = (' + a.toFixed(1) + 'x + ' + b.toFixed(1) + ')/(' + cc.toFixed(1) + 'x + ' + d.toFixed(1) + ')   |   ' + asyTxt;
+                }
+                V.bind(['ra', 'rb', 'rc', 'rd'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: All asymptotes and holes of \(f(x) = \dfrac{x^2 - 1}{x^2 - 4}\)</strong><br><br>
+                <strong>Step 1: Factor top and bottom</strong><br>
+                Why? Asymptotes and holes are decided by the factored form.<br>
+                \[f(x) = \frac{(x-1)(x+1)}{(x-2)(x+2)}\]<br>
+                <strong>Step 2: Vertical asymptotes</strong><br>
+                Why? The denominator vanishes at \(x = 2\) and \(x = -2\); neither factor cancels with the numerator, so both are true vertical asymptotes (not holes).<br><br>
+                <strong>Step 3: Horizontal asymptote</strong><br>
+                Why? Degrees of numerator and denominator are equal (both 2), so \(y = \) ratio of leading coefficients \(= 1/1 = 1\).<br><br>
+                <strong>Step 4: Holes</strong><br>
+                No common factors cancelled, so there are no holes. (Compare: \(\frac{(x-1)(x+1)}{(x-1)(x+2)}\) would have a <em>hole</em> at \(x = 1\) instead of an asymptote.)
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Average cost (worked):</strong> producing \(x\) items costs \(C(x) = 500 + 2x\); the average cost per item \(A(x) = \frac{500 + 2x}{x} = \frac{500}{x} + 2\) → horizontal asymptote \(y = 2\): mass production approaches the marginal cost.</li>
+                    <li><strong>Thin lens equation:</strong> \(\frac{1}{f} = \frac{1}{u} + \frac{1}{v}\) rearranges to the rational \(v(u) = \frac{uf}{u - f}\), with a vertical asymptote at the focal length.</li>
+                    <li><strong>Michaelis–Menten kinetics:</strong> reaction rate \(v = \frac{V_{max}[S]}{K_m + [S]}\) — saturation is the horizontal asymptote.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Find all asymptotes and holes of \(f(x) = \dfrac{x^2 - 9}{x - 3}\).
+                    <details><summary>Solution</summary>
+                    \(f(x) = \frac{(x-3)(x+3)}{x-3} = x + 3\) for \(x \neq 3\): no asymptotes, one <strong>hole</strong> at \((3, 6)\).
+                    </details>
+                </li>
+                <li>For \(f(x) = \dfrac{2x + 1}{x - 4}\): asymptotes, and the value \(f\) can never take.
+                    <details><summary>Solution</summary>
+                    Vertical \(x = 4\); horizontal \(y = 2\). \(f(x) = 2\) would need \(2x + 1 = 2x - 8\), impossible — so \(f\) never equals 2 (exactly the horizontal asymptote).
+                    </details>
+                </li>
+            </ol>
+
+            <h3 id="even-odd">Function Properties: Even/Odd & Monotonicity</h3>
+            <p><strong>Intuition:</strong> Symmetry is free information — if you know an <a href="https://en.wikipedia.org/wiki/Even_and_odd_functions" target="_blank" style="color: var(--primary);">even or odd function</a> on the right half of the axis, you know it everywhere.</p>
 
             <h4>Even and Odd Functions</h4>
-            <p>A function \(f\) is <strong>even</strong> if:
-            \[f(-x) = f(x)\]</p>
-            <p>Even functions are symmetric about the y-axis.</p>
-            <div class="example">
-                <strong>Example:</strong> \(f(x) = x^2\) is even.
-            </div>
+            <p>A function \(f\) is <strong>even</strong> if \(f(-x) = f(x)\) — symmetric about the y-axis (mirror).</p>
+            <p>A function \(f\) is <strong>odd</strong> if \(f(-x) = -f(x)\) — symmetric about the origin (180° rotation).</p>
 
-            <p>A function \(f\) is <strong>odd</strong> if:
-            \[f(-x) = -f(x)\]</p>
-            <p>Odd functions are symmetric about the origin.</p>
+            <p><strong>Interactive plot:</strong> the solid curve is \(f(x)\); the dashed green curve is \(f(-x)\). If dashed lands exactly on solid → even. If dashed is the mirror image through the x-axis → odd. Anything else → neither.</p>
+            <div class="viz-widget" id="symWidget">
+                <div class="viz-controls">
+                    <label>Function: <span id="symWidget-pickVal"></span>
+                        <input type="range" id="symWidget-pick" min="0" max="4" step="1" value="0">
+                    </label>
+                </div>
+                <canvas id="symWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="symWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('symWidget', { xmin: -5, xmax: 5, ymin: -5, ymax: 5 });
+                const $ = V.$;
+                const funcs = [
+                    { name: 'x²',     f: x => x * x },
+                    { name: 'x³',     f: x => x * x * x / 5 },
+                    { name: 'x² + x', f: x => x * x + x },
+                    { name: 'cos x',  f: x => Math.cos(x) * 3 },
+                    { name: 'sin x',  f: x => Math.sin(x) * 3 }
+                ];
+                function classify(f) {
+                    let even = true, odd = true;
+                    for (let x = 0.1; x <= 4; x += 0.1) {
+                        if (Math.abs(f(-x) - f(x)) > 1e-9) even = false;
+                        if (Math.abs(f(-x) + f(x)) > 1e-9) odd = false;
+                    }
+                    return even ? 'EVEN — mirror symmetry about the y-axis' :
+                           odd ? 'ODD — 180° rotation symmetry about the origin' :
+                           'NEITHER even nor odd';
+                }
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value);
+                    $('pickVal').textContent = funcs[k].name;
+                    const f = funcs[k].f;
+                    V.plot(f, c.curve);
+                    V.plot(x => f(-x), c.accent, [6, 6]);
+                    $('readout').textContent = 'f(x) = ' + funcs[k].name + '  →  ' + classify(f);
+                }
+                V.bind(['pick'], draw);
+            })();
+            </script>
+
             <div class="example">
-                <strong>Example:</strong> \(f(x) = x^3\) is odd.
+                <strong>Step-by-step: Prove \(f(x) = x^3\) is odd</strong><br><br>
+                <strong>Step 1: Write \(f(-x)\) and expand</strong><br>
+                \[f(-x) = (-x)^3 = (-1)^3 x^3 = -x^3\]<br>
+                <strong>Step 2: Compare with \(-f(x)\)</strong><br>
+                \(-f(x) = -x^3\). They agree for every \(x\), so \(f(-x) = -f(x)\): \(f\) is odd. ∎
+            </div>
+            <div class="example">
+                <strong>Step-by-step: Show \(g(x) = x^2 + x\) is neither</strong><br><br>
+                <strong>Step 1:</strong> \(g(-x) = x^2 - x\).<br>
+                <strong>Step 2:</strong> Test evenness at \(x = 1\): \(g(-1) = 0 \neq 2 = g(1)\). Not even.<br>
+                <strong>Step 3:</strong> Test oddness at \(x = 1\): \(g(-1) = 0 \neq -2 = -g(1)\). Not odd. ∎
             </div>
 
             <h4>Monotonicity</h4>
@@ -181,6 +749,30 @@
                 <li><strong>Increasing</strong> if \(x_1 < x_2 \Rightarrow f(x_1) < f(x_2)\)</li>
                 <li><strong>Decreasing</strong> if \(x_1 < x_2 \Rightarrow f(x_1) > f(x_2)\)</li>
             </ul>
+            <p>Most functions are monotonic only <em>piecewise</em>: \(x^2\) decreases on \((-\infty, 0]\) and increases on \([0, \infty)\). Monotonic functions are exactly the ones that pass the horizontal line test everywhere — hence invertible (see <a href="#inverse-functions" style="color: var(--primary);">Inverse Functions</a>).</p>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Fourier analysis:</strong> every signal splits uniquely into an even part \(\frac{f(x)+f(-x)}{2}\) and an odd part \(\frac{f(x)-f(-x)}{2}\) — cosines carry the even part, sines the odd part.</li>
+                    <li><strong>Integration shortcut (worked):</strong> \(\int_{-a}^{a} x^3\cos(x^2)\,dx = 0\) instantly, because the integrand is odd — no computation needed.</li>
+                    <li><strong>Monotonic response curves:</strong> dose-response in pharmacology and cumulative distribution functions in statistics are monotone by construction.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Classify \(f(x) = \dfrac{x}{x^2 + 1}\) as even, odd, or neither.
+                    <details><summary>Solution</summary>
+                    \(f(-x) = \frac{-x}{x^2+1} = -f(x)\) → odd.
+                    </details>
+                </li>
+                <li>Split \(f(x) = e^x\) into its even and odd parts.
+                    <details><summary>Solution</summary>
+                    Even: \(\frac{e^x + e^{-x}}{2} = \cosh x\). Odd: \(\frac{e^x - e^{-x}}{2} = \sinh x\). Indeed \(e^x = \cosh x + \sinh x\).
+                    </details>
+                </li>
+            </ol>
 
             <hr class="hr">
         </section>
@@ -190,56 +782,488 @@
 
             <h3>Special Functions</h3>
 
-            <h4>Exponential Functions</h4>
-            <p>\[f(x) = a^x \quad (a > 0, a \neq 1)\]</p>
+            <h4 id="exponential-functions">Exponential Functions</h4>
+            <p><strong>Intuition:</strong> An <a href="https://en.wikipedia.org/wiki/Exponential_function" target="_blank" style="color: var(--primary);">exponential function</a> models anything that grows (or decays) in proportion to its current size — populations, invested money, radioactive atoms. Linear growth <em>adds</em> a fixed amount per step; exponential growth <em>multiplies</em> by a fixed factor per step.</p>
+            <p><strong>Formal definition:</strong></p>
+            <p>\[f(x) = C \cdot a^x \quad (a > 0,\ a \neq 1)\]</p>
             <ul>
-                <li>Domain: all real numbers</li>
-                <li>Range: \((0, \infty)\)</li>
-                <li>Always positive</li>
-                <li>Passes through \((0, 1)\)</li>
+                <li>Domain: all real numbers; Range: \((0, \infty)\) for \(C > 0\)</li>
+                <li>Passes through \((0, C)\); base \(a > 1\) grows, \(0 < a < 1\) decays</li>
+                <li>\(a = 1\) is degenerate: the constant function \(C\)</li>
             </ul>
+
+            <p><strong>Interactive plot:</strong> toggle the log-scale checkbox — on a logarithmic y-axis every exponential becomes a straight line (that's how scientists spot exponential growth in data).</p>
+            <div class="viz-widget" id="expWidget">
+                <div class="viz-controls">
+                    <label>C: <span id="expWidget-CVal"></span>
+                        <input type="range" id="expWidget-C" min="0.5" max="5" step="0.1" value="1">
+                    </label>
+                    <label>base a: <span id="expWidget-aVal"></span>
+                        <input type="range" id="expWidget-a" min="0.2" max="4" step="0.05" value="2">
+                    </label>
+                    <label><input type="checkbox" id="expWidget-logscale"> log-scale y-axis</label>
+                </div>
+                <canvas id="expWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="expWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('expWidget', { xmin: -4, xmax: 6, ymin: -1, ymax: 20 });
+                const $ = V.$;
+                function draw() {
+                    const c = V.colors();
+                    const C = parseFloat($('C').value), a = parseFloat($('a').value);
+                    const logs = $('logscale').checked;
+                    $('CVal').textContent = C.toFixed(1); $('aVal').textContent = a.toFixed(2);
+                    if (logs) { V.ymin = -2; V.ymax = 3; } else { V.ymin = -1; V.ymax = 20; }
+                    V.clear(); V.drawAxes(c);
+                    const f = x => C * Math.pow(a, x);
+                    V.plot(logs ? (x => Math.log10(f(x))) : f, c.curve);
+                    V.dot(0, logs ? Math.log10(C) : C, c.accent, 6);
+                    const degen = Math.abs(a - 1) < 0.03 ? '   ⚠ a ≈ 1: degenerate (constant)' : '';
+                    $('readout').textContent = 'f(x) = ' + C.toFixed(1) + ' · ' + a.toFixed(2) + '^x'
+                        + (logs ? '   [y-axis shows log₁₀ f — exponentials are straight lines here]' : '') + degen;
+                }
+                V.bind(['C', 'a', 'logscale'], draw);
+            })();
+            </script>
+
             <div class="example">
-                <strong>Example:</strong> \(f(x) = 2^x\)
+                <strong>Step-by-step: From compound interest to the number \(e\)</strong><br><br>
+                <strong>Step 1: Compound once a year</strong><br>
+                €1 at 100% interest becomes \((1 + 1)^1 = 2\).<br><br>
+                <strong>Step 2: Compound \(n\) times a year</strong><br>
+                Why? Each period pays \(1/n\) of the rate, \(n\) times: \(\left(1 + \frac{1}{n}\right)^n\).<br><br>
+                <strong>Step 3: Let \(n\) grow</strong><br>
+                <table>
+                    <tr><th>n</th><th>\((1 + 1/n)^n\)</th></tr>
+                    <tr><td>1</td><td>2</td></tr>
+                    <tr><td>12</td><td>2.6130</td></tr>
+                    <tr><td>365</td><td>2.7146</td></tr>
+                    <tr><td>10&thinsp;000</td><td>2.71815</td></tr>
+                </table>
+                <strong>Step 4: The limit is the natural base</strong>
+                \[e = \lim_{n \to \infty}\left(1 + \frac{1}{n}\right)^n \approx 2.71828\]
             </div>
 
-            <h4>Logarithmic Functions</h4>
-            <p>\[f(x) = \log_a(x) \quad (a > 0, a \neq 1)\]</p>
-            <ul>
-                <li>Domain: \((0, \infty)\)</li>
-                <li>Range: all real numbers</li>
-                <li>Inverse of exponential functions</li>
-            </ul>
-            <p><strong>Key Property:</strong> If \(y = a^x\), then \(x = \log_a(y)\)</p>
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Carbon-14 dating (worked):</strong> \(N(t) = N_0 \cdot (1/2)^{t/5730}\). A bone with 25% of its original C-14 satisfies \((1/2)^{t/5730} = 1/4 = (1/2)^2\), so \(t = 2 \times 5730 = 11\,460\) years.</li>
+                    <li><strong>Compound interest (worked):</strong> €1000 at 5% for 10 years: \(1000(1.05)^{10} \approx 1628.89\) euros.</li>
+                    <li><strong>Population growth / epidemics:</strong> early-phase spread multiplies per generation.</li>
+                    <li><strong>Moore's law:</strong> transistor counts doubling ≈ every 2 years — a straight line on the widget's log scale.</li>
+                </ul>
+            </div>
 
-            <h4>Trigonometric Functions</h4>
-            <p>\[\sin(x), \cos(x), \tan(x), \cot(x), \sec(x), \csc(x)\]</p>
-            <p><strong>Unit Circle Relationships:</strong></p>
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>A bacteria culture triples every 4 hours starting from 500 cells. Write \(N(t)\) and evaluate at \(t = 12\) h.
+                    <details><summary>Solution</summary>
+                    \(N(t) = 500 \cdot 3^{t/4}\); \(N(12) = 500 \cdot 3^3 = 13\,500\) cells.
+                    </details>
+                </li>
+                <li>Which is larger for big \(x\): \(f(x) = x^{100}\) or \(g(x) = 1.01^x\)? Why?
+                    <details><summary>Solution</summary>
+                    \(g\) eventually wins: any exponential with base \(> 1\) outgrows every polynomial, since \(\frac{g(x)}{f(x)} = e^{x\ln 1.01 - 100\ln x} \to \infty\).
+                    </details>
+                </li>
+            </ol>
+
+            <h4 id="logarithmic-functions">Logarithmic Functions</h4>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Logarithm" target="_blank" style="color: var(--primary);">logarithm</a> answers the question "<em>how many times</em> must I multiply by \(a\) to reach \(x\)?" It compresses huge ranges into small ones — which is why earthquakes, sound, and acidity are all measured logarithmically.</p>
+            <p><strong>Formal definition:</strong></p>
+            <p>\[f(x) = \log_a(x) \quad (a > 0,\ a \neq 1)\]</p>
+            <ul>
+                <li>Domain: \((0, \infty)\); Range: all real numbers</li>
+                <li>Inverse of the exponential: \(y = a^x \iff x = \log_a(y)\)</li>
+            </ul>
+            <p><strong>The three log laws</strong> (each is an exponent law in disguise):</p>
+            <ul>
+                <li>\(\log_a(xy) = \log_a x + \log_a y\) — because \(a^{m+n} = a^m a^n\)</li>
+                <li>\(\log_a(x/y) = \log_a x - \log_a y\) — because \(a^{m-n} = a^m / a^n\)</li>
+                <li>\(\log_a(x^k) = k \log_a x\) — because \((a^m)^k = a^{mk}\)</li>
+            </ul>
+
+            <p><strong>Interactive plot:</strong> \(\log_a x\) (solid), its inverse \(a^x\) (dashed green), and the mirror line \(y = x\) (dotted) — inverse pairs are always reflections across it.</p>
+            <div class="viz-widget" id="logWidget">
+                <div class="viz-controls">
+                    <label>base a: <span id="logWidget-aVal"></span>
+                        <input type="range" id="logWidget-a" min="1.5" max="10" step="0.1" value="2.7">
+                    </label>
+                </div>
+                <canvas id="logWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="logWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('logWidget', { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('a').value);
+                    $('aVal').textContent = a.toFixed(1);
+                    const lg = x => Math.log(x) / Math.log(a);
+                    V.plot(x => x > 0 ? lg(x) : NaN, c.curve);
+                    V.plot(x => Math.pow(a, x), c.accent, [6, 6]);
+                    V.plot(x => x, c.axis, [2, 4]);
+                    V.dot(1, 0, c.curve, 5);
+                    V.label('(1, 0)', 1.15, -0.4, c);
+                    $('readout').textContent = 'solid: log_' + a.toFixed(1) + '(x)   |   dashed: ' + a.toFixed(1) + '^x   |   dotted: y = x (mirror)';
+                }
+                V.bind(['a'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: Solve \(3 \cdot 2^{x+1} = 24\)</strong><br><br>
+                <strong>Step 1: Isolate the exponential</strong><br>
+                Why? Logs can only "undo" a bare exponential.<br>
+                \[2^{x+1} = 8\]<br>
+                <strong>Step 2: Take \(\log_2\) of both sides</strong><br>
+                Why? \(\log_2\) is the inverse of \(2^x\), so it frees the exponent (law 3 with \(k = x+1\)):<br>
+                \[x + 1 = \log_2 8 = 3\]<br>
+                <strong>Step 3: Solve</strong>
+                \[x = 2\]
+                <strong>Verification:</strong> \(3 \cdot 2^{3} = 24\) ✓
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Richter scale (worked):</strong> magnitude difference 7 − 5 = 2 means \(10^2 = 100\) times the shaking amplitude and \(\approx 10^{1.5 \times 2} = 1000\) times the energy.</li>
+                    <li><strong>pH (worked):</strong> \(\text{pH} = -\log_{10}[\text{H}^+]\). Coffee at pH 5 has \(10^{-5}\) mol/L — 100× more acidic than water at pH 7.</li>
+                    <li><strong>Binary search:</strong> halving a million-entry list takes \(\log_2 10^6 \approx 20\) steps.</li>
+                    <li><strong>Decibels & information entropy:</strong> both are logarithms of ratios.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Solve \(\log_3(x) + \log_3(x - 2) = 1\).
+                    <details><summary>Solution</summary>
+                    Law 1: \(\log_3 x(x-2) = 1 \Rightarrow x^2 - 2x = 3 \Rightarrow (x-3)(x+1) = 0\). Only \(x = 3\) keeps both logs defined (\(x > 2\)). ✓
+                    </details>
+                </li>
+                <li>How many decimal digits does \(2^{100}\) have?
+                    <details><summary>Solution</summary>
+                    Digits \(= \lfloor 100 \log_{10} 2 \rfloor + 1 = \lfloor 30.103 \rfloor + 1 = 31\).
+                    </details>
+                </li>
+            </ol>
+
+            <h4 id="trigonometric-functions">Trigonometric Functions</h4>
+            <p><strong>Intuition:</strong> <a href="https://en.wikipedia.org/wiki/Trigonometric_functions" target="_blank" style="color: var(--primary);">Trigonometric functions</a> are what circular motion looks like from the side. A point going around a circle, watched edge-on, bobs up and down as a sine wave — that single fact makes \(\sin\) and \(\cos\) the language of every wave and vibration in physics.</p>
+            <p><strong>The six functions:</strong> \(\sin(x), \cos(x), \tan(x) = \frac{\sin x}{\cos x}, \cot(x), \sec(x), \csc(x)\)</p>
+            <p><strong>Fundamental identity</strong> (Pythagoras on the unit circle):</p>
             <p>\[\sin^2(x) + \cos^2(x) = 1\]</p>
 
-            <h4>Inverse Functions</h4>
-            <p>If \(f: A \rightarrow B\) is a bijection (one-to-one and onto), then \(f^{-1}: B \rightarrow A\) is the <strong>inverse function</strong> satisfying:</p>
+            <p><strong>Interactive animation:</strong> press Play — the point circles the unit circle (left) while its height traces the sine wave (right). Knobs control \(A\sin(\omega x + \varphi)\).</p>
+            <div class="viz-widget" id="trigWidget">
+                <div class="viz-controls">
+                    <label>Amplitude A: <span id="trigWidget-AVal"></span>
+                        <input type="range" id="trigWidget-A" min="0.2" max="1.5" step="0.05" value="1">
+                    </label>
+                    <label>Frequency ω: <span id="trigWidget-wVal"></span>
+                        <input type="range" id="trigWidget-w" min="0.5" max="4" step="0.1" value="1">
+                    </label>
+                    <label>Phase φ: <span id="trigWidget-phVal"></span>
+                        <input type="range" id="trigWidget-ph" min="0" max="6.28" step="0.05" value="0">
+                    </label>
+                    <button class="viz-btn" id="trigWidget-play">▶ Play</button>
+                </div>
+                <canvas id="trigWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="trigWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('trigWidget');
+                const $ = V.$, ctx = V.ctx, W = V.W;
+                const cx = 150, cy = 210, R = 120;          // unit circle (pixels)
+                const wx0 = 330, wx1 = 800;                 // wave region (pixels)
+                const spanX = 4 * Math.PI;                  // wave shows x in [0, 4π]
+                let t = 0, running = false, lastTs = null;
+                function draw() {
+                    const c = V.colors();
+                    V.clear();
+                    const A = parseFloat($('A').value), w = parseFloat($('w').value), ph = parseFloat($('ph').value);
+                    $('AVal').textContent = A.toFixed(2); $('wVal').textContent = w.toFixed(1); $('phVal').textContent = ph.toFixed(2);
+                    const f = x => A * Math.sin(w * x + ph);
+                    // --- unit circle (left) ---
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(cx - R - 20, cy); ctx.lineTo(cx + R + 20, cy); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(cx, cy - R - 20); ctx.lineTo(cx, cy + R + 20); ctx.stroke();
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.stroke();
+                    const th = w * t + ph;
+                    const pxc = cx + R * Math.cos(th), pyc = cy - R * A * Math.sin(th) / Math.max(A, 1);
+                    // radius, point, height segment
+                    ctx.strokeStyle = c.curve; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(pxc, pyc); ctx.stroke();
+                    ctx.fillStyle = c.accent;
+                    ctx.beginPath(); ctx.arc(pxc, pyc, 6, 0, 2 * Math.PI); ctx.fill();
+                    ctx.strokeStyle = c.accent; ctx.setLineDash([4, 4]);
+                    ctx.beginPath(); ctx.moveTo(pxc, pyc); ctx.lineTo(wx0, pyc); ctx.stroke();
+                    ctx.setLineDash([]);
+                    // --- traced wave (right) ---
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(wx0, cy); ctx.lineTo(wx1, cy); ctx.stroke();
+                    ctx.strokeStyle = c.curve; ctx.lineWidth = 2.5; ctx.beginPath();
+                    const yScale = R / Math.max(A, 1);
+                    for (let i = 0; i <= wx1 - wx0; i++) {
+                        const x = spanX * i / (wx1 - wx0);
+                        const Y = cy - yScale * f(x + t) * (1);
+                        if (i === 0) ctx.moveTo(wx0 + i, Y); else ctx.lineTo(wx0 + i, Y);
+                    }
+                    ctx.stroke();
+                    ctx.fillStyle = c.accent;
+                    ctx.beginPath(); ctx.arc(wx0, cy - yScale * f(t), 6, 0, 2 * Math.PI); ctx.fill();
+                    ctx.fillStyle = c.text; ctx.font = '13px monospace';
+                    ctx.fillText('unit circle', cx - 40, cy + R + 40);
+                    ctx.fillText('f(x) = ' + A.toFixed(2) + '·sin(' + w.toFixed(1) + 'x + ' + ph.toFixed(2) + ')', wx0 + 20, 30);
+                    $('readout').textContent = 'θ = ' + th.toFixed(2) + ' rad   |   sin θ = ' + Math.sin(th).toFixed(3) + '   |   cos θ = ' + Math.cos(th).toFixed(3)
+                        + '   |   sin²+cos² = ' + (Math.sin(th) ** 2 + Math.cos(th) ** 2).toFixed(3);
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    if (lastTs !== null) t += (ts - lastTs) / 1000;
+                    lastTs = ts;
+                    draw();
+                    requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = !running;
+                    $('play').textContent = running ? '⏸ Pause' : '▶ Play';
+                    lastTs = null;
+                    if (running) requestAnimationFrame(tick);
+                });
+                V.bind(['A', 'w', 'ph'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: Exact values from the unit circle</strong><br><br>
+                <strong>θ = π/6 (30°):</strong> half an equilateral triangle of side 1 → legs \(\frac12\) and \(\frac{\sqrt3}{2}\): \(\sin\frac{\pi}{6} = \frac12\), \(\cos\frac{\pi}{6} = \frac{\sqrt3}{2}\).<br><br>
+                <strong>θ = π/4 (45°):</strong> isosceles right triangle with hypotenuse 1 → legs \(\frac{1}{\sqrt2}\): \(\sin\frac{\pi}{4} = \cos\frac{\pi}{4} = \frac{\sqrt2}{2}\).<br><br>
+                <strong>θ = π/3 (60°):</strong> the π/6 triangle with legs swapped: \(\sin\frac{\pi}{3} = \frac{\sqrt3}{2}\), \(\cos\frac{\pi}{3} = \frac12\).
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Concert pitch A440 (worked):</strong> the tuning-fork tone is \(p(t) = A\sin(2\pi \cdot 440\, t)\) — 440 full circles of the widget per second.</li>
+                    <li><strong>AC mains voltage:</strong> \(V(t) = 325\sin(2\pi \cdot 50\,t)\) volts in Europe (230 V RMS).</li>
+                    <li><strong>Tides, seasons, springs:</strong> any system pulled back toward equilibrium proportionally to displacement oscillates sinusoidally (simple harmonic motion).</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Find amplitude, period, and phase shift of \(f(x) = 3\sin(2x - \frac{\pi}{2})\).
+                    <details><summary>Solution</summary>
+                    \(A = 3\); period \(= \frac{2\pi}{2} = \pi\); phase shift \(= \frac{\pi/2}{2} = \frac{\pi}{4}\) to the right.
+                    </details>
+                </li>
+                <li>Using the unit circle, explain why \(\sin(\pi - \theta) = \sin\theta\).
+                    <details><summary>Solution</summary>
+                    The points at angles \(\theta\) and \(\pi - \theta\) are mirror images across the y-axis: same height (same sine), opposite \(x\) (cosine flips sign).
+                    </details>
+                </li>
+            </ol>
+
+            <h4 id="inverse-functions">Inverse Functions</h4>
+            <p><strong>Intuition:</strong> An <a href="https://en.wikipedia.org/wiki/Inverse_function" target="_blank" style="color: var(--primary);">inverse function</a> runs a process backwards: if \(f\) converts euros to dollars, \(f^{-1}\) converts dollars back to euros. Only processes that never merge two inputs into one output can be reversed.</p>
+            <p><strong>Formal definition:</strong> If \(f: A \rightarrow B\) is a bijection (one-to-one and onto), then \(f^{-1}: B \rightarrow A\) is the <strong>inverse function</strong> satisfying:</p>
             <p>\[f(f^{-1}(x)) = x \quad \text{and} \quad f^{-1}(f(x)) = x\]</p>
+            <p><strong>Graphically:</strong> the graph of \(f^{-1}\) is the graph of \(f\) reflected across the line \(y = x\) — swapping input and output swaps the axes.</p>
+
+            <div class="viz-widget" id="invWidget">
+                <div class="viz-controls">
+                    <label>Function: <span id="invWidget-pickVal"></span>
+                        <input type="range" id="invWidget-pick" min="0" max="2" step="1" value="0">
+                    </label>
+                </div>
+                <canvas id="invWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="invWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('invWidget', { xmin: -6, xmax: 6, ymin: -6, ymax: 6 });
+                const $ = V.$, ctx = V.ctx;
+                const funcs = [
+                    { name: '2x + 3',  f: x => 2 * x + 3,      inv: 'f⁻¹(x) = (x − 3)/2' },
+                    { name: 'x³/4',    f: x => x * x * x / 4,  inv: 'f⁻¹(x) = ∛(4x)' },
+                    { name: 'eˣ',      f: x => Math.exp(x),    inv: 'f⁻¹(x) = ln(x)' }
+                ];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value);
+                    $('pickVal').textContent = funcs[k].name;
+                    const f = funcs[k].f;
+                    V.plot(x => x, c.axis, [2, 4]);          // mirror line y = x
+                    V.plot(f, c.curve);                       // f
+                    // inverse: parametric reflection (f(t), t)
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 2.5; ctx.setLineDash([6, 6]);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let t = V.xmin; t <= V.xmax; t += 0.01) {
+                        const X = f(t), Y = t;
+                        if (!isFinite(X) || X < V.xmin || X > V.xmax) { started = false; continue; }
+                        if (!started) { ctx.moveTo(V.px(X), V.py(Y)); started = true; }
+                        else ctx.lineTo(V.px(X), V.py(Y));
+                    }
+                    ctx.stroke(); ctx.setLineDash([]);
+                    $('readout').textContent = 'solid: f(x) = ' + funcs[k].name + '   |   dashed: ' + funcs[k].inv + '   |   dotted mirror: y = x';
+                }
+                V.bind(['pick'], draw);
+            })();
+            </script>
+
             <div class="example">
-                <strong>Example:</strong> \(f(x) = 2x + 3\) has inverse \(f^{-1}(x) = \frac{x - 3}{2}\)
+                <strong>Step-by-step: Invert \(f(x) = 2x + 3\)</strong><br><br>
+                <strong>Step 1: Write \(y = f(x)\) and swap \(x \leftrightarrow y\)</strong><br>
+                Why? The inverse exchanges the roles of input and output.<br>
+                \[x = 2y + 3\]<br>
+                <strong>Step 2: Solve for \(y\)</strong><br>
+                \[y = \frac{x - 3}{2} \quad\Rightarrow\quad f^{-1}(x) = \frac{x - 3}{2}\]<br>
+                <strong>Step 3: Verify BOTH compositions</strong><br>
+                \(f(f^{-1}(x)) = 2 \cdot \frac{x-3}{2} + 3 = x\) ✓ and \(f^{-1}(f(x)) = \frac{(2x+3) - 3}{2} = x\) ✓
+            </div>
+            <div class="example">
+                <strong>Why \(x^2\) needs a domain restriction:</strong> a horizontal line \(y = 4\) hits the parabola twice (\(x = \pm 2\)) — it fails the <strong>horizontal line test</strong>, so no inverse exists on all of \(\mathbb{R}\). Restrict to \([0, \infty)\) and the inverse is \(\sqrt{x}\).
             </div>
 
-            <h3>Function Composition</h3>
-            <p>The <strong>composition</strong> of functions \(f\) and \(g\), denoted \((f \circ g)(x)\), is:</p>
-            <p>\[(f \circ g)(x) = f(g(x))\]</p>
             <div class="example">
-                <strong>Example:</strong> If \(f(x) = x^2\) and \(g(x) = x + 1\), then:
-                \[(f \circ g)(x) = f(g(x)) = f(x + 1) = (x + 1)^2 = x^2 + 2x + 1\]
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Decryption:</strong> decoding is exactly the inverse function of encoding — RSA's security rests on inverses that are easy one way, hard the other.</li>
+                    <li><strong>Unit conversions:</strong> \(F(c) = \tfrac95 c + 32\) has inverse \(C(f) = \tfrac59(f - 32)\).</li>
+                    <li><strong>log ↔ exp:</strong> see <a href="#logarithmic-functions" style="color: var(--primary);">Logarithmic Functions</a> — the widget there shows the same mirror picture.</li>
+                </ul>
             </div>
-            <p><strong>Note:</strong> Generally, \((f \circ g)(x) \neq (g \circ f)(x)\)</p>
 
-            <h3>Transformations of Functions</h3>
-            <p>Given \(f(x)\), we can create new functions:</p>
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Find \(f^{-1}\) for \(f(x) = \dfrac{x}{x + 1}\) (for \(x \neq -1\)).
+                    <details><summary>Solution</summary>
+                    \(x = \frac{y}{y+1} \Rightarrow x(y+1) = y \Rightarrow y(x - 1) = -x \Rightarrow f^{-1}(x) = \frac{x}{1 - x}\), \(x \neq 1\).
+                    </details>
+                </li>
+                <li>Is \(f(x) = x^3 - x\) invertible on \(\mathbb{R}\)?
+                    <details><summary>Solution</summary>
+                    No: \(f(0) = f(1) = f(-1) = 0\) — three inputs share one output, failing the horizontal line test. (It becomes invertible on \([1/\sqrt3, \infty)\), where it is strictly increasing.)
+                    </details>
+                </li>
+            </ol>
+
+            <h3 id="composition-transformations">Function Composition & Transformations</h3>
+            <p><strong>Intuition:</strong> <a href="https://en.wikipedia.org/wiki/Function_composition" target="_blank" style="color: var(--primary);">Composition</a> chains machines: the output of \(g\) feeds straight into \(f\). Transformations are the special case of composing with simple shift/stretch machines — which is how one template graph generates a whole family.</p>
+
+            <h4>Composition</h4>
+            <p>\[(f \circ g)(x) = f(g(x)) \quad \text{(apply } g \text{ first, then } f\text{)}\]</p>
+            <div class="example">
+                <strong>Step-by-step: \(f(x) = x^2\), \(g(x) = x + 1\) — both orders</strong><br><br>
+                <strong>Order 1: \((f \circ g)(x)\)</strong><br>
+                Feed \(g\)'s output into \(f\): \(f(g(x)) = f(x+1) = (x+1)^2 = x^2 + 2x + 1\).<br>
+                At \(x = 2\): \(g(2) = 3\), then \(f(3) = 9\).<br><br>
+                <strong>Order 2: \((g \circ f)(x)\)</strong><br>
+                Feed \(f\)'s output into \(g\): \(g(f(x)) = g(x^2) = x^2 + 1\).<br>
+                At \(x = 2\): \(f(2) = 4\), then \(g(4) = 5\).<br><br>
+                <strong>Conclusion:</strong> \(9 \neq 5\) — composition is <em>not commutative</em>: \(f \circ g \neq g \circ f\) in general.
+            </div>
+
+            <h4>Transformations</h4>
+            <p>Every transformed graph is \(a \cdot f(b(x - h)) + k\):</p>
             <ul>
-                <li><strong>Vertical Shifts:</strong> \(f(x) + c\) shifts graph up by \(c\) units (or down if \(c < 0\))</li>
-                <li><strong>Horizontal Shifts:</strong> \(f(x - c)\) shifts graph right by \(c\) units (or left if \(c < 0\))</li>
-                <li><strong>Vertical Stretch/Compression:</strong> \(cf(x)\) stretches (if \(c > 1\)) or compresses (if \(0 < c < 1\)) vertically</li>
-                <li><strong>Reflection:</strong> \(-f(x)\) reflects across the x-axis; \(f(-x)\) reflects across the y-axis</li>
+                <li>\(k\): <strong>vertical shift</strong> (up if \(k > 0\))</li>
+                <li>\(h\): <strong>horizontal shift</strong> (right if \(h > 0\))</li>
+                <li>\(a\): <strong>vertical stretch</strong> (\(|a| > 1\)) / compression (\(|a| < 1\)); \(a < 0\) reflects across the x-axis</li>
+                <li>\(b\): <strong>horizontal compression</strong> (\(|b| > 1\)) / stretch (\(|b| < 1\)); \(b < 0\) reflects across the y-axis</li>
             </ul>
+
+            <p><strong>Interactive plot:</strong> base curve dashed, transformed curve solid. Watch the readout rebuild the formula as you turn the knobs.</p>
+            <div class="viz-widget" id="transWidget">
+                <div class="viz-controls">
+                    <label>Base f: <span id="transWidget-pickVal"></span>
+                        <input type="range" id="transWidget-pick" min="0" max="2" step="1" value="0">
+                    </label>
+                    <label>a (v-stretch): <span id="transWidget-taVal"></span>
+                        <input type="range" id="transWidget-ta" min="-3" max="3" step="0.1" value="1">
+                    </label>
+                    <label>b (h-compress): <span id="transWidget-tbVal"></span>
+                        <input type="range" id="transWidget-tb" min="-3" max="3" step="0.1" value="1">
+                    </label>
+                    <label>h (h-shift): <span id="transWidget-thVal"></span>
+                        <input type="range" id="transWidget-th" min="-5" max="5" step="0.25" value="0">
+                    </label>
+                    <label>k (v-shift): <span id="transWidget-tkVal"></span>
+                        <input type="range" id="transWidget-tk" min="-5" max="5" step="0.25" value="0">
+                    </label>
+                </div>
+                <canvas id="transWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="transWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('transWidget', { xmin: -8, xmax: 8, ymin: -8, ymax: 8 });
+                const $ = V.$;
+                const bases = [
+                    { name: 'x²',   f: x => x * x },
+                    { name: '|x|',  f: x => Math.abs(x) },
+                    { name: 'sin x', f: x => Math.sin(x) * 2 }
+                ];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const kx = parseInt($('pick').value);
+                    const a = parseFloat($('ta').value), b = parseFloat($('tb').value);
+                    const h = parseFloat($('th').value), k = parseFloat($('tk').value);
+                    $('pickVal').textContent = bases[kx].name;
+                    $('taVal').textContent = a.toFixed(1); $('tbVal').textContent = b.toFixed(1);
+                    $('thVal').textContent = h.toFixed(2); $('tkVal').textContent = k.toFixed(2);
+                    const f = bases[kx].f;
+                    V.plot(f, c.accent, [6, 6]);                       // base, dashed
+                    V.plot(x => a * f(b * (x - h)) + k, c.curve);      // transformed
+                    $('readout').textContent = 'g(x) = ' + a.toFixed(1) + ' · f(' + b.toFixed(1) + '·(x − ' + h.toFixed(2) + ')) + ' + k.toFixed(2)
+                        + '   with f(x) = ' + bases[kx].name;
+                }
+                V.bind(['pick', 'ta', 'tb', 'th', 'tk'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: Build \(g(x) = -2f(x - 3) + 1\) from \(f\) — order matters!</strong><br><br>
+                <strong>Step 1: Horizontal shift</strong> — \(f(x - 3)\): slide the graph 3 right. (Do shifts <em>inside</em> the argument first.)<br>
+                <strong>Step 2: Vertical stretch</strong> — \(2f(x-3)\): double every height.<br>
+                <strong>Step 3: Reflection</strong> — \(-2f(x-3)\): flip across the x-axis.<br>
+                <strong>Step 4: Vertical shift</strong> — \(-2f(x-3) + 1\): raise everything by 1.<br><br>
+                Why this order? Steps 2–4 act on the <em>output</em>; doing the \(+1\) before the \(\times(-2)\) would give \(-2(f + 1) = -2f - 2\), a different function.
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Computer graphics:</strong> every sprite you see is scaled (\(a, b\)), translated (\(h, k\)), and flipped (signs) — the widget's four knobs are a 2D graphics pipeline in miniature.</li>
+                    <li><strong>Signal processing:</strong> \(f(t - h)\) is a time delay; \(f(bt)\) is playback speed.</li>
+                    <li><strong>Currency chains (composition):</strong> EUR→USD→JPY is \((g \circ f)\); the order of conversion never commutes with fees involved.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Given \(f(x) = \sqrt{x}\) and \(g(x) = 3x + 1\), compute \((f \circ g)(5)\) and \((g \circ f)(5)\).
+                    <details><summary>Solution</summary>
+                    \((f \circ g)(5) = f(16) = 4\). \((g \circ f)(5) = g(\sqrt5) = 3\sqrt5 + 1 \approx 7.708\).
+                    </details>
+                </li>
+                <li>Describe how the graph of \(y = \frac12|x + 2| - 3\) is built from \(y = |x|\).
+                    <details><summary>Solution</summary>
+                    Shift 2 <em>left</em> (\(x + 2 = x - (-2)\)), compress vertically by \(\frac12\), then shift 3 down. Vertex moves \((0,0) \to (-2, -3)\).
+                    </details>
+                </li>
+            </ol>
 
             <hr class="hr">
         </section>
@@ -247,20 +1271,436 @@
         <section id="advanced">
             <h2>Advanced Level</h2>
 
-            <h3>Continuous Functions</h3>
-            <p>A function \(f: \mathbb{R} \rightarrow \mathbb{R}\) is <strong>continuous</strong> at \(c\) if:</p>
+            <h3 id="continuous-functions">Continuous Functions</h3>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Continuous_function" target="_blank" style="color: var(--primary);">continuous function</a> is one you can draw without lifting the pen: nearby inputs give nearby outputs, with no jumps or teleports.</p>
+            <p><strong>Formal definition:</strong> \(f: \mathbb{R} \rightarrow \mathbb{R}\) is <strong>continuous at \(c\)</strong> if</p>
             <p>\[\lim_{x \to c} f(x) = f(c)\]</p>
-            <p><strong>Equivalent Definition:</strong> For every \(\epsilon > 0\), there exists \(\delta > 0\) such that:
-            \[|x - c| < \delta \Rightarrow |f(x) - f(c)| < \epsilon\]</p>
+            <p><strong>Equivalent (ε-δ) definition:</strong> for every \(\varepsilon > 0\) there exists \(\delta > 0\) such that</p>
+            <p>\[|x - c| < \delta \;\Rightarrow\; |f(x) - f(c)| < \varepsilon\]</p>
+            <p><strong>Geometric meaning</strong> (this is what the widget below shows): whatever horizontal <em>ε-tube</em> you draw around the height \(f(c)\), you can always find a vertical <em>δ-window</em> around \(c\) so narrow that the whole piece of graph inside the window stays inside the tube. Continuity at \(c\) means the challenge "here's my ε!" can always be answered with a working δ.</p>
 
-            <h3>Differentiable Functions</h3>
-            <p>A function is <strong>differentiable</strong> at \(c\) if the derivative exists:</p>
+            <p><strong>Interactive: ε-δ on the continuous \(f(x) = x^2\).</strong> Shrink ε and watch δ shrink too — but a valid δ always exists.</p>
+            <div class="viz-widget" id="contWidget">
+                <div class="viz-controls">
+                    <label>ε: <span id="contWidget-epsVal"></span>
+                        <input type="range" id="contWidget-eps" min="0.05" max="2" step="0.05" value="0.5">
+                    </label>
+                    <label>point c: <span id="contWidget-cptVal"></span>
+                        <input type="range" id="contWidget-cpt" min="-2.5" max="2.5" step="0.1" value="1">
+                    </label>
+                </div>
+                <canvas id="contWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="contWidget-readout"></p>
+            </div>
+
+            <p><strong>Interactive: ε-δ FAILING on a jump.</strong> The step function \(f(x) = x\) for \(x < 1\), \(x + 2\) for \(x \ge 1\). Put \(c = 1\) and pick \(\varepsilon < 2\): no δ can keep the graph inside the tube — the jump always escapes.</p>
+            <div class="viz-widget" id="jumpWidget">
+                <div class="viz-controls">
+                    <label>ε: <span id="jumpWidget-epsVal"></span>
+                        <input type="range" id="jumpWidget-eps" min="0.05" max="3" step="0.05" value="1">
+                    </label>
+                    <label>point c: <span id="jumpWidget-cptVal"></span>
+                        <input type="range" id="jumpWidget-cpt" min="-2" max="3" step="0.05" value="1">
+                    </label>
+                </div>
+                <canvas id="jumpWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="jumpWidget-readout"></p>
+            </div>
+
+            <script>
+            // Shared ε-δ visualizer (VIZ-3): instantiated for contWidget and jumpWidget
+            function epsDeltaWidget(widgetId, f, opts) {
+                const V = VizCore(widgetId, opts);
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    V.plot(f, c.curve);
+                    const eps = parseFloat($('eps').value), cp = parseFloat($('cpt').value);
+                    $('epsVal').textContent = eps.toFixed(2); $('cptVal').textContent = cp.toFixed(2);
+                    const fc = f(cp);
+                    // horizontal ε-band around f(c)
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                    ctx.fillRect(0, V.py(fc + eps), V.W.width, V.py(fc - eps) - V.py(fc + eps));
+                    ctx.globalAlpha = 1;
+                    // largest δ found numerically
+                    let delta = 0;
+                    for (let d = 0.001; d < (V.xmax - V.xmin); d += 0.001) {
+                        if (Math.abs(f(cp + d) - fc) >= eps || Math.abs(f(cp - d) - fc) >= eps) break;
+                        delta = d;
+                    }
+                    if (delta > 0.0015) {
+                        ctx.globalAlpha = 0.15; ctx.fillStyle = c.curve;
+                        ctx.fillRect(V.px(cp - delta), 0, V.px(cp + delta) - V.px(cp - delta), V.W.height);
+                        ctx.globalAlpha = 1;
+                        $('readout').textContent = 'ε = ' + eps.toFixed(2) + '  →  δ = ' + delta.toFixed(3) + '   (the δ-window keeps the graph inside the ε-tube)';
+                    } else {
+                        $('readout').innerHTML = 'ε = ' + eps.toFixed(2) + '  →  <span style="color:#ef4444">no δ works!</span> The jump escapes every ε-tube narrower than the gap.';
+                    }
+                    // dashed guides through (c, f(c))
+                    ctx.setLineDash([5, 5]); ctx.strokeStyle = c.axis; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(V.px(cp), V.py(fc)); ctx.lineTo(V.px(cp), V.W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(V.px(cp), V.py(fc)); ctx.lineTo(0, V.py(fc)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    V.dot(cp, fc, c.accent, 5);
+                }
+                V.bind(['eps', 'cpt'], draw);
+            }
+            epsDeltaWidget('contWidget', x => x * x, { xmin: -4, xmax: 4, ymin: -1, ymax: 9 });
+            epsDeltaWidget('jumpWidget', x => x < 1 ? x : x + 2, { xmin: -3, xmax: 4, ymin: -3, ymax: 7 });
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step ε-δ proof: \(f(x) = 3x + 1\) is continuous at \(c = 2\)</strong><br><br>
+                <strong>Step 1: Write what must be controlled</strong><br>
+                We must make \(|f(x) - f(2)| = |3x + 1 - 7| = 3|x - 2|\) smaller than any given \(\varepsilon\).<br><br>
+                <strong>Step 2: Choose δ</strong><br>
+                Why? \(3|x - 2| < \varepsilon\) exactly when \(|x - 2| < \varepsilon/3\). So choose \(\delta = \varepsilon/3\).<br><br>
+                <strong>Step 3: Verify the implication</strong><br>
+                If \(|x - 2| < \delta = \varepsilon/3\), then \(|f(x) - f(2)| = 3|x - 2| < 3 \cdot \varepsilon/3 = \varepsilon\). ∎<br><br>
+                (The widget's readout for a linear function shows exactly this ratio: δ is always ε divided by the slope.)
+            </div>
+
+            <div class="example">
+                <strong>The three types of discontinuity:</strong>
+                <ul>
+                    <li><strong>Removable:</strong> \(\frac{x^2 - 1}{x - 1}\) at \(x = 1\) — a single missing point (hole); redefining one value fixes it.</li>
+                    <li><strong>Jump:</strong> the widget's step function at \(x = 1\) — left and right limits exist but disagree.</li>
+                    <li><strong>Infinite:</strong> \(1/x\) at \(x = 0\) — the function blows up.</li>
+                </ul>
+            </div>
+
+            <p><strong>Two theorems that need continuity</strong> (both visible in the widgets):</p>
+            <ul>
+                <li><strong>Intermediate Value Theorem (IVT):</strong> a continuous \(f\) on \([a, b]\) takes every value between \(f(a)\) and \(f(b)\) — the unbroken pen stroke must cross every horizontal line between its endpoints. The jump widget shows how a discontinuity lets the graph skip values 1 to 3 entirely.</li>
+                <li><strong>Extreme Value Theorem (EVT):</strong> a continuous \(f\) on a closed \([a, b]\) attains a maximum and minimum.</li>
+            </ul>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Root-finding:</strong> the bisection algorithm is IVT made mechanical — it only works because continuity forbids skipping zero (see <a href="NumericalMethods.html" style="color: var(--primary);">Numerical Methods</a>).</li>
+                    <li><strong>Physical signals:</strong> temperature, pressure, position evolve continuously — sensors exploit this to interpolate between samples.</li>
+                    <li><strong>Thermostats & switches:</strong> engineered <em>jump</em> discontinuities: output snaps between states at a threshold.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Prove with ε-δ that \(f(x) = 5x - 4\) is continuous at \(c = 1\).
+                    <details><summary>Solution</summary>
+                    \(|f(x) - f(1)| = |5x - 4 - 1| = 5|x - 1|\). Given \(\varepsilon > 0\) choose \(\delta = \varepsilon/5\): then \(|x-1| < \delta \Rightarrow |f(x)-f(1)| = 5|x-1| < \varepsilon\). ∎
+                    </details>
+                </li>
+                <li>Classify the discontinuity of \(f(x) = \frac{|x|}{x}\) at \(x = 0\).
+                    <details><summary>Solution</summary>
+                    Left limit \(-1\), right limit \(+1\): both exist but differ → <strong>jump</strong> discontinuity (of size 2).
+                    </details>
+                </li>
+            </ol>
+
+            <h3 id="differentiable-functions">Differentiable Functions</h3>
+            <p><strong>Intuition:</strong> A function is <a href="https://en.wikipedia.org/wiki/Differentiable_function" target="_blank" style="color: var(--primary);">differentiable</a> at a point if, zoomed in far enough, its graph looks like a straight line there. The slope of that line is the derivative. Corners and kinks (like \(|x|\) at 0) never straighten out, no matter the zoom — they are not differentiable.</p>
+            <p><strong>Formal definition:</strong> \(f\) is <strong>differentiable at \(c\)</strong> if the limit</p>
             <p>\[f'(c) = \lim_{h \to 0} \frac{f(c + h) - f(c)}{h}\]</p>
+            <p>exists (finite). In ε-δ form: \(\exists L \in \mathbb{R}\) such that \(\forall \varepsilon > 0\ \exists \delta > 0:\)</p>
+            <p>\[0 < |h| < \delta \;\Rightarrow\; \left|\frac{f(c+h) - f(c)}{h} - L\right| < \varepsilon\]</p>
 
-            <h3>Convex and Concave Functions</h3>
-            <p>A function \(f\) is <strong>convex</strong> if for all \(x, y\) and \(\lambda \in [0, 1]\):</p>
-            <p>\[f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda)f(y)\]</p>
-            <p>Geometrically, the graph lies below any secant line.</p>
+            <p><strong>Interactive: secant → tangent on \(f(x) = x^2/2\).</strong> Press Play: the point \(b\) slides toward \(a\), the secant collapses onto the tangent, and the difference quotient converges to \(f'(a) = a\).</p>
+            <div class="viz-widget" id="diffWidget">
+                <div class="viz-controls">
+                    <label>a: <span id="diffWidget-aVal"></span>
+                        <input type="range" id="diffWidget-a" min="-3" max="3" step="0.1" value="1">
+                    </label>
+                    <label>b: <span id="diffWidget-b2Val"></span>
+                        <input type="range" id="diffWidget-b2" min="-4" max="4" step="0.05" value="3.5">
+                    </label>
+                    <button class="viz-btn" id="diffWidget-play">▶ Play (b → a)</button>
+                </div>
+                <canvas id="diffWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="diffWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('diffWidget', { xmin: -5, xmax: 5, ymin: -2, ymax: 8 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => x * x / 2;
+                let t = 0, running = false, lastTs = null, b0 = 3.5;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    V.plot(f, c.curve);
+                    const a = parseFloat($('a').value);
+                    let b = running ? a + (b0 - a) * Math.exp(-t) : parseFloat($('b2').value);
+                    if (Math.abs(b - a) < 1e-4) b = a + 1e-4;
+                    $('aVal').textContent = a.toFixed(2); $('b2Val').textContent = b.toFixed(3);
+                    const fa = f(a), fb = f(b);
+                    const slope = (fb - fa) / (b - a);
+                    // secant, extended
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(V.px(V.xmin), V.py(fa + slope * (V.xmin - a)));
+                    ctx.lineTo(V.px(V.xmax), V.py(fa + slope * (V.xmax - a)));
+                    ctx.stroke();
+                    V.dot(a, fa, c.curve, 6); V.dot(b, fb, c.accent, 5);
+                    $('readout').textContent = '(f(b)−f(a))/(b−a) = ' + slope.toFixed(5)
+                        + '   →   f′(a) = a = ' + a.toFixed(2)
+                        + '   |   gap: ' + Math.abs(slope - a).toExponential(2);
+                }
+                function tick(ts) {
+                    if (!running) return;
+                    if (lastTs !== null) t += (ts - lastTs) / 1000;
+                    lastTs = ts;
+                    if (t > 8) { running = false; $('play').textContent = '▶ Play (b → a)'; }
+                    draw();
+                    if (running) requestAnimationFrame(tick);
+                }
+                $('play').addEventListener('click', () => {
+                    running = !running;
+                    if (running) { t = 0; b0 = parseFloat($('b2').value); lastTs = null; requestAnimationFrame(tick); }
+                    $('play').textContent = running ? '⏸ Pause' : '▶ Play (b → a)';
+                });
+                V.bind(['a', 'b2'], draw);
+            })();
+            </script>
+
+            <p><strong>Interactive: where differentiability FAILS — \(f(x) = |x|\) at 0.</strong> The secant from the left has slope −1, from the right +1. They never agree, so no tangent exists at the corner.</p>
+            <div class="viz-widget" id="absWidget">
+                <div class="viz-controls">
+                    <label>h: <span id="absWidget-hVal"></span>
+                        <input type="range" id="absWidget-h" min="0.05" max="3" step="0.05" value="1.5">
+                    </label>
+                </div>
+                <canvas id="absWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="absWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('absWidget', { xmin: -4, xmax: 4, ymin: -1, ymax: 5 });
+                const $ = V.$, ctx = V.ctx;
+                const f = x => Math.abs(x);
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    V.plot(f, c.curve);
+                    const h = parseFloat($('h').value);
+                    $('hVal').textContent = h.toFixed(2);
+                    // left and right secants from the corner (0,0)
+                    const sL = (f(-h) - 0) / (-h), sR = (f(h) - 0) / h;
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = c.accent;
+                    ctx.beginPath(); ctx.moveTo(V.px(0), V.py(0)); ctx.lineTo(V.px(-h), V.py(f(-h))); ctx.stroke();
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.beginPath(); ctx.moveTo(V.px(0), V.py(0)); ctx.lineTo(V.px(h), V.py(f(h))); ctx.stroke();
+                    V.dot(-h, f(-h), c.accent, 5); V.dot(h, f(h), '#ef4444', 5); V.dot(0, 0, c.curve, 6);
+                    $('readout').textContent = 'left slope = ' + sL.toFixed(2) + '   |   right slope = ' + sR.toFixed(2)
+                        + '   →   −1 ≠ +1 for every h: no derivative at 0';
+                }
+                V.bind(['h'], draw);
+            })();
+            </script>
+
+            <h4>Worked examples from the limit definition</h4>
+            <div class="example">
+                <strong>Example 1: \(f(x) = x^2\) at a general point \(c\)</strong><br><br>
+                <strong>Step 1:</strong> Form the difference quotient:
+                \[\frac{f(c+h) - f(c)}{h} = \frac{(c+h)^2 - c^2}{h} = \frac{2ch + h^2}{h}\]
+                <strong>Step 2:</strong> For \(h \neq 0\), cancel \(h\): \(= 2c + h\).<br>
+                <strong>Step 3:</strong> Take the limit: \(f'(c) = \lim_{h \to 0}(2c + h) = 2c\). ∎
+            </div>
+            <div class="example">
+                <strong>Example 2: \(f(x) = \frac{1}{x}\) (for \(c \neq 0\))</strong><br><br>
+                <strong>Step 1:</strong>
+                \[\frac{\frac{1}{c+h} - \frac{1}{c}}{h} = \frac{\frac{c - (c+h)}{c(c+h)}}{h} = \frac{-h}{h \, c(c+h)}\]
+                <strong>Step 2:</strong> Cancel \(h\): \(= \frac{-1}{c(c+h)}\).<br>
+                <strong>Step 3:</strong> Limit: \(f'(c) = -\frac{1}{c^2}\). ∎
+            </div>
+            <div class="example">
+                <strong>Example 3: \(f(x) = \sqrt{x}\) (for \(c > 0\)) — the conjugate trick</strong><br><br>
+                <strong>Step 1:</strong> Multiply by the conjugate to remove the root difference:
+                \[\frac{\sqrt{c+h} - \sqrt{c}}{h} \cdot \frac{\sqrt{c+h} + \sqrt{c}}{\sqrt{c+h} + \sqrt{c}} = \frac{(c+h) - c}{h(\sqrt{c+h} + \sqrt{c})}\]
+                <strong>Step 2:</strong> Cancel \(h\): \(= \frac{1}{\sqrt{c+h} + \sqrt{c}}\).<br>
+                <strong>Step 3:</strong> Limit: \(f'(c) = \frac{1}{2\sqrt{c}}\). ∎
+            </div>
+            <div class="example">
+                <strong>Example 4 (failure): \(f(x) = |x|\) at \(c = 0\)</strong><br><br>
+                <strong>Right limit:</strong> \(\lim_{h \to 0^+} \frac{|h| - 0}{h} = \lim_{h \to 0^+} \frac{h}{h} = +1\)<br>
+                <strong>Left limit:</strong> \(\lim_{h \to 0^-} \frac{|h| - 0}{h} = \lim_{h \to 0^-} \frac{-h}{h} = -1\)<br>
+                One-sided limits disagree (\(+1 \neq -1\)) → the two-sided limit does not exist → \(|x|\) is <strong>not differentiable at 0</strong> (exactly what the widget shows). ∎
+            </div>
+
+            <h4>Theorem: differentiable ⇒ continuous</h4>
+            <div class="example">
+                <strong>Proof sketch:</strong> if \(f'(c)\) exists, then
+                \[\lim_{h \to 0}\big(f(c+h) - f(c)\big) = \lim_{h \to 0} \frac{f(c+h) - f(c)}{h} \cdot h = f'(c) \cdot 0 = 0,\]
+                which is precisely continuity at \(c\). ∎<br><br>
+                <strong>The converse is FALSE:</strong> \(|x|\) is continuous everywhere but not differentiable at 0. (Extreme counterexample: the Weierstrass function is continuous everywhere and differentiable <em>nowhere</em>.)
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Velocity & acceleration:</strong> \(v(t) = s'(t)\), \(a(t) = v'(t)\) — the difference quotient is literally average speed over a shrinking stopwatch interval.</li>
+                    <li><strong>Marginal cost:</strong> \(C'(q)\) = cost of producing one more unit.</li>
+                    <li><strong>Newton's method:</strong> uses tangent lines to find roots fast (see <a href="NumericalMethods.html" style="color: var(--primary);">Numerical Methods</a>).</li>
+                    <li><strong>Gradient descent in ML:</strong> training a neural network is following derivatives downhill.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Compute \(f'(c)\) for \(f(x) = x^3\) from the limit definition.
+                    <details><summary>Solution</summary>
+                    \(\frac{(c+h)^3 - c^3}{h} = \frac{3c^2h + 3ch^2 + h^3}{h} = 3c^2 + 3ch + h^2 \xrightarrow{h \to 0} 3c^2\).
+                    </details>
+                </li>
+                <li>Is \(f(x) = x|x|\) differentiable at 0?
+                    <details><summary>Solution</summary>
+                    Yes! \(\frac{f(h) - 0}{h} = \frac{h|h|}{h} = |h| \to 0\). So \(f'(0) = 0\) — the two parabola halves \(x^2\) and \(-x^2\) meet <em>smoothly</em>, unlike the |x| corner.
+                    </details>
+                </li>
+                <li>Define \(f(0) = 0\) and \(f(x) = x\sin(1/x)\) otherwise; also \(g(0) = 0\), \(g(x) = x^2\sin(1/x)\). Which is differentiable at 0?
+                    <details><summary>Solution</summary>
+                    For \(f\): \(\frac{f(h)}{h} = \sin(1/h)\) oscillates forever — no limit, not differentiable (though continuous!). For \(g\): \(\frac{g(h)}{h} = h\sin(1/h) \to 0\) by squeeze (\(|h\sin(1/h)| \le |h|\)) — differentiable with \(g'(0) = 0\).
+                    </details>
+                </li>
+                <li>Find \(a, b\) so that \(f(x) = x^2\) for \(x \le 1\) and \(f(x) = ax + b\) for \(x > 1\) is differentiable everywhere.
+                    <details><summary>Solution</summary>
+                    Match values at 1: \(a + b = 1\). Match slopes: \(a = 2\cdot1 = 2\), hence \(b = -1\). So \(f(x) = 2x - 1\) for \(x>1\) — the tangent line to the parabola at (1,1).
+                    </details>
+                </li>
+                <li>(Fermat) Show: if \(f\) has an interior maximum at \(c\) and \(f'(c)\) exists, then \(f'(c) = 0\).
+                    <details><summary>Solution</summary>
+                    For \(h > 0\): \(\frac{f(c+h)-f(c)}{h} \le 0\) (numerator ≤ 0), so the right limit \(\le 0\). For \(h < 0\): the quotient \(\ge 0\), so the left limit \(\ge 0\). Both equal \(f'(c)\), forcing \(f'(c) = 0\). ∎
+                    </details>
+                </li>
+            </ol>
+
+            <h3 id="convex-concave">Convex and Concave Functions</h3>
+            <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Convex_function" target="_blank" style="color: var(--primary);">convex function</a> is bowl-shaped: connect any two points of the graph with a straight chord, and the graph sags <em>below</em> the chord. Concave is the opposite (dome-shaped). This one geometric property is the backbone of modern optimization.</p>
+            <p><strong>Formal definition:</strong> \(f\) is <strong>convex</strong> if for all \(x, y\) and all \(\lambda \in [0, 1]\):</p>
+            <p>\[f(\lambda x + (1-\lambda)y) \;\leq\; \lambda f(x) + (1-\lambda)f(y)\]</p>
+            <p>The left side is the graph at a mixed point; the right side is the chord at the same place. <strong>Concave</strong> flips the inequality. \(f\) is concave ⟺ \(-f\) is convex.</p>
+
+            <p><strong>Interactive plot:</strong> pick a function and chord endpoints \(a, b\); the shaded region is the gap between chord and curve. The λ-slider walks a point along the chord and compares both sides of the definition numerically.</p>
+            <div class="viz-widget" id="convWidget">
+                <div class="viz-controls">
+                    <label>Function: <span id="convWidget-pickVal"></span>
+                        <input type="range" id="convWidget-pick" min="0" max="3" step="1" value="0">
+                    </label>
+                    <label>a: <span id="convWidget-caVal"></span>
+                        <input type="range" id="convWidget-ca" min="-4" max="4" step="0.1" value="-2">
+                    </label>
+                    <label>b: <span id="convWidget-cbVal"></span>
+                        <input type="range" id="convWidget-cb" min="-4" max="4" step="0.1" value="3">
+                    </label>
+                    <label>λ: <span id="convWidget-lamVal"></span>
+                        <input type="range" id="convWidget-lam" min="0" max="1" step="0.01" value="0.5">
+                    </label>
+                </div>
+                <canvas id="convWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="convWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('convWidget', { xmin: -5, xmax: 5, ymin: -4, ymax: 8 });
+                const $ = V.$, ctx = V.ctx;
+                const funcs = [
+                    { name: 'x²/2',  f: x => x * x / 2 },
+                    { name: '−ln(x+4.5)+2', f: x => -Math.log(x + 4.5) + 2 },
+                    { name: 'x³/8',  f: x => x * x * x / 8 },
+                    { name: '2·sin x', f: x => 2 * Math.sin(x) }
+                ];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value);
+                    let a = parseFloat($('ca').value), b = parseFloat($('cb').value);
+                    const lam = parseFloat($('lam').value);
+                    if (a > b) { const tmp = a; a = b; b = tmp; }
+                    if (b - a < 0.2) b = a + 0.2;
+                    $('pickVal').textContent = funcs[k].name;
+                    $('caVal').textContent = a.toFixed(1); $('cbVal').textContent = b.toFixed(1);
+                    $('lamVal').textContent = lam.toFixed(2);
+                    const f = funcs[k].f;
+                    const chord = x => f(a) + (f(b) - f(a)) * (x - a) / (b - a);
+                    // shade gap between chord and curve on [a,b]
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                    ctx.beginPath();
+                    ctx.moveTo(V.px(a), V.py(f(a)));
+                    for (let x = a; x <= b; x += (b - a) / 200) ctx.lineTo(V.px(x), V.py(f(x)));
+                    for (let x = b; x >= a; x -= (b - a) / 200) ctx.lineTo(V.px(x), V.py(chord(x)));
+                    ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+                    V.plot(f, c.curve);
+                    // chord
+                    ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(V.px(a), V.py(f(a))); ctx.lineTo(V.px(b), V.py(f(b))); ctx.stroke();
+                    V.dot(a, f(a), c.accent, 5); V.dot(b, f(b), c.accent, 5);
+                    // λ point: chord value vs graph value
+                    const xm = lam * a + (1 - lam) * b;
+                    const chordVal = lam * f(a) + (1 - lam) * f(b);
+                    const graphVal = f(xm);
+                    V.dot(xm, chordVal, c.accent, 5);
+                    V.dot(xm, graphVal, c.curve, 5);
+                    ctx.strokeStyle = c.axis; ctx.setLineDash([3, 3]);
+                    ctx.beginPath(); ctx.moveTo(V.px(xm), V.py(chordVal)); ctx.lineTo(V.px(xm), V.py(graphVal)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    // classify on [a,b] numerically
+                    let above = true, below = true;
+                    for (let x = a; x <= b; x += (b - a) / 100) {
+                        if (f(x) > chord(x) + 1e-9) above = false;
+                        if (f(x) < chord(x) - 1e-9) below = false;
+                    }
+                    const verdict = above ? 'chord above curve → CONVEX here' :
+                                    below ? 'chord below curve → CONCAVE here' :
+                                    'chord crosses curve → neither on [a, b]';
+                    $('readout').textContent = 'f(λa+(1−λ)b) = ' + graphVal.toFixed(4)
+                        + '  vs  λf(a)+(1−λ)f(b) = ' + chordVal.toFixed(4) + '   |   ' + verdict;
+                }
+                V.bind(['pick', 'ca', 'cb', 'lam'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: \(f(x) = x^2\) is convex, straight from the definition</strong><br><br>
+                <strong>Step 1: Write both sides for \(f(x) = x^2\)</strong><br>
+                Need: \((\lambda x + (1-\lambda)y)^2 \le \lambda x^2 + (1-\lambda)y^2\).<br><br>
+                <strong>Step 2: Expand the left side</strong>
+                \[\lambda^2 x^2 + 2\lambda(1-\lambda)xy + (1-\lambda)^2 y^2\]
+                <strong>Step 3: Subtract left from right</strong><br>
+                \[\lambda(1-\lambda)x^2 - 2\lambda(1-\lambda)xy + \lambda(1-\lambda)y^2 = \lambda(1-\lambda)(x - y)^2\]
+                <strong>Step 4: Conclude</strong><br>
+                \(\lambda \in [0,1]\) makes \(\lambda(1-\lambda) \ge 0\), and \((x-y)^2 \ge 0\) always — so the difference is \(\ge 0\), proving the inequality. ∎
+            </div>
+
+            <div class="example">
+                <strong>Second-derivative test & inflection points:</strong> for twice-differentiable \(f\):
+                \(f'' \ge 0\) on an interval ⟺ convex there; \(f'' \le 0\) ⟺ concave. An <strong>inflection point</strong> is where convexity flips.<br><br>
+                <strong>Worked: \(f(x) = x^3 - 3x\).</strong> \(f''(x) = 6x\): negative for \(x < 0\) (concave), positive for \(x > 0\) (convex) → inflection at \(x = 0\). Try it in the widget with \(x^3/8\): place \(a, b\) straddling 0 and watch the chord cross the curve.
+            </div>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Convex optimization:</strong> for a convex function, any local minimum is automatically global — the bowl has one bottom. This is why machine-learning practitioners prize convex losses; least squares \(\sum (y_i - \hat y_i)^2\) is convex.</li>
+                    <li><strong>Jensen's inequality:</strong> for convex \(f\): \(f(\mathbb{E}[X]) \le \mathbb{E}[f(X)]\) — the definition applied to weighted averages; foundational in probability and information theory.</li>
+                    <li><strong>Economics:</strong> diminishing returns = concave production functions; risk aversion = concave utility.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Show \(f(x) = e^x\) is convex using the second-derivative test.
+                    <details><summary>Solution</summary>
+                    \(f''(x) = e^x > 0\) for all \(x\) → convex on all of \(\mathbb{R}\).
+                    </details>
+                </li>
+                <li>Find the intervals of convexity/concavity of \(f(x) = x^4 - 6x^2\).
+                    <details><summary>Solution</summary>
+                    \(f''(x) = 12x^2 - 12 = 12(x-1)(x+1)\): convex on \((-\infty,-1]\) and \([1,\infty)\), concave on \([-1,1]\); inflections at \(x = \pm 1\).
+                    </details>
+                </li>
+            </ol>
 
             <hr class="hr">
         </section>
@@ -292,6 +1732,15 @@
             <h3>Wikipedia</h3>
             <ul>
                 <li><a href="https://en.wikipedia.org/wiki/Function_(mathematics)" target="_blank">Function (Mathematics) - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Linear_function" target="_blank">Linear Function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Quadratic_function" target="_blank">Quadratic Function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Rational_function" target="_blank">Rational Function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Exponential_function" target="_blank">Exponential Function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Logarithm" target="_blank">Logarithm - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Trigonometric_functions" target="_blank">Trigonometric Functions - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Continuous_function" target="_blank">Continuous Function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Differentiable_function" target="_blank">Differentiable Function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Convex_function" target="_blank">Convex Function - Wikipedia</a></li>
                 <li><a href="https://en.wikipedia.org/wiki/Functional_analysis" target="_blank">Functional Analysis - Wikipedia</a></li>
             </ul>
 
@@ -304,6 +1753,8 @@
 
             <h3>Textbooks & Bibliography</h3>
             <ul>
+                <li><strong>Calculus</strong> - Michael Spivak (2008)</li>
+                <li><strong>Convex Optimization</strong> - Stephen Boyd & Lieven Vandenberghe (2004)</li>
                 <li><strong>Principles of Mathematical Analysis</strong> - Walter Rudin (1976)</li>
                 <li><strong>Real and Complex Analysis</strong> - Walter Rudin (1987)</li>
                 <li><strong>Functional Analysis: Introduction to Further Topics in Analysis</strong> - Rudin (2013)</li>
@@ -319,7 +1770,6 @@
     </div>
 
     <script>
-        const ThemeToggle = (() => {
         const ThemeToggle = (() => {
             const STORAGE_KEY = 'theme-preference';
             const LIGHT = 'light';
