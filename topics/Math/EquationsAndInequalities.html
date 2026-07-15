@@ -251,14 +251,141 @@
             <div class="subsection-title">Equations</div>
 
             <h3>Systems of Linear Equations</h3>
-            <p>Multiple linear equations with multiple variables can be solved using substitution or elimination methods.</p>
+            <p>A <strong>system of linear equations</strong> consists of multiple linear equations with multiple variables. We seek values that satisfy all equations simultaneously. Two main methods solve these systems: <strong>substitution</strong> and <strong>elimination</strong>. For larger systems (3+ variables), matrix methods like <strong>Gaussian elimination</strong> are preferred. See <a href="https://en.wikipedia.org/wiki/System_of_linear_equations" target="_blank" style="color: var(--primary);">Wikipedia on Systems of Linear Equations</a> and <a href="https://en.wikipedia.org/wiki/Gaussian_elimination" target="_blank" style="color: var(--primary);">Gaussian Elimination</a>.</p>
+
+            <h4>Method 1: Substitution</h4>
+            <p>The substitution method solves by expressing one variable in terms of another, then substituting into the remaining equation.</p>
             <div class="example">
-                <strong>Example:</strong>
+                <strong>Example (2 variables):</strong> Solve the system:
                 \[\begin{cases}
                 x + y = 5 \\
                 2x - y = 4
                 \end{cases}\]
-                Solution: \(x = 3, y = 2\)
+                <br>
+                <strong>Step 1: Solve the first equation for one variable</strong><br>
+                From the first equation, isolate \(y\):<br>
+                \[x + y = 5 \Rightarrow y = 5 - x\]<br><br>
+
+                <strong>Step 2: Substitute into the second equation</strong><br>
+                Replace \(y\) with \(5 - x\) in the second equation:<br>
+                \[2x - (5 - x) = 4\]
+                \[2x - 5 + x = 4\]
+                \[3x - 5 = 4\]<br><br>
+
+                <strong>Step 3: Solve for the remaining variable</strong><br>
+                \[3x = 9 \Rightarrow x = 3\]<br><br>
+
+                <strong>Step 4: Back-substitute to find the other variable</strong><br>
+                \[y = 5 - x = 5 - 3 = 2\]<br><br>
+
+                <strong>Solution:</strong> \(x = 3, y = 2\)<br><br>
+
+                <strong>Verification:</strong> Substitute back into both original equations:<br>
+                First: \(3 + 2 = 5\) ✓<br>
+                Second: \(2(3) - 2 = 6 - 2 = 4\) ✓
+            </div>
+
+            <h4>Method 2: Elimination (Gaussian Elimination)</h4>
+            <p>The elimination method combines equations to eliminate variables. For example, add or subtract multiples of equations to cancel out one variable, then solve the resulting simpler system.</p>
+            <div class="example">
+                <strong>Example (same system):</strong> Solve:
+                \[\begin{cases}
+                x + y = 5 \\
+                2x - y = 4
+                \end{cases}\]
+                <br>
+                <strong>Step 1: Add the equations to eliminate \(y\)</strong><br>
+                Notice the \(+y\) and \(-y\) cancel:<br>
+                \[(x + y) + (2x - y) = 5 + 4\]
+                \[3x = 9\]
+                \[x = 3\]<br><br>
+
+                <strong>Step 2: Substitute back into either original equation</strong><br>
+                \[3 + y = 5 \Rightarrow y = 2\]<br><br>
+
+                <strong>Solution:</strong> \(x = 3, y = 2\)
+            </div>
+
+            <h4>Systems with Three or More Variables</h4>
+            <p>For systems with 3+ variables, the elimination method (or Gaussian elimination with back-substitution) becomes systematic. Matrix notation makes this clearer.</p>
+            <div class="example">
+                <strong>Example (3 variables):</strong> Solve:
+                \[\begin{cases}
+                x + y + z = 6 \\
+                2x - y + z = 3 \\
+                x + 2y - z = 2
+                \end{cases}\]
+                <br>
+                <strong>Step 1: Eliminate \(x\) from equations 2 and 3 using equation 1</strong><br>
+                Equation 2 minus 2×(Equation 1):<br>
+                \[(2x - y + z) - 2(x + y + z) = 3 - 2(6)\]
+                \[-3y - z = -9 \quad \text{...(A)}\]<br><br>
+
+                Equation 3 minus (Equation 1):<br>
+                \[(x + 2y - z) - (x + y + z) = 2 - 6\]
+                \[y - 2z = -4 \quad \text{...(B)}\]<br><br>
+
+                <strong>Step 2: Eliminate \(y\) from equations (A) and (B)</strong><br>
+                From (B): \(y = 2z - 4\)<br>
+                Substitute into (A):<br>
+                \[-3(2z - 4) - z = -9\]
+                \[-6z + 12 - z = -9\]
+                \[-7z = -21\]
+                \[z = 3\]<br><br>
+
+                <strong>Step 3: Back-substitute to find other variables</strong><br>
+                From (B): \(y = 2(3) - 4 = 2\)<br>
+                From original equation 1: \(x + 2 + 3 = 6 \Rightarrow x = 1\)<br><br>
+
+                <strong>Solution:</strong> \(x = 1, y = 2, z = 3\)<br><br>
+
+                <strong>Verification:</strong><br>
+                \(1 + 2 + 3 = 6\) ✓<br>
+                \(2(1) - 2 + 3 = 3\) ✓<br>
+                \(1 + 2(2) - 3 = 2\) ✓
+            </div>
+
+            <h4>Applications of Linear Systems</h4>
+            <p>Linear systems model numerous real-world phenomena:</p>
+            <ul>
+                <li><strong>Economics:</strong> Supply and demand equilibrium, input-output analysis</li>
+                <li><strong>Engineering:</strong> Circuit analysis (Kirchhoff's laws), structural mechanics</li>
+                <li><strong>Chemistry:</strong> Balancing chemical equations, stoichiometry</li>
+                <li><strong>Network flow:</strong> Traffic flow, pipeline systems, telecommunications</li>
+                <li><strong>Population modeling:</strong> Age-structured population dynamics</li>
+            </ul>
+
+            <div class="example">
+                <strong>Application Example (Chemistry - Balancing):</strong> Balance the equation: \(\text{Fe} + \text{O}_2 \to \text{Fe}_2\text{O}_3\)<br><br>
+                Let \(a, b, c\) be the coefficients. We need:
+                \[\begin{cases}
+                a = 2c \quad \text{(Fe atoms)} \\
+                2b = 3c \quad \text{(O atoms)}
+                \end{cases}\]
+                Setting \(c = 2\): \(a = 4, b = 3\)<br>
+                Balanced equation: \(4\text{Fe} + 3\text{O}_2 \to 2\text{Fe}_2\text{O}_3\)
+            </div>
+
+            <div class="example">
+                <strong>Application Example (Engineering - Circuit Analysis):</strong> Find currents in a circuit using Kirchhoff's voltage law:
+                \[\begin{cases}
+                I_1 + I_2 + I_3 = 0 \quad \text{(junction)} \\
+                10I_1 - 5I_2 = 12 \quad \text{(loop 1)} \\
+                5I_2 + 15I_3 = 8 \quad \text{(loop 2)}
+                \end{cases}\]
+                Solve this 3×3 system using elimination or matrix methods.
+            </div>
+
+            <div class="example">
+                <strong>N-Variable Example (5 variables - System of equations):</strong>
+                \[\begin{cases}
+                x_1 + x_2 - x_3 + 2x_4 - x_5 = 10 \\
+                2x_1 - x_2 + x_3 + x_4 + x_5 = 5 \\
+                x_1 + 3x_2 + 2x_3 - x_4 = 8 \\
+                -x_1 + x_2 - x_3 + x_4 + 2x_5 = 3 \\
+                3x_1 + 2x_2 + x_3 + x_4 - x_5 = 12
+                \end{cases}\]
+                For such systems, use <strong>matrix form</strong>: \(\mathbf{A}\mathbf{x} = \mathbf{b}\), solved via <strong>Gaussian elimination</strong> or computational tools (NumPy, MATLAB, etc.).
             </div>
 
             <h3>Polynomial Equations</h3>
