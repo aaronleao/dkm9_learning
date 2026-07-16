@@ -24,50 +24,50 @@
         }
 
         :root {
-            --primary-color: #2196F3;
-            --secondary-color: #4CAF50;
-            --dark-text: #333;
-            --light-text: #666;
-            --background: #f5f5f5;
-            --card-bg: #ffffff;
-            --border-color: #e0e0e0;
-            --code-bg: #f0f0f0;
+            --primary: #2196F3;
+            --secondary: #4CAF50;
+            --dark: #333;
+            --light: #666;
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --border: #e0e0e0;
+            --code: #f0f0f0;
         }
 
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) {
-                --dark-text: #e0e0e0;
-                --light-text: #b0b0b0;
-                --background: #1a1a1a;
-                --card-bg: #2d2d2d;
-                --border-color: #404040;
-                --code-bg: #3a3a3a;
+                --dark: #e0e0e0;
+                --light: #b0b0b0;
+                --bg: #1a1a1a;
+                --card: #2d2d2d;
+                --border: #404040;
+                --code: #3a3a3a;
             }
         }
 
         :root[data-theme="dark"] {
-            --dark-text: #e0e0e0;
-            --light-text: #b0b0b0;
-            --background: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --border-color: #404040;
-            --code-bg: #3a3a3a;
+            --dark: #e0e0e0;
+            --light: #b0b0b0;
+            --bg: #1a1a1a;
+            --card: #2d2d2d;
+            --border: #404040;
+            --code: #3a3a3a;
         }
 
         :root[data-theme="light"] {
-            --dark-text: #333;
-            --light-text: #666;
-            --background: #f5f5f5;
-            --card-bg: #ffffff;
-            --border-color: #e0e0e0;
-            --code-bg: #f0f0f0;
+            --dark: #333;
+            --light: #666;
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --border: #e0e0e0;
+            --code: #f0f0f0;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.7;
-            color: var(--dark-text);
-            background-color: var(--background);
+            color: var(--dark);
+            background-color: var(--bg);
         }
 
         .container {
@@ -77,7 +77,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 40px 20px;
             border-radius: 8px;
@@ -91,7 +91,7 @@
         }
 
         nav {
-            background: var(--card-bg);
+            background: var(--card);
             padding: 15px 20px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -102,20 +102,20 @@
         }
 
         nav a {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
         }
 
         nav a:hover {
-            color: var(--secondary-color);
+            color: var(--secondary);
         }
 
         .theme-toggle {
             background: none;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
+            border: 2px solid var(--primary);
+            color: var(--primary);
             padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
@@ -125,20 +125,20 @@
         }
 
         .theme-toggle:hover {
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             color: white;
         }
 
         .toc {
-            background: var(--card-bg);
+            background: var(--card);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
         }
 
         .toc h2 {
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 1.2em;
             margin-bottom: 15px;
         }
@@ -155,18 +155,18 @@
         }
 
         .toc a {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .toc a:hover {
-            color: var(--secondary-color);
+            color: var(--secondary);
             text-decoration: underline;
         }
 
         section {
-            background: var(--card-bg);
+            background: var(--card);
             padding: 30px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -174,21 +174,21 @@
         }
 
         h2 {
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 2em;
             margin: 40px 0 20px 0;
             padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border);
         }
 
         h3 {
-            color: var(--secondary-color);
+            color: var(--secondary);
             font-size: 1.4em;
             margin: 25px 0 15px 0;
         }
 
         h4 {
-            color: var(--dark-text);
+            color: var(--dark);
             font-size: 1.1em;
             margin: 15px 0 10px 0;
         }
@@ -208,7 +208,7 @@
         }
 
         strong {
-            color: var(--primary-color);
+            color: var(--primary);
             font-weight: 600;
         }
 
@@ -217,7 +217,7 @@
         }
 
         code {
-            background-color: var(--code-bg);
+            background-color: var(--code);
             padding: 2px 6px;
             border-radius: 4px;
             font-family: 'Monaco', 'Courier New', monospace;
@@ -225,12 +225,12 @@
         }
 
         pre {
-            background-color: var(--code-bg);
+            background-color: var(--code);
             padding: 15px;
             border-radius: 8px;
             overflow-x: auto;
             margin-bottom: 15px;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
         }
 
         table {
@@ -242,43 +242,43 @@
         th, td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
         }
 
         th {
-            background-color: var(--code-bg);
+            background-color: var(--code);
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         tr:hover {
-            background-color: var(--code-bg);
+            background-color: var(--code);
         }
 
         .mermaid {
             display: flex;
             justify-content: center;
             margin: 20px 0;
-            background-color: var(--code-bg);
+            background-color: var(--code);
             padding: 20px;
             border-radius: 8px;
         }
 
         .example {
-            background-color: var(--code-bg);
+            background-color: var(--code);
             padding: 15px;
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--secondary);
             border-radius: 4px;
             margin: 15px 0;
         }
 
         .example strong {
-            color: var(--secondary-color);
+            color: var(--secondary);
         }
 
         .hr-line {
             height: 2px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             margin: 40px 0;
             border: none;
         }
@@ -286,13 +286,13 @@
         footer {
             text-align: center;
             padding: 30px 20px;
-            color: var(--light-text);
-            border-top: 1px solid var(--border-color);
+            color: var(--light);
+            border-top: 1px solid var(--border);
             margin-top: 50px;
         }
 
         footer a {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
         }
 
@@ -318,6 +318,63 @@
                 padding: 20px;
             }
         }
+
+        /* ===== Interactive widget chrome (from COMPONENTS.md — copy verbatim) ===== */
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px; white-space:pre-wrap;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
+
+        /* ===== Buttons/selects row (quiz + widget controls) ===== */
+        .btn-row {display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0;}
+        .btn-row select {background:var(--card); color:var(--dark); border:1px solid var(--border); border-radius:6px; padding:7px 10px; font-size:0.95em; max-width:100%;}
+
+        /* ===== QUIZ-1: multiple-choice quiz ===== */
+        .quiz-q {margin-bottom:20px;}
+        .quiz-opts {display:flex; flex-wrap:wrap; gap:8px; margin:8px 0;}
+        .quiz-opt {background:var(--card); color:var(--dark); border:1px solid var(--border); padding:6px 14px; border-radius:6px; cursor:pointer; font-size:0.95em; font-family:inherit;}
+        .quiz-opt.sel {border-color:var(--primary); color:var(--primary); font-weight:600;}
+        .quiz-opt.ok {border-color:var(--secondary); color:var(--secondary); font-weight:600;}
+        .quiz-opt.bad {border-color:#ef4444; color:#ef4444; font-weight:600;}
+
+        /* ===== QUIZ-2: truth-table fill-in ===== */
+        .tt-cell {cursor:pointer; text-align:center; font-family:monospace; font-weight:600; user-select:none; -webkit-user-select:none; min-width:48px; color:var(--primary);}
+        .tt-cell.ok {color:var(--secondary);}
+        .tt-cell.bad {color:#ef4444;}
+
+        /* ===== PROOF-1: write-and-evaluate proof box ===== */
+        .proof-box textarea {width:100%; min-height:180px; font-family:'Monaco','Courier New',monospace; font-size:0.95em; background:var(--card); color:var(--dark); border:1px solid var(--border); border-radius:6px; padding:10px; box-sizing:border-box; resize:vertical;}
+        .check-list {list-style:none; margin-left:0;}
+        .check-list li.ok::before {content:"\2713  "; color:var(--secondary); font-weight:700;}
+        .check-list li.miss::before {content:"\2717  "; color:#ef4444; font-weight:700;}
+
+        /* ===== VENN-1: theme-aware inline SVG Venn diagrams ===== */
+        .venn-holder svg {width:100%; max-width:420px; height:auto; display:block; margin:0 auto; background:var(--card); border-radius:6px;}
+        .venn-row {display:flex; flex-wrap:wrap; gap:12px; justify-content:center; align-items:flex-start;}
+        .venn-row .venn-holder {flex:1 1 260px; min-width:220px;}
+        .venn-row .venn-holder p {text-align:center; font-family:monospace; margin:6px 0 0 0; color:var(--dark);}
+        .venn-region {fill:var(--secondary); opacity:0; transition:opacity .25s;}
+        .venn-region.on {opacity:0.4;}
+        .venn-hit {fill:transparent; stroke:none; pointer-events:fill; cursor:pointer;}
+        .venn-circle {fill:none; stroke-width:2.5;}
+        .venn-label {font:600 16px monospace; fill:var(--dark);}
+        .venn-frame {fill:none; stroke:var(--border); stroke-width:1.5;}
+        .venn-dot {stroke:var(--dark); stroke-width:1.5; transition:fill .25s;}
+
+        /* ===== Misc ===== */
+        .study-time {display:inline-block; font-size:0.55em; background:var(--code); color:var(--light); border:1px solid var(--border); border-radius:12px; padding:2px 10px; vertical-align:middle; margin-left:10px; font-weight:400; white-space:nowrap;}
+        .toc ul ul {display:block; margin:4px 0 0 14px; font-size:0.92em;}
+        .toc ul ul li {padding:2px 0;}
+        .pitfall {background:var(--code); border-left:4px solid #ef4444; border-radius:4px; padding:12px 15px; margin:15px 0;}
+        .pitfall strong {color:#ef4444;}
+        #circuitWidget-canvas {touch-action:none; cursor:default;}
     </style>
 </head>
 <body>
@@ -340,28 +397,239 @@
 
         <div class="toc">
             <h2>Table of Contents</h2>
+            <p style="color:var(--light); font-size:0.9em;">Total study time from zero to Advanced-ready: <strong>≈ 6–8 hours</strong>. Do every exercise <em>before</em> opening its solution — the exercises are the course.</p>
             <ul>
-                <li><a href="#beginner">Beginner Level</a></li>
-                <li><a href="#intermediate">Intermediate Level</a></li>
-                <li><a href="#advanced">Advanced Level</a></li>
-                <li><a href="#research">Research Level</a></li>
+                <li><a href="#beginner"><strong>Beginner</strong></a> (≈ 2.5 h)
+                    <ul>
+                        <li><a href="#propositions">Propositions &amp; Truth Values</a></li>
+                        <li><a href="#operators">Logical Operators + Venn Diagrams</a></li>
+                        <li><a href="#conditional">Understanding the Conditional</a></li>
+                        <li><a href="#equivalence">Equivalence &amp; De Morgan</a></li>
+                        <li><a href="#circuits">Logic Circuits Playground</a></li>
+                        <li><a href="#beginner-check">Checkpoint Quiz</a></li>
+                    </ul>
+                </li>
+                <li><a href="#intermediate"><strong>Intermediate</strong></a> (≈ 2 h)
+                    <ul>
+                        <li><a href="#compound-tables">Compound Truth Tables</a></li>
+                        <li><a href="#quantifiers">Quantifiers</a></li>
+                        <li><a href="#laws">Laws &amp; Tautologies</a></li>
+                        <li><a href="#variants">Implication Variants &amp; Fallacies</a></li>
+                        <li><a href="#tautologies-theorems">From Tautologies to Theorems</a></li>
+                        <li><a href="#intermediate-check">Checkpoint Quiz</a></li>
+                    </ul>
+                </li>
+                <li><a href="#advanced"><strong>Advanced</strong></a> (≈ 2.5 h)
+                    <ul>
+                        <li><a href="#predicate-logic">Predicate Logic (FOL)</a></li>
+                        <li><a href="#consequence">Logical Consequence</a></li>
+                        <li><a href="#proof-methods">Proof Methods — the Toolbox</a></li>
+                        <li><a href="#proof-exercises">Write Your Own Proofs</a></li>
+                    </ul>
+                </li>
+                <li><a href="#research"><strong>Research</strong></a> (guide)
+                    <ul>
+                        <li><a href="#godel">Gödel's Incompleteness</a></li>
+                        <li><a href="#model-theory">Model Theory</a></li>
+                        <li><a href="#next-steps">Where to Go From Here</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
+        <script>
+        // ============ Shared interactive helpers (QUIZ-1, QUIZ-2, VENN-1, PROOF-1) ============
+        // House rules: id-prefix convention; JS never injects LaTeX — dynamic feedback uses
+        // plain text with Unicode logic symbols (¬ ∧ ∨ ⊕ → ↔ ≡ ⊢ ⊨ ∀ ∃).
+
+        // --- QUIZ-1: multiple-choice quiz. Markup: .quiz-opt buttons with data-q (question
+        // index) and data-correct on the right answer; prefix-check / prefix-reset / prefix-readout.
+        function wireQuiz(prefix) {
+            const root = document.getElementById(prefix);
+            const opts = Array.from(root.querySelectorAll('.quiz-opt'));
+            opts.forEach(btn => btn.addEventListener('click', () => {
+                root.querySelectorAll('.quiz-opt[data-q="' + btn.dataset.q + '"]')
+                    .forEach(b => b.classList.remove('sel', 'ok', 'bad'));
+                btn.classList.add('sel');
+            }));
+            document.getElementById(prefix + '-check').addEventListener('click', () => {
+                const qids = Array.from(new Set(opts.map(b => b.dataset.q)));
+                let right = 0, answered = 0;
+                qids.forEach(q => {
+                    const sel = root.querySelector('.quiz-opt[data-q="' + q + '"].sel');
+                    if (!sel) return;
+                    answered++;
+                    if (sel.hasAttribute('data-correct')) { sel.classList.add('ok'); right++; }
+                    else { sel.classList.add('bad'); }
+                });
+                const ro = document.getElementById(prefix + '-readout');
+                if (answered < qids.length) {
+                    ro.textContent = right + ' / ' + qids.length + ' correct — ' + (qids.length - answered) + ' question(s) unanswered.';
+                } else if (right === qids.length) {
+                    ro.textContent = right + ' / ' + qids.length + ' correct — perfect! Move on.';
+                } else {
+                    ro.textContent = right + ' / ' + qids.length + ' correct — open the explanation under each question you missed.';
+                }
+            });
+            document.getElementById(prefix + '-reset').addEventListener('click', () => {
+                opts.forEach(b => b.classList.remove('sel', 'ok', 'bad'));
+                document.getElementById(prefix + '-readout').textContent = '';
+            });
+        }
+
+        // --- QUIZ-2: truth-table fill-in. Markup: <td class="tt-cell" data-answer="T">?</td>;
+        // click cycles ? → T → F; prefix-check / prefix-reset / prefix-readout.
+        function wireTruthTable(prefix) {
+            const root = document.getElementById(prefix);
+            const cells = Array.from(root.querySelectorAll('.tt-cell'));
+            cells.forEach(c => c.addEventListener('click', () => {
+                c.classList.remove('ok', 'bad');
+                c.textContent = c.textContent === '?' ? 'T' : (c.textContent === 'T' ? 'F' : '?');
+            }));
+            document.getElementById(prefix + '-check').addEventListener('click', () => {
+                let right = 0;
+                cells.forEach(c => {
+                    c.classList.remove('ok', 'bad');
+                    if (c.textContent === c.dataset.answer) { c.classList.add('ok'); right++; }
+                    else { c.classList.add('bad'); }
+                });
+                document.getElementById(prefix + '-readout').textContent =
+                    right + ' / ' + cells.length + ' cells correct' +
+                    (right === cells.length ? ' — well done!' : ' — red cells are wrong (click a cell to change it).');
+            });
+            document.getElementById(prefix + '-reset').addEventListener('click', () => {
+                cells.forEach(c => { c.textContent = '?'; c.classList.remove('ok', 'bad'); });
+                document.getElementById(prefix + '-readout').textContent = '';
+            });
+        }
+
+        // --- VENN-1: theme-aware inline SVG two-set Venn diagram.
+        // The 4 minterm regions (P∧Q, P∧¬Q, ¬P∧Q, ¬P∧¬Q) are exactly the 4 truth-table rows.
+        // Visual layers are painted with masks; hit layers rely on stacking order
+        // (lens on top) because masks do not clip pointer events, clip-paths do.
+        function vennSVG(prefix) {
+            const P = 'cx="140" cy="112" r="72"', Q = 'cx="220" cy="112" r="72"';
+            return '<svg viewBox="0 0 360 224" role="img" aria-label="Two-set Venn diagram">'
+                + '<defs>'
+                + '<clipPath id="' + prefix + '-clipQ"><circle ' + Q + '/></clipPath>'
+                + '<mask id="' + prefix + '-mNotQ"><rect width="360" height="224" fill="#fff"/><circle ' + Q + ' fill="#000"/></mask>'
+                + '<mask id="' + prefix + '-mNotP"><rect width="360" height="224" fill="#fff"/><circle ' + P + ' fill="#000"/></mask>'
+                + '<mask id="' + prefix + '-mOut"><rect width="360" height="224" fill="#fff"/><circle ' + P + ' fill="#000"/><circle ' + Q + ' fill="#000"/></mask>'
+                + '</defs>'
+                // shadeable minterm layers (bottom):
+                + '<rect class="venn-region" id="' + prefix + '-r-00" x="9" y="9" width="342" height="206" rx="8" mask="url(#' + prefix + '-mOut)"/>'
+                + '<circle class="venn-region" id="' + prefix + '-r-10" ' + P + ' mask="url(#' + prefix + '-mNotQ)"/>'
+                + '<circle class="venn-region" id="' + prefix + '-r-01" ' + Q + ' mask="url(#' + prefix + '-mNotP)"/>'
+                + '<circle class="venn-region" id="' + prefix + '-r-11" ' + P + ' clip-path="url(#' + prefix + '-clipQ)"/>'
+                // chrome:
+                + '<rect class="venn-frame" x="8" y="8" width="344" height="208" rx="8"/>'
+                + '<circle class="venn-circle" style="stroke:var(--primary)" ' + P + '/>'
+                + '<circle class="venn-circle" style="stroke:var(--secondary)" ' + Q + '/>'
+                + '<text class="venn-label" x="86" y="54" style="fill:var(--primary)">P</text>'
+                + '<text class="venn-label" x="264" y="54" style="fill:var(--secondary)">Q</text>'
+                // invisible hit layers (top; stacking order resolves the overlap):
+                + '<rect class="venn-hit" data-region="00" x="9" y="9" width="342" height="206"/>'
+                + '<circle class="venn-hit" data-region="10" ' + P + '/>'
+                + '<circle class="venn-hit" data-region="01" ' + Q + '/>'
+                + '<circle class="venn-hit" data-region="11" ' + P + ' clip-path="url(#' + prefix + '-clipQ)"/>'
+                + '</svg>';
+        }
+
+        // Boolean-lambda idiom (used by Venn AND the circuit challenges): expressions are
+        // plain JS functions plus a Unicode display string — no string parsing anywhere.
+        const VENN_REGIONS = ['11', '10', '01', '00'];
+        const VENN_ASSIGN = { '11': [true, true], '10': [true, false], '01': [false, true], '00': [false, false] };
+        const VENN_NAMES = { '11': 'P∧Q', '10': 'P∧¬Q', '01': '¬P∧Q', '00': '¬P∧¬Q' };
+
+        // wireVenn(prefix, exprs, challenges):
+        //   exprs      = { 'display string': (P,Q)=>bool, ... }  → one shade button each (data-expr)
+        //   challenges = [ {label, fn} ] (optional)              → prefix-challenge <select> + prefix-check
+        // Injects the SVG into the div.venn-holder with id "prefix-holder".
+        function wireVenn(prefix, exprs, challenges) {
+            const holder = document.getElementById(prefix + '-holder');
+            holder.innerHTML = vennSVG(prefix);
+            const root = document.getElementById(prefix);
+            const readout = document.getElementById(prefix + '-readout');
+            const region = r => document.getElementById(prefix + '-r-' + r);
+            const shade = fn => VENN_REGIONS.forEach(r =>
+                region(r).classList.toggle('on', !!fn(VENN_ASSIGN[r][0], VENN_ASSIGN[r][1])));
+            root.querySelectorAll('[data-expr]').forEach(btn => btn.addEventListener('click', () => {
+                shade(exprs[btn.dataset.expr]);
+                readout.textContent = 'Shaded: ' + btn.dataset.expr + '   (green = rows where the formula is TRUE)';
+            }));
+            root.querySelectorAll('.venn-hit').forEach(h => h.addEventListener('click', () => {
+                region(h.dataset.region).classList.toggle('on');
+                const on = VENN_REGIONS.filter(r => region(r).classList.contains('on'));
+                readout.textContent = on.length
+                    ? 'Manual shading — regions ON: ' + on.map(r => VENN_NAMES[r]).join(', ')
+                    : 'Manual shading — nothing shaded yet.';
+            }));
+            if (challenges) {
+                const sel = document.getElementById(prefix + '-challenge');
+                document.getElementById(prefix + '-check').addEventListener('click', () => {
+                    if (sel.value === '') {
+                        readout.textContent = 'Pick a challenge in the dropdown first, then click regions of the diagram to shade them.';
+                        return;
+                    }
+                    const ch = challenges[+sel.value];
+                    const wrong = VENN_REGIONS.filter(r =>
+                        region(r).classList.contains('on') !== !!ch.fn(VENN_ASSIGN[r][0], VENN_ASSIGN[r][1]));
+                    readout.textContent = wrong.length === 0
+                        ? '✓ Correct! Your shading matches ' + ch.label + '.'
+                        : '✗ Not yet — reconsider the region(s): ' + wrong.map(r => VENN_NAMES[r]).join(', ');
+                });
+            }
+        }
+
+        // --- PROOF-1: hybrid write-and-evaluate proof exercise.
+        // rubric = [ {label, hint, patterns:[regex,...]} ] — an element counts as detected
+        // if ANY of its tolerant regexes matches the textarea. This is an HONEST heuristic:
+        // it checks structure, it cannot judge correctness (disclaimer shown every time).
+        function ProofCheck(prefix, rubric) {
+            document.getElementById(prefix + '-check').addEventListener('click', () => {
+                const text = document.getElementById(prefix + '-input').value;
+                const list = document.getElementById(prefix + '-list');
+                list.textContent = '';
+                let found = 0;
+                rubric.forEach(item => {
+                    const hit = item.patterns.some(re => re.test(text));
+                    const li = document.createElement('li');
+                    li.className = hit ? 'ok' : 'miss';
+                    li.textContent = hit ? item.label : item.label + ' — not detected. Hint: ' + item.hint;
+                    if (hit) found++;
+                    list.appendChild(li);
+                });
+                document.getElementById(prefix + '-readout').textContent =
+                    found + ' / ' + rubric.length + ' structural elements detected.\n'
+                    + 'Note: this is a keyword-based structural check, not a proof verifier — it can be fooled '
+                    + 'and it cannot judge logical correctness. Now compare your proof line by line against the model solution below.';
+                document.getElementById(prefix + '-solution').hidden = false;
+            });
+        }
+        </script>
+
         <section id="beginner">
-            <h2>Beginner Level</h2>
+            <h2>Beginner Level <span class="study-time">≈ 2.5 h study</span></h2>
 
             <h3>What is Logic?</h3>
             <p><strong>Mathematical logic</strong> is the study of reasoning and proof. It provides the foundation for all mathematics by formalizing the rules of valid reasoning.</p>
+            <p><strong>Your roadmap through this page:</strong> first you learn what a <em>proposition</em> is and how the operators ¬, ∧, ∨, →, ↔ combine them (truth tables and Venn diagrams). You make that concrete by <em>building circuits</em> in the playground. Then quantifiers (∀, ∃) let you talk about infinitely many things at once, and you see how always-true formulas (tautologies) become the engine behind theorems. Finally you learn the standard <em>proof methods</em> and write proofs yourself, with instant feedback. Do every exercise before opening its solution.</p>
 
-            <h3>Propositions and Truth Values</h3>
+            <h3 id="propositions">Propositions and Truth Values</h3>
             <p>A <strong>proposition</strong> (or <strong>statement</strong>) is a declarative sentence that is either true or false (not both).</p>
             <p><strong>Examples:</strong></p>
             <ul>
                 <li>"2 + 2 = 4" is a proposition (true)</li>
-                <li>"3 > 7" is a proposition (false)</li>
-                <li>"Is it raining?" is not a proposition (it's a question)</li>
+                <li>"3 &gt; 7" is a proposition (false)</li>
+                <li>"Is it raining?" is <em>not</em> a proposition (it's a question — it asserts nothing)</li>
+                <li>"Close the door!" is <em>not</em> a proposition (a command has no truth value)</li>
+                <li>"Chocolate is the best flavor" is <em>not</em> a proposition (a matter of taste, not fact)</li>
+                <li>"\(x + 1 = 5\)" is <em>not</em> a proposition <em>yet</em> — it is an <strong>open sentence</strong>: its truth depends on \(x\). Fix \(x = 4\) and it becomes a true proposition. Quantifiers (Intermediate level) are the tool that turns open sentences into propositions.</li>
+                <li>"Every even number greater than 2 is the sum of two primes" <em>is</em> a proposition — nobody knows whether it is true (Goldbach's conjecture), but it is definitely one or the other.</li>
             </ul>
+            <div class="example">
+                <strong>Fun aside (the liar paradox):</strong> "This sentence is false." If it were true, it would be false; if false, true. It cannot consistently receive a truth value, so it is not a proposition. Self-reference is dangerous — and, remarkably, it is exactly the fuel of Gödel's theorems at the Research level.
+            </div>
 
             <h4>Truth Tables</h4>
             <p>Truth values are denoted:</p>
@@ -370,7 +638,85 @@
                 <li>\(F\) or \(0\) for false</li>
             </ul>
 
-            <h3>Logical Operators</h3>
+            <div class="viz-widget" id="propQuiz">
+                <h4>Exercise: Proposition or Not?</h4>
+                <p>Classify each sentence, then press <em>Check answers</em>.</p>
+                <ol>
+                    <li class="quiz-q">
+                        <p>"7 is a prime number."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>Proposition</button>
+                            <button class="quiz-opt" data-q="0">Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Declarative and definitely true — a proposition.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Please close the door."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1">Proposition</button>
+                            <button class="quiz-opt" data-q="1" data-correct>Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>A request/command — it cannot be true or false.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(x^2 = 9\)"</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2">Proposition</button>
+                            <button class="quiz-opt" data-q="2" data-correct>Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>An open sentence: true for \(x = \pm 3\), false otherwise. Without a value (or a quantifier) it has no truth value.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"There are infinitely many prime numbers."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>Proposition</button>
+                            <button class="quiz-opt" data-q="3">Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>A proposition — and a true one. Euclid proved it ~300 BC; you will re-prove it yourself in the Proof Methods section.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Is 2 + 2 = 4?"</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4">Proposition</button>
+                            <button class="quiz-opt" data-q="4" data-correct>Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>A question. The <em>content</em> is mathematical, but grammatically it asserts nothing.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"It rained in Paris on 1 January 2000."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="5" data-correct>Proposition</button>
+                            <button class="quiz-opt" data-q="5">Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>You may not know the answer, but the sentence is definitely either true or false — that is all a proposition needs.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Mathematics is more beautiful than music."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="6">Proposition</button>
+                            <button class="quiz-opt" data-q="6" data-correct>Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>An opinion — there is no objective truth value.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"This sentence is false."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="7">Proposition</button>
+                            <button class="quiz-opt" data-q="7" data-correct>Not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The liar paradox: assigning either truth value leads to contradiction, so it gets none.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="propQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="propQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="propQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('propQuiz');</script>
+
+            <h3 id="operators">Logical Operators</h3>
+            <p>Operators build new propositions out of old ones. For each operator below you get: its truth table (the <em>definition</em>), an everyday example, and a math example. Later, the circuit playground turns each operator into a physical <strong>gate</strong>.</p>
 
             <h4>Negation (NOT)</h4>
             <p>The <strong>negation</strong> of proposition \(P\), denoted \(\neg P\) or \(\overline{P}\), is true when \(P\) is false and vice versa.</p>
@@ -379,6 +725,11 @@
                 <tr><td>T</td><td>F</td></tr>
                 <tr><td>F</td><td>T</td></tr>
             </table>
+            <div class="example">
+                <strong>Everyday:</strong> \(P\) = "the shop is open" → \(\neg P\) = "the shop is closed".<br>
+                <strong>Math:</strong> \(P\) = "\(n\) is even" → \(\neg P\) = "\(n\) is odd" (for integers, these are exact opposites).<br>
+                <strong>Careful:</strong> the negation of "all cats are black" is <em>not</em> "no cat is black" — it is "at least one cat is not black". Negation flips between <em>all</em> and <em>some-not</em>; you will make this precise with quantifiers.
+            </div>
 
             <h4>Conjunction (AND)</h4>
             <p>The <strong>conjunction</strong> of propositions \(P\) and \(Q\), denoted \(P \land Q\), is true only when both \(P\) and \(Q\) are true.</p>
@@ -389,6 +740,10 @@
                 <tr><td>F</td><td>T</td><td>F</td></tr>
                 <tr><td>F</td><td>F</td><td>F</td></tr>
             </table>
+            <div class="example">
+                <strong>Everyday:</strong> "I'll go swimming if it is warm AND sunny" — one cold cloud and the trip is off.<br>
+                <strong>Math:</strong> \(0 &lt; x \land x &lt; 5\) is what "\(0 &lt; x &lt; 5\)" secretly means: two conditions, both required.
+            </div>
 
             <h4>Disjunction (OR)</h4>
             <p>The <strong>disjunction</strong> of propositions \(P\) and \(Q\), denoted \(P \lor Q\), is true when at least one of \(P\) or \(Q\) is true.</p>
@@ -399,6 +754,21 @@
                 <tr><td>F</td><td>T</td><td>T</td></tr>
                 <tr><td>F</td><td>F</td><td>F</td></tr>
             </table>
+            <div class="example">
+                <strong>Everyday:</strong> "the alarm rings if the door OR the window opens" — it also rings if <em>both</em> open. Mathematical OR is <strong>inclusive</strong>.<br>
+                <strong>Math:</strong> \(xy = 0 \;\rightarrow\; (x = 0 \lor y = 0)\) — and both can be zero at once.
+            </div>
+
+            <h4>Exclusive Or (XOR)</h4>
+            <p>Everyday language often means the <strong>exclusive or</strong>: "soup <em>or</em> salad" (not both). It is written \(P \oplus Q\) and is true when \(P\) and \(Q\) <em>differ</em>:</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \oplus Q\)</th></tr>
+                <tr><td>T</td><td>T</td><td>F</td></tr>
+                <tr><td>T</td><td>F</td><td>T</td></tr>
+                <tr><td>F</td><td>T</td><td>T</td></tr>
+                <tr><td>F</td><td>F</td><td>F</td></tr>
+            </table>
+            <p>Note \(P \oplus Q \equiv \neg(P \leftrightarrow Q)\): XOR is the exact opposite of the biconditional below. In the circuit playground you will <em>build</em> XOR out of AND, OR and NOT — a classic challenge.</p>
 
             <h4>Conditional (Implication)</h4>
             <p>The <strong>conditional</strong> or <strong>implication</strong> \(P \rightarrow Q\) (read "if \(P\) then \(Q\)") is false only when \(P\) is true and \(Q\) is false.</p>
@@ -409,7 +779,7 @@
                 <tr><td>F</td><td>T</td><td>T</td></tr>
                 <tr><td>F</td><td>F</td><td>T</td></tr>
             </table>
-            <p>Key insight: A conditional with false premise is always true.</p>
+            <p>Key insight: a conditional with a false premise is always true. This surprises everyone at first — the next subsection is entirely devoted to it.</p>
 
             <h4>Biconditional</h4>
             <p>The <strong>biconditional</strong> \(P \leftrightarrow Q\) (read "\(P\) if and only if \(Q\)") is true when \(P\) and \(Q\) have the same truth value.</p>
@@ -420,20 +790,774 @@
                 <tr><td>F</td><td>T</td><td>F</td></tr>
                 <tr><td>F</td><td>F</td><td>T</td></tr>
             </table>
-
-            <h3>Logical Equivalence</h3>
-            <p>Two propositions are <strong>logically equivalent</strong>, denoted \(\equiv\), if they have the same truth value in all cases.</p>
             <div class="example">
-                <strong>Example:</strong> \(\neg(P \land Q) \equiv (\neg P \lor \neg Q)\) (De Morgan's Law)
+                <strong>Math:</strong> "a triangle is equilateral <em>if and only if</em> its three angles are equal" — each side of the ↔ implies the other. Definitions in mathematics are always biconditionals, even when written with a plain "if".
             </div>
+
+            <h4>Seeing Formulas: Venn Diagrams</h4>
+            <p>A two-set Venn diagram splits the world into exactly <strong>four regions</strong>: inside both circles (\(P \land Q\)), only the left (\(P \land \neg Q\)), only the right (\(\neg P \land Q\)), and outside both (\(\neg P \land \neg Q\)). <strong>These four regions are exactly the four rows of a truth table</strong> — shading a formula's true regions <em>is</em> drawing its truth table geometrically. Two formulas are equivalent precisely when they shade the same picture.</p>
+
+            <div class="viz-widget" id="vennOpsWidget">
+                <h4>Interactive: Venn Diagram Explorer</h4>
+                <p>Press a formula button to shade the regions where it is <strong>true</strong> — or click regions of the diagram directly to shade them yourself. Then try the challenges.</p>
+                <div class="venn-holder" id="vennOpsWidget-holder"></div>
+                <div class="btn-row">
+                    <button class="viz-btn" data-expr="P">P</button>
+                    <button class="viz-btn" data-expr="¬P">¬P</button>
+                    <button class="viz-btn" data-expr="P∧Q">P∧Q</button>
+                    <button class="viz-btn" data-expr="P∨Q">P∨Q</button>
+                    <button class="viz-btn" data-expr="P⊕Q">P⊕Q</button>
+                    <button class="viz-btn" data-expr="P→Q">P→Q</button>
+                    <button class="viz-btn" data-expr="¬(P∧Q)">¬(P∧Q)</button>
+                    <button class="viz-btn" data-expr="¬P∨¬Q">¬P∨¬Q</button>
+                </div>
+                <div class="btn-row">
+                    <label for="vennOpsWidget-challenge"><strong>Challenge:</strong></label>
+                    <select id="vennOpsWidget-challenge">
+                        <option value="">— pick one, then shade regions by clicking them —</option>
+                        <option value="0">Shade ¬(P∨Q) — "neither"</option>
+                        <option value="1">Shade P⊕Q — "exactly one"</option>
+                        <option value="2">Shade (P∧Q)∨(¬P∧¬Q) — "both or neither"</option>
+                    </select>
+                    <button class="viz-btn" id="vennOpsWidget-check">Check shading</button>
+                </div>
+                <p class="viz-readout" id="vennOpsWidget-readout"></p>
+            </div>
+            <script>
+            wireVenn('vennOpsWidget', {
+                'P':      (P, Q) => P,
+                '¬P':     (P, Q) => !P,
+                'P∧Q':    (P, Q) => P && Q,
+                'P∨Q':    (P, Q) => P || Q,
+                'P⊕Q':    (P, Q) => P !== Q,
+                'P→Q':    (P, Q) => !P || Q,
+                '¬(P∧Q)': (P, Q) => !(P && Q),
+                '¬P∨¬Q':  (P, Q) => !P || !Q
+            }, [
+                { label: '¬(P∨Q)',        fn: (P, Q) => !(P || Q) },
+                { label: 'P⊕Q',           fn: (P, Q) => P !== Q },
+                { label: '(P∧Q)∨(¬P∧¬Q)', fn: (P, Q) => (P && Q) || (!P && !Q) }
+            ]);
+            </script>
+            <p><em>Did you notice?</em> The buttons ¬(P∧Q) and ¬P∨¬Q shade the <strong>same</strong> regions. Hold that thought — it is De Morgan's law, proved below.</p>
+
+            <div class="viz-widget" id="ttOpsQuiz">
+                <h4>Exercise: Fill In the Truth Table</h4>
+                <p>Click the <strong>?</strong> cells to cycle ? → T → F, then check. Work column by column: compute \(\neg P\) first, then use it.</p>
+                <table>
+                    <tr><th>\(P\)</th><th>\(Q\)</th><th>\(\neg P\)</th><th>\(\neg P \lor Q\)</th><th>\(P \land \neg Q\)</th></tr>
+                    <tr><td>T</td><td>T</td><td class="tt-cell" data-answer="F">?</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>T</td><td>F</td><td class="tt-cell" data-answer="F">?</td><td class="tt-cell" data-answer="F">?</td><td class="tt-cell" data-answer="T">?</td></tr>
+                    <tr><td>F</td><td>T</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>F</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="F">?</td></tr>
+                </table>
+                <div class="btn-row">
+                    <button class="viz-btn" id="ttOpsQuiz-check">Check</button>
+                    <button class="viz-btn" id="ttOpsQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="ttOpsQuiz-readout"></p>
+                <details><summary>Hint &amp; a secret</summary><p>\(\neg P \lor Q\) is true when at least one of \(\neg P\), \(Q\) is true. When you finish, compare its column with the table of \(P \rightarrow Q\) above: they are identical. That is the important equivalence \(P \rightarrow Q \equiv \neg P \lor Q\) — the implication <em>is</em> an OR in disguise.</p></details>
+            </div>
+            <script>wireTruthTable('ttOpsQuiz');</script>
+
+            <h3 id="conditional">Understanding the Conditional</h3>
+            <p>The rows \(F \rightarrow T\) and \(F \rightarrow F\) being <em>true</em> ("vacuous truth") is the single most misunderstood definition in logic. Here are three ways to see why it must be so:</p>
+            <ol>
+                <li><strong>The promise view.</strong> I promise: "<em>If it rains, I bring you an umbrella.</em>" When did I break my promise? Only if it rained and I brought nothing. If it never rained, I kept my promise no matter what I carried — the promise said nothing about sunny days.</li>
+                <li><strong>The subset view.</strong> "\(P \rightarrow Q\) true" means the \(P\)-region lies entirely inside the \(Q\)-region. Points outside \(P\) can do whatever they like without breaking that. (See the widget below.)</li>
+                <li><strong>The no-counterexample view.</strong> \(P \rightarrow Q\) is false only if you can exhibit a counterexample: a situation with \(P\) true and \(Q\) false. No counterexample = true. A false premise can never produce a counterexample.</li>
+            </ol>
+            <div class="example">
+                <strong>Example:</strong> "If \(n\) is a multiple of 4, then \(n\) is even" is true for <em>every</em> integer \(n\) — including \(n = 7\), where both parts are false, and \(n = 6\), where only the conclusion is true. Check: neither 7 nor 6 is a counterexample, because neither is a multiple of 4 that fails to be even.
+            </div>
+
+            <div class="viz-widget" id="vennImpWidget">
+                <h4>Interactive: Two Pictures of P → Q</h4>
+                <div class="btn-row">
+                    <button class="viz-btn" id="vennImpWidget-regions">Region view (shade P→Q)</button>
+                    <button class="viz-btn" id="vennImpWidget-subset">Subset view (P inside Q)</button>
+                </div>
+                <div class="venn-holder" id="vennImpWidget-holder"></div>
+                <p class="viz-readout" id="vennImpWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const holder = document.getElementById('vennImpWidget-holder');
+                const readout = document.getElementById('vennImpWidget-readout');
+                const subsetSVG =
+                    '<svg viewBox="0 0 360 224" role="img" aria-label="P as a subset of Q">'
+                    + '<rect class="venn-frame" x="8" y="8" width="344" height="208" rx="8"/>'
+                    + '<circle class="venn-circle" style="stroke:var(--secondary)" cx="180" cy="112" r="88"/>'
+                    + '<circle class="venn-circle" style="stroke:var(--primary)" cx="162" cy="128" r="44"/>'
+                    + '<text class="venn-label" x="152" y="134" style="fill:var(--primary)">P</text>'
+                    + '<text class="venn-label" x="240" y="52" style="fill:var(--secondary)">Q</text>'
+                    + '</svg>';
+                function regions() {
+                    holder.innerHTML = vennSVG('vennImpWidget');
+                    holder.querySelectorAll('.venn-hit').forEach(h => h.remove());
+                    ['11', '01', '00'].forEach(r => document.getElementById('vennImpWidget-r-' + r).classList.add('on'));
+                    readout.textContent = 'P→Q is TRUE everywhere except the region P∧¬Q. An implication fails only when the premise holds and the conclusion does not.';
+                }
+                function subset() {
+                    holder.innerHTML = subsetSVG;
+                    readout.textContent = 'Same fact, different picture: "P→Q is true" says the P-region lies entirely inside the Q-region — no point of P escapes Q, i.e. no counterexample exists.';
+                }
+                document.getElementById('vennImpWidget-regions').addEventListener('click', regions);
+                document.getElementById('vennImpWidget-subset').addEventListener('click', subset);
+                regions();
+            })();
+            </script>
+
+            <h4>Necessary vs Sufficient</h4>
+            <p>\(P \rightarrow Q\) can be read in two directions, and mathematicians use both constantly:</p>
+            <ul>
+                <li>\(P\) is <strong>sufficient</strong> for \(Q\): having \(P\) is enough to guarantee \(Q\).</li>
+                <li>\(Q\) is <strong>necessary</strong> for \(P\): without \(Q\), \(P\) is impossible.</li>
+            </ul>
+            <div class="example">
+                <strong>Example:</strong> "divisible by 4 → even". Being divisible by 4 is <em>sufficient</em> for evenness (it guarantees it) but not <em>necessary</em> (6 is even without it). Being even is <em>necessary</em> for divisibility by 4 (an odd number has no chance) but not <em>sufficient</em>.
+            </div>
+
+            <div class="viz-widget" id="condQuiz">
+                <h4>Exercise: Conditionals</h4>
+                <ol>
+                    <li class="quiz-q">
+                        <p>What is the truth value of: "If \(2 + 2 = 5\), then the Moon is made of cheese"?</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>True</button>
+                            <button class="quiz-opt" data-q="0">False</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The premise is false, so the conditional is (vacuously) true — no counterexample can exist.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>Your teacher promises: "If you score above 90, you get an A." You scored 85 and still got an A. Was the promise broken?</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1">Yes</button>
+                            <button class="quiz-opt" data-q="1" data-correct>No</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The promise only covers scores above 90. \(F \rightarrow T\) is true. (Reading it as "only if" is the converse error — next level!)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(P\) is sufficient for \(Q\)" translates to:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>P → Q</button>
+                            <button class="quiz-opt" data-q="2">Q → P</button>
+                            <button class="quiz-opt" data-q="2">P ↔ Q</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Sufficient = enough to guarantee: \(P \rightarrow Q\).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>For a real number \(x\), "\(x &gt; 2\)" is ______ for "\(x^2 &gt; 4\)".</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>sufficient but not necessary</button>
+                            <button class="quiz-opt" data-q="3">necessary but not sufficient</button>
+                            <button class="quiz-opt" data-q="3">necessary and sufficient</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(x &gt; 2 \Rightarrow x^2 &gt; 4\) always (sufficient). But \(x = -5\) gives \(x^2 &gt; 4\) without \(x &gt; 2\), so it is not necessary.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="condQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="condQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="condQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('condQuiz');</script>
+
+            <h3 id="equivalence">Logical Equivalence</h3>
+            <p>Two propositions are <strong>logically equivalent</strong>, denoted \(\equiv\), if they have the same truth value in all cases — same truth-table column, same Venn shading.</p>
+            <div class="example">
+                <strong>Example:</strong> \(\neg(P \land Q) \equiv (\neg P \lor \neg Q)\) (De Morgan's Law): "not both" means "at least one fails". Its twin: \(\neg(P \lor Q) \equiv (\neg P \land \neg Q)\): "neither" means "both fail".<br>
+                <strong>Everyday:</strong> "the film is not (long and boring)" = "it is not long, or not boring (or neither)".
+            </div>
+            <p>Verify the first law yourself — with a truth table, then with a picture:</p>
+
+            <div class="viz-widget" id="ttDeMorganQuiz">
+                <h4>Exercise: Prove De Morgan by Truth Table</h4>
+                <p>Fill in the two right columns. If they come out identical, you have <em>proved</em> \(\neg(P \land Q) \equiv \neg P \lor \neg Q\) — a truth table over all rows is a complete proof.</p>
+                <table>
+                    <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \land Q\)</th><th>\(\neg(P \land Q)\)</th><th>\(\neg P \lor \neg Q\)</th></tr>
+                    <tr><td>T</td><td>T</td><td>T</td><td class="tt-cell" data-answer="F">?</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>T</td><td>F</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="T">?</td></tr>
+                    <tr><td>F</td><td>T</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="T">?</td></tr>
+                    <tr><td>F</td><td>F</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td class="tt-cell" data-answer="T">?</td></tr>
+                </table>
+                <div class="btn-row">
+                    <button class="viz-btn" id="ttDeMorganQuiz-check">Check</button>
+                    <button class="viz-btn" id="ttDeMorganQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="ttDeMorganQuiz-readout"></p>
+            </div>
+            <script>wireTruthTable('ttDeMorganQuiz');</script>
+
+            <div class="viz-widget" id="vennDMWidget">
+                <h4>Interactive: De Morgan's Laws, Seen</h4>
+                <p>Both diagrams shade at once — left side of the law on the left, right side on the right. Identical shading = equivalence.</p>
+                <div class="btn-row">
+                    <button class="viz-btn" id="vennDMWidget-and">¬(P∧Q)  vs  ¬P∨¬Q</button>
+                    <button class="viz-btn" id="vennDMWidget-or">¬(P∨Q)  vs  ¬P∧¬Q</button>
+                </div>
+                <div class="venn-row">
+                    <div class="venn-holder">
+                        <div id="vennDMWidgetL-holder"></div>
+                        <p id="vennDMWidget-labL"></p>
+                    </div>
+                    <div class="venn-holder">
+                        <div id="vennDMWidgetR-holder"></div>
+                        <p id="vennDMWidget-labR"></p>
+                    </div>
+                </div>
+                <p class="viz-readout" id="vennDMWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                document.getElementById('vennDMWidgetL-holder').innerHTML = vennSVG('vennDMWidgetL');
+                document.getElementById('vennDMWidgetR-holder').innerHTML = vennSVG('vennDMWidgetR');
+                document.querySelectorAll('#vennDMWidget .venn-hit').forEach(h => h.remove());
+                const laws = {
+                    and: { L: (P, Q) => !(P && Q), R: (P, Q) => !P || !Q, tL: '¬(P∧Q)', tR: '¬P∨¬Q' },
+                    or:  { L: (P, Q) => !(P || Q), R: (P, Q) => !P && !Q, tL: '¬(P∨Q)', tR: '¬P∧¬Q' }
+                };
+                function show(k) {
+                    const l = laws[k];
+                    VENN_REGIONS.forEach(r => {
+                        document.getElementById('vennDMWidgetL-r-' + r).classList.toggle('on', !!l.L(VENN_ASSIGN[r][0], VENN_ASSIGN[r][1]));
+                        document.getElementById('vennDMWidgetR-r-' + r).classList.toggle('on', !!l.R(VENN_ASSIGN[r][0], VENN_ASSIGN[r][1]));
+                    });
+                    document.getElementById('vennDMWidget-labL').textContent = l.tL;
+                    document.getElementById('vennDMWidget-labR').textContent = l.tR;
+                    document.getElementById('vennDMWidget-readout').textContent =
+                        'Identical shadings ⇒ ' + l.tL + ' ≡ ' + l.tR + '. Equivalent formulas always paint the same picture.';
+                }
+                document.getElementById('vennDMWidget-and').addEventListener('click', () => show('and'));
+                document.getElementById('vennDMWidget-or').addEventListener('click', () => show('or'));
+                show('and');
+            })();
+            </script>
+
+            <h3 id="circuits">Logic Circuits Playground</h3>
+            <p>Every logical operator is also a piece of hardware: a <strong>gate</strong>. Propositions become <strong>wires</strong> carrying T (current flows) or F (no current); operators become gates combining those wires. Your computer is, at the bottom, billions of these:</p>
+            <table>
+                <tr><th>Gate</th><th>Operator</th><th>Output is T when…</th></tr>
+                <tr><td><code>NOT</code></td><td>\(\neg P\)</td><td>the input is F</td></tr>
+                <tr><td><code>AND</code></td><td>\(P \land Q\)</td><td>both inputs are T</td></tr>
+                <tr><td><code>OR</code></td><td>\(P \lor Q\)</td><td>at least one input is T</td></tr>
+                <tr><td><code>XOR</code></td><td>\(P \oplus Q\)</td><td>the inputs differ</td></tr>
+            </table>
+            <p>Time to play. Build circuits freely, watch signals flow (green = T), and then take the five challenges — each asks you to build a circuit computing a given boolean expression, and the board <em>verifies your circuit against the target on every input combination</em>, exactly like a truth-table proof.</p>
+
+            <div class="viz-widget" id="circuitWidget">
+                <h4>Interactive: Circuit Board</h4>
+                <div class="btn-row">
+                    <select id="circuitWidget-mode">
+                        <option value="-1">Free play</option>
+                        <option value="0">Challenge 1 — NOT</option>
+                        <option value="1">Challenge 2 — A∧¬B</option>
+                        <option value="2">Challenge 3 — XOR from scratch</option>
+                        <option value="3">Challenge 4 — De Morgan in hardware</option>
+                        <option value="4">Challenge 5 — majority vote</option>
+                    </select>
+                    <button class="viz-btn" id="circuitWidget-checkBtn">Check circuit</button>
+                    <button class="viz-btn" id="circuitWidget-clear">Clear board</button>
+                    <button class="viz-btn" id="circuitWidget-del">🗑 Delete: off</button>
+                </div>
+                <p id="circuitWidget-goal"></p>
+                <canvas id="circuitWidget-canvas" width="820" height="460"></canvas>
+                <p class="viz-readout" id="circuitWidget-readout"></p>
+                <details>
+                    <summary>How to use the board</summary>
+                    <ul>
+                        <li><strong>Add a gate:</strong> drag it down from the palette strip at the top (max 12 gates).</li>
+                        <li><strong>Wire:</strong> press on an <em>output</em> port (right side of a switch or gate) and drag to an <em>input</em> port (left side of a gate, or the OUT lamp).</li>
+                        <li><strong>Toggle inputs:</strong> click the A / B / C switches and watch the signals propagate.</li>
+                        <li><strong>Rewire:</strong> drawing a new wire into an occupied input replaces the old wire.</li>
+                        <li><strong>Delete a gate:</strong> drag it back onto the palette strip, right-click it, or turn Delete mode on and click it.</li>
+                        <li>Unconnected inputs read F. Feedback loops are rejected.</li>
+                    </ul>
+                </details>
+            </div>
+            <script>
+            (function () {
+                const cv = document.getElementById('circuitWidget-canvas');
+                const ctx = cv.getContext('2d');
+                const readout = document.getElementById('circuitWidget-readout');
+                const goalEl = document.getElementById('circuitWidget-goal');
+                const modeSel = document.getElementById('circuitWidget-mode');
+                const checkBtn = document.getElementById('circuitWidget-checkBtn');
+                const W = cv.width, H = cv.height;
+                const PAL_H = 64, GW = 64, GH = 44, PR = 9, MAX_GATES = 12;
+
+                const palette = ['NOT', 'AND', 'OR', 'XOR'].map((t, i) => ({ type: t, x: 320 + i * 112, y: (PAL_H - GH) / 2 }));
+                const inputs = [
+                    { name: 'A', y: 150, val: false },
+                    { name: 'B', y: 255, val: false },
+                    { name: 'C', y: 360, val: false }
+                ];
+                const lamp = { x: 745, y: 255 };
+
+                let gates = [], wires = [], nextId = 1, deleteMode = false, drag = null, mode = -1;
+
+                // Same lambda idiom as the Venn widgets: target = plain function + Unicode text.
+                const challenges = [
+                    { label: 'Challenge 1 — NOT', txt: 'Light the lamp exactly when A is FALSE. Target: OUT = ¬A.', fn: v => !v[0], vars: 1 },
+                    { label: 'Challenge 2 — combine', txt: 'Target: OUT = A∧¬B (A and not B).', fn: v => v[0] && !v[1], vars: 2 },
+                    { label: 'Challenge 3 — XOR from scratch', txt: 'Target: OUT = A⊕B, WITHOUT the XOR gate. Hint: A⊕B ≡ (A∨B)∧¬(A∧B).', fn: v => v[0] !== v[1], vars: 2, banned: ['XOR'] },
+                    { label: 'Challenge 4 — De Morgan in hardware', txt: 'Target: OUT = ¬(A∧B), using only OR and NOT gates. Hint: ¬(A∧B) ≡ ¬A∨¬B.', fn: v => !(v[0] && v[1]), vars: 2, banned: ['AND', 'XOR'] },
+                    { label: 'Challenge 5 — majority vote', txt: 'Light the lamp when AT LEAST TWO of A, B, C are true. Target: OUT = (A∧B)∨(A∧C)∨(B∧C).', fn: v => (v[0] && v[1]) || (v[0] && v[2]) || (v[1] && v[2]), vars: 3 }
+                ];
+
+                const usedVars = () => mode < 0 ? 3 : challenges[mode].vars;
+                const gateById = id => gates.find(g => g.id === id);
+
+                // ---- geometry: all port positions derived, never stored ----
+                function outPos(from) {
+                    if (from.kind === 'in') return { x: 86, y: inputs[from.idx].y };
+                    const g = gateById(from.id); return { x: g.x + GW, y: g.y + GH / 2 };
+                }
+                function inPos(to) {
+                    if (to.kind === 'lamp') return { x: lamp.x - 38, y: lamp.y };
+                    const g = gateById(to.id);
+                    if (g.type === 'NOT') return { x: g.x, y: g.y + GH / 2 };
+                    return { x: g.x, y: g.y + (to.port === 0 ? 13 : 31) };
+                }
+                const d2 = (a, b) => (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+                const HIT = (PR + 4) * (PR + 4);
+
+                function hitOutPort(p) {
+                    for (let i = 0; i < usedVars(); i++) if (d2(p, outPos({ kind: 'in', idx: i })) <= HIT) return { kind: 'in', idx: i };
+                    for (const g of gates) if (d2(p, outPos({ kind: 'gate', id: g.id })) <= HIT) return { kind: 'gate', id: g.id };
+                    return null;
+                }
+                function hitInPort(p) {
+                    if (d2(p, inPos({ kind: 'lamp' })) <= HIT) return { kind: 'lamp' };
+                    for (const g of gates) {
+                        const n = g.type === 'NOT' ? 1 : 2;
+                        for (let k = 0; k < n; k++) if (d2(p, inPos({ kind: 'gate', id: g.id, port: k })) <= HIT) return { kind: 'gate', id: g.id, port: k };
+                    }
+                    return null;
+                }
+                function hitSwitch(p) {
+                    for (let i = 0; i < usedVars(); i++) {
+                        const s = inputs[i];
+                        if (p.x >= 12 && p.x <= 72 && p.y >= s.y - 20 && p.y <= s.y + 20) return i;
+                    }
+                    return null;
+                }
+                function hitPalette(p) {
+                    if (p.y > PAL_H) return null;
+                    for (const t of palette) if (p.x >= t.x && p.x <= t.x + GW && p.y >= t.y && p.y <= t.y + GH) return t.type;
+                    return null;
+                }
+                function hitGate(p) {
+                    for (let i = gates.length - 1; i >= 0; i--) {
+                        const g = gates[i];
+                        if (p.x >= g.x && p.x <= g.x + GW && p.y >= g.y && p.y <= g.y + GH) return g;
+                    }
+                    return null;
+                }
+
+                // ---- wiring rules ----
+                function reaches(a, b) { // is gate b reachable downstream from gate a?
+                    const stack = [a], seen = new Set();
+                    while (stack.length) {
+                        const g = stack.pop();
+                        if (g === b) return true;
+                        if (seen.has(g)) continue;
+                        seen.add(g);
+                        wires.forEach(w => { if (w.from.kind === 'gate' && w.from.id === g && w.to.kind === 'gate') stack.push(w.to.id); });
+                    }
+                    return false;
+                }
+                const samePort = (a, b) => a.kind === b.kind && (a.kind === 'lamp' || (a.id === b.id && (a.port || 0) === (b.port || 0)));
+                function tryWire(from, to) {
+                    if (from.kind === 'gate' && to.kind === 'gate' && (from.id === to.id || reaches(to.id, from.id))) {
+                        flash('✗ That wire would create a feedback loop — not allowed.');
+                        return false;
+                    }
+                    wires = wires.filter(w => !samePort(w.to, to));
+                    wires.push({ from, to });
+                    return true;
+                }
+                function removeGate(id) {
+                    gates = gates.filter(g => g.id !== id);
+                    wires = wires.filter(w => !(w.from.kind === 'gate' && w.from.id === id) && !(w.to.kind === 'gate' && w.to.id === id));
+                }
+
+                // ---- evaluation: one pure function reused by live colors, the free-play
+                // truth table, and challenge validation ----
+                function evalCircuit(vals) {
+                    const out = new Map();
+                    gates.forEach(g => out.set(g.id, false));
+                    const src = f => f.kind === 'in' ? vals[f.idx] : !!out.get(f.id);
+                    const inVal = (gid, k) => {
+                        const w = wires.find(w => w.to.kind === 'gate' && w.to.id === gid && w.to.port === k);
+                        return w ? src(w.from) : false;
+                    };
+                    for (let pass = 0; pass <= gates.length; pass++) {
+                        gates.forEach(g => {
+                            let v;
+                            if (g.type === 'NOT') v = !inVal(g.id, 0);
+                            else {
+                                const a = inVal(g.id, 0), b = inVal(g.id, 1);
+                                v = g.type === 'AND' ? a && b : (g.type === 'OR' ? a || b : a !== b);
+                            }
+                            out.set(g.id, v);
+                        });
+                    }
+                    const lw = wires.find(w => w.to.kind === 'lamp');
+                    return { lamp: lw ? src(lw.from) : false, out, wired: !!lw };
+                }
+
+                function liveTable() {
+                    if (!wires.some(w => w.to.kind === 'lamp')) return 'Wire something into the OUT lamp to see its live truth table here.';
+                    const rows = [];
+                    for (let m = 0; m < 8; m++) {
+                        const vals = [!!(m & 4), !!(m & 2), !!(m & 1)];
+                        rows.push('  ' + vals.map(v => v ? 'T' : 'F').join(' ') + '  →  ' + (evalCircuit(vals).lamp ? 'T' : 'F'));
+                    }
+                    let s = '  A B C → OUT        A B C → OUT\n';
+                    for (let i = 0; i < 4; i++) s += rows[i] + '     ' + rows[i + 4] + '\n';
+                    return s;
+                }
+
+                function flash(m) { readout.textContent = m; }
+                function updateFree() { if (mode < 0) readout.textContent = liveTable(); }
+
+                function checkChallenge() {
+                    if (mode < 0) return;
+                    const ch = challenges[mode];
+                    if (ch.banned && gates.some(g => ch.banned.includes(g.type))) {
+                        flash('✗ This challenge forbids the gate type(s): ' + ch.banned.join(', ') + ' — remove them first.');
+                        return;
+                    }
+                    if (!wires.some(w => w.to.kind === 'lamp')) { flash('✗ Nothing is wired into the OUT lamp yet.'); return; }
+                    const n = ch.vars, rows = 1 << n;
+                    for (let m = 0; m < rows; m++) {
+                        const vals = [0, 1, 2].map(i => i < n ? !!(m & (1 << (n - 1 - i))) : false);
+                        const got = evalCircuit(vals).lamp, want = !!ch.fn(vals);
+                        if (got !== want) {
+                            const asg = inputs.slice(0, n).map((s, i) => s.name + '=' + (vals[i] ? 'T' : 'F')).join(' ');
+                            flash('✗ Not yet. Fails at ' + asg + ': your circuit gives ' + (got ? 'T' : 'F') + ', the target needs ' + (want ? 'T' : 'F') + '. Set the switches to that row and trace the signals.');
+                            return;
+                        }
+                    }
+                    flash('✓ Correct on all ' + rows + ' input combinations — challenge solved! Pick the next one from the dropdown.');
+                }
+
+                // ---- pointer FSM (pointer events cover mouse, touch and pen) ----
+                function toCanvas(e) {
+                    const r = cv.getBoundingClientRect();
+                    return { x: (e.clientX - r.left) * W / r.width, y: (e.clientY - r.top) * H / r.height };
+                }
+                cv.addEventListener('pointerdown', e => {
+                    if (e.button === 2) return;
+                    const p = toCanvas(e);
+                    const op = hitOutPort(p);
+                    if (op) { drag = { kind: 'wire', from: op, x: p.x, y: p.y }; cv.setPointerCapture(e.pointerId); draw(); return; }
+                    const sw = hitSwitch(p);
+                    if (sw !== null) { inputs[sw].val = !inputs[sw].val; updateFree(); draw(); return; }
+                    const pt = hitPalette(p);
+                    if (pt) {
+                        if (gates.length >= MAX_GATES) { flash('Gate limit (' + MAX_GATES + ') reached — delete a gate first (drag it onto the palette).'); return; }
+                        const g = { id: nextId++, type: pt, x: p.x - GW / 2, y: Math.max(p.y - GH / 2, PAL_H + 4) };
+                        gates.push(g);
+                        drag = { kind: 'gate', id: g.id, dx: GW / 2, dy: GH / 2 };
+                        cv.setPointerCapture(e.pointerId); draw(); return;
+                    }
+                    const g = hitGate(p);
+                    if (g) {
+                        if (deleteMode) { removeGate(g.id); updateFree(); draw(); return; }
+                        drag = { kind: 'gate', id: g.id, dx: p.x - g.x, dy: p.y - g.y };
+                        cv.setPointerCapture(e.pointerId); draw(); return;
+                    }
+                });
+                cv.addEventListener('pointermove', e => {
+                    if (!drag) return;
+                    const p = toCanvas(e);
+                    if (drag.kind === 'gate') { const g = gateById(drag.id); if (g) { g.x = p.x - drag.dx; g.y = p.y - drag.dy; } }
+                    else { drag.x = p.x; drag.y = p.y; }
+                    requestDraw();
+                });
+                cv.addEventListener('pointerup', e => {
+                    if (!drag) return;
+                    const p = toCanvas(e);
+                    if (drag.kind === 'wire') {
+                        const ip = hitInPort(p);
+                        if (ip && tryWire(drag.from, ip)) updateFree();
+                    } else if (drag.kind === 'gate' && p.y < PAL_H) {
+                        removeGate(drag.id);
+                        if (mode < 0) updateFree(); else flash('Gate deleted.');
+                    }
+                    drag = null; draw();
+                });
+                cv.addEventListener('pointercancel', () => { drag = null; draw(); });
+                cv.addEventListener('contextmenu', e => {
+                    e.preventDefault();
+                    const p = toCanvas(e);
+                    const g = hitGate(p);
+                    if (g) { removeGate(g.id); updateFree(); draw(); }
+                });
+
+                // ---- rendering (theme colors read at draw time, house convention) ----
+                function colors() {
+                    const cs = getComputedStyle(document.documentElement);
+                    const v = n => cs.getPropertyValue(n).trim();
+                    return {
+                        primary: v('--primary') || '#2196F3', secondary: v('--secondary') || '#4CAF50',
+                        dark: v('--dark') || '#333', light: v('--light') || '#888',
+                        card: v('--card') || '#fff', code: v('--code') || '#eee', border: v('--border') || '#ccc'
+                    };
+                }
+                function rr(x, y, w, h, r, fill, stroke) {
+                    ctx.beginPath();
+                    ctx.moveTo(x + r, y);
+                    ctx.arcTo(x + w, y, x + w, y + h, r);
+                    ctx.arcTo(x + w, y + h, x, y + h, r);
+                    ctx.arcTo(x, y + h, x, y, r);
+                    ctx.arcTo(x, y, x + w, y, r);
+                    ctx.closePath();
+                    if (fill) ctx.fill();
+                    if (stroke) ctx.stroke();
+                }
+                function port(x, y, col, c) {
+                    ctx.beginPath(); ctx.arc(x, y, PR - 2, 0, Math.PI * 2);
+                    ctx.fillStyle = col; ctx.fill();
+                    ctx.strokeStyle = c.card; ctx.lineWidth = 1.5; ctx.stroke();
+                }
+                function bez(a, b) {
+                    const mx = Math.max(40, Math.abs(b.x - a.x) / 2);
+                    ctx.beginPath(); ctx.moveTo(a.x, a.y);
+                    ctx.bezierCurveTo(a.x + mx, a.y, b.x - mx, b.y, b.x, b.y);
+                    ctx.stroke();
+                }
+                function boxGate(c, x, y, type, res, id) {
+                    ctx.fillStyle = c.card; ctx.strokeStyle = c.primary; ctx.lineWidth = 2;
+                    rr(x, y, GW, GH, 8, true, true);
+                    ctx.fillStyle = c.dark; ctx.font = '700 14px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(type, x + GW / 2, y + GH / 2);
+                    if (res) {
+                        const n = type === 'NOT' ? 1 : 2;
+                        for (let k = 0; k < n; k++) {
+                            const pp = inPos({ kind: 'gate', id, port: k });
+                            const w = wires.find(w => w.to.kind === 'gate' && w.to.id === id && w.to.port === k);
+                            port(pp.x, pp.y, w ? (wireVal(w, res) ? c.secondary : c.light) : c.border, c);
+                        }
+                        const op = outPos({ kind: 'gate', id });
+                        port(op.x, op.y, res.out.get(id) ? c.secondary : c.light, c);
+                    }
+                }
+                const wireVal = (w, res) => w.from.kind === 'in' ? inputs[w.from.idx].val : !!res.out.get(w.from.id);
+
+                function draw() {
+                    const c = colors();
+                    const res = evalCircuit(inputs.map(s => s.val));
+                    ctx.clearRect(0, 0, W, H);
+                    ctx.textBaseline = 'middle';
+                    // palette strip
+                    ctx.fillStyle = c.code; ctx.fillRect(0, 0, W, PAL_H);
+                    ctx.strokeStyle = c.border; ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(0, PAL_H + 0.5); ctx.lineTo(W, PAL_H + 0.5); ctx.stroke();
+                    ctx.fillStyle = c.light; ctx.font = '600 13px monospace'; ctx.textAlign = 'left';
+                    ctx.fillText('PALETTE — drag a gate down ↓', 14, PAL_H / 2);
+                    palette.forEach(t => boxGate(c, t.x, t.y, t.type, null, null));
+                    // wires
+                    wires.forEach(w => {
+                        const on = wireVal(w, res);
+                        ctx.strokeStyle = on ? c.secondary : c.light;
+                        ctx.lineWidth = on ? 3.5 : 2.5;
+                        bez(outPos(w.from), inPos(w.to));
+                    });
+                    // rubber-band wire while dragging
+                    if (drag && drag.kind === 'wire') {
+                        ctx.strokeStyle = c.primary; ctx.lineWidth = 2; ctx.setLineDash([6, 5]);
+                        bez(outPos(drag.from), { x: drag.x, y: drag.y });
+                        ctx.setLineDash([]);
+                    }
+                    // input switches
+                    const nUsed = usedVars();
+                    inputs.forEach((s, i) => {
+                        const used = i < nUsed;
+                        ctx.globalAlpha = used ? 1 : 0.3;
+                        ctx.fillStyle = c.card; ctx.strokeStyle = s.val ? c.secondary : c.light; ctx.lineWidth = 2;
+                        rr(12, s.y - 20, 60, 40, 8, true, true);
+                        ctx.fillStyle = s.val ? c.secondary : c.light;
+                        ctx.font = '700 15px monospace'; ctx.textAlign = 'center';
+                        ctx.fillText(s.name + '=' + (s.val ? 'T' : 'F'), 42, s.y);
+                        if (used) port(86, s.y, s.val ? c.secondary : c.light, c);
+                        else { ctx.font = '11px monospace'; ctx.fillStyle = c.light; ctx.fillText('(unused)', 42, s.y + 32); }
+                        ctx.globalAlpha = 1;
+                    });
+                    // gates
+                    gates.forEach(g => boxGate(c, g.x, g.y, g.type, res, g.id));
+                    // OUT lamp
+                    const on = res.lamp && res.wired;
+                    port(lamp.x - 38, lamp.y, on ? c.secondary : c.light, c);
+                    ctx.strokeStyle = on ? c.secondary : c.light; ctx.lineWidth = 2.5;
+                    ctx.beginPath(); ctx.moveTo(lamp.x - 30, lamp.y); ctx.lineTo(lamp.x - 24, lamp.y); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(lamp.x, lamp.y, 24, 0, Math.PI * 2);
+                    if (on) {
+                        ctx.save(); ctx.shadowColor = c.secondary; ctx.shadowBlur = 25;
+                        ctx.fillStyle = c.secondary; ctx.fill(); ctx.restore();
+                        ctx.fillStyle = '#fff';
+                    } else {
+                        ctx.fillStyle = c.code; ctx.fill();
+                        ctx.strokeStyle = c.light; ctx.lineWidth = 2; ctx.stroke();
+                        ctx.fillStyle = c.light;
+                    }
+                    ctx.font = '700 13px monospace'; ctx.textAlign = 'center';
+                    ctx.fillText(on ? 'T' : 'F', lamp.x, lamp.y);
+                    ctx.fillStyle = c.dark; ctx.font = '600 13px monospace';
+                    ctx.fillText('OUT', lamp.x, lamp.y + 40);
+                    if (deleteMode) {
+                        ctx.fillStyle = '#ef4444'; ctx.font = '600 12px monospace'; ctx.textAlign = 'right';
+                        ctx.fillText('DELETE MODE — click a gate to remove it', W - 12, PAL_H + 18);
+                    }
+                }
+                let raf = false;
+                function requestDraw() { if (raf) return; raf = true; requestAnimationFrame(() => { raf = false; draw(); }); }
+
+                // ---- controls ----
+                function setMode(i) {
+                    mode = i;
+                    if (mode < 0) {
+                        goalEl.innerHTML = '<strong>Free play.</strong> Wire anything — the live truth table of OUT appears below the board.';
+                        checkBtn.style.display = 'none';
+                        updateFree();
+                    } else {
+                        const ch = challenges[mode];
+                        goalEl.innerHTML = '<strong>' + ch.label + ':</strong> ' + ch.txt;
+                        checkBtn.style.display = '';
+                        flash('Build the circuit, then press "Check circuit". It will be verified on every input combination.');
+                    }
+                    draw();
+                }
+                modeSel.addEventListener('change', () => setMode(parseInt(modeSel.value, 10)));
+                checkBtn.addEventListener('click', checkChallenge);
+                document.getElementById('circuitWidget-clear').addEventListener('click', () => {
+                    gates = []; wires = [];
+                    if (mode < 0) updateFree(); else flash('Board cleared.');
+                    draw();
+                });
+                document.getElementById('circuitWidget-del').addEventListener('click', function () {
+                    deleteMode = !deleteMode;
+                    this.textContent = deleteMode ? '🗑 Delete: ON (click a gate)' : '🗑 Delete: off';
+                    draw();
+                });
+
+                new MutationObserver(() => draw()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+                setMode(-1);
+            })();
+            </script>
+
+            <h3 id="beginner-check">Beginner Checkpoint</h3>
+            <p>Six questions, one per key idea. Aim for 6/6 before moving to Intermediate — each explanation tells you which subsection to revisit.</p>
+            <div class="viz-widget" id="begQuiz">
+                <ol>
+                    <li class="quiz-q">
+                        <p>Which formula is true <em>exactly</em> when \(P\) and \(Q\) are both false?</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>¬P ∧ ¬Q</button>
+                            <button class="quiz-opt" data-q="0">¬(P ∧ Q)</button>
+                            <button class="quiz-opt" data-q="0">¬P ∨ ¬Q</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(\neg(P \land Q)\) and \(\neg P \lor \neg Q\) are true in <em>three</em> rows (all except TT). Only \(\neg P \land \neg Q\) pins down the single row FF. (Revisit: Logical Operators, De Morgan.)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>\(P \rightarrow Q\) is false precisely when:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1" data-correct>P is true and Q is false</button>
+                            <button class="quiz-opt" data-q="1">P is false and Q is true</button>
+                            <button class="quiz-opt" data-q="1">P and Q are both false</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The one broken-promise row. All other rows are true — including both false-premise rows. (Revisit: Understanding the Conditional.)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>The negation of "\(n\) is even <strong>and</strong> \(n &gt; 10\)" is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>n is odd or n ≤ 10</button>
+                            <button class="quiz-opt" data-q="2">n is odd and n ≤ 10</button>
+                            <button class="quiz-opt" data-q="2">n is even and n ≤ 10</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>De Morgan: \(\neg(P \land Q) \equiv \neg P \lor \neg Q\). Negating an AND gives an OR of the negations. (Revisit: Logical Equivalence.)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>In a two-set Venn diagram, the region <em>outside both circles</em> is the truth-table row:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>P = F, Q = F</button>
+                            <button class="quiz-opt" data-q="3">P = T, Q = T</button>
+                            <button class="quiz-opt" data-q="3">P = T, Q = F</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The four regions ↔ the four rows; outside both circles means neither \(P\) nor \(Q\) holds. (Revisit: Venn Diagrams.)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>An XOR gate outputs T when:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4" data-correct>its inputs differ</button>
+                            <button class="quiz-opt" data-q="4">both inputs are T</button>
+                            <button class="quiz-opt" data-q="4">at least one input is T</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>XOR = "exactly one". Both-T gives F — that is what separates it from OR. (Revisit: Exclusive Or; build it in the playground.)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(x &gt; 4\) is sufficient for \(x &gt; 2\)" is the same as saying:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="5" data-correct>(x &gt; 4) → (x &gt; 2)</button>
+                            <button class="quiz-opt" data-q="5">(x &gt; 2) → (x &gt; 4)</button>
+                            <button class="quiz-opt" data-q="5">(x &gt; 4) ↔ (x &gt; 2)</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Sufficient condition = premise of the implication. The ↔ would additionally claim \(x&gt;2\) forces \(x&gt;4\), which is false (\(x=3\)). (Revisit: Necessary vs Sufficient.)</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="begQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="begQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="begQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('begQuiz');</script>
 
             <div class="hr-line"></div>
         </section>
 
         <section id="intermediate">
-            <h2>Intermediate Level</h2>
+            <h2>Intermediate Level <span class="study-time">≈ 2 h study</span></h2>
 
-            <h3>Quantifiers</h3>
+            <h3 id="compound-tables">Building Truth Tables for Compound Formulas</h3>
+            <p>Any formula, however nested, can be evaluated mechanically: add <strong>one column per subformula</strong>, innermost first. With \(n\) variables you need \(2^n\) rows (list them in binary order so you never miss one).</p>
+            <p><strong>Worked example:</strong> is \(((P \rightarrow Q) \land P) \rightarrow Q\) a tautology?</p>
+            <table>
+                <tr><th>\(P\)</th><th>\(Q\)</th><th>\(P \rightarrow Q\)</th><th>\((P \rightarrow Q) \land P\)</th><th>\(((P \rightarrow Q) \land P) \rightarrow Q\)</th></tr>
+                <tr><td>T</td><td>T</td><td>T</td><td>T</td><td><strong>T</strong></td></tr>
+                <tr><td>T</td><td>F</td><td>F</td><td>F</td><td><strong>T</strong></td></tr>
+                <tr><td>F</td><td>T</td><td>T</td><td>F</td><td><strong>T</strong></td></tr>
+                <tr><td>F</td><td>F</td><td>T</td><td>F</td><td><strong>T</strong></td></tr>
+            </table>
+            <p>All rows true — a <strong>tautology</strong>. Remember this one: it says "from \(P \rightarrow Q\) and \(P\), you get \(Q\)". Under the name <em>modus ponens</em> it will reappear below as the engine of formal proofs.</p>
+
+            <div class="viz-widget" id="ttBuildQuiz">
+                <h4>Exercise: a 3-Variable Table</h4>
+                <p>Complete the table for \((P \lor Q) \land \neg R\). The \(\neg R\) column is given; fill in \(P \lor Q\) and the final column.</p>
+                <table>
+                    <tr><th>\(P\)</th><th>\(Q\)</th><th>\(R\)</th><th>\(P \lor Q\)</th><th>\(\neg R\)</th><th>\((P \lor Q) \land \neg R\)</th></tr>
+                    <tr><td>T</td><td>T</td><td>T</td><td class="tt-cell" data-answer="T">?</td><td>F</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>T</td><td>T</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td>T</td><td class="tt-cell" data-answer="T">?</td></tr>
+                    <tr><td>T</td><td>F</td><td>T</td><td class="tt-cell" data-answer="T">?</td><td>F</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>T</td><td>F</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td>T</td><td class="tt-cell" data-answer="T">?</td></tr>
+                    <tr><td>F</td><td>T</td><td>T</td><td class="tt-cell" data-answer="T">?</td><td>F</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>F</td><td>T</td><td>F</td><td class="tt-cell" data-answer="T">?</td><td>T</td><td class="tt-cell" data-answer="T">?</td></tr>
+                    <tr><td>F</td><td>F</td><td>T</td><td class="tt-cell" data-answer="F">?</td><td>F</td><td class="tt-cell" data-answer="F">?</td></tr>
+                    <tr><td>F</td><td>F</td><td>F</td><td class="tt-cell" data-answer="F">?</td><td>T</td><td class="tt-cell" data-answer="F">?</td></tr>
+                </table>
+                <div class="btn-row">
+                    <button class="viz-btn" id="ttBuildQuiz-check">Check</button>
+                    <button class="viz-btn" id="ttBuildQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="ttBuildQuiz-readout"></p>
+                <details><summary>Hint</summary><p>The final column is T only where BOTH the \(P \lor Q\) column and the \(\neg R\) column show T — rows 2, 4 and 6. You can also build this circuit in the playground (OR gate + NOT gate + AND gate) and compare with its live truth table!</p></details>
+            </div>
+            <script>wireTruthTable('ttBuildQuiz');</script>
+
+            <h3 id="quantifiers">Quantifiers</h3>
 
             <h4>Universal Quantifier</h4>
             <p>The <strong>universal quantifier</strong> \(\forall\) (read "for all") denotes that a property holds for all elements in a domain.</p>
@@ -451,12 +1575,133 @@
                 <strong>Example:</strong> \(\exists x \in \mathbb{R}: x^2 = 4\) (there exists a real number whose square is 4)
             </div>
 
+            <h4>The Domain Matters</h4>
+            <div class="example">
+                <strong>Example:</strong> "\(\forall x: x^2 \geq x\)" is <em>true</em> over the integers \(\mathbb{Z}\), but <em>false</em> over the reals \(\mathbb{R}\) (take \(x = \tfrac12\): \(\tfrac14 &lt; \tfrac12\)). A quantified statement is meaningless until you say what it ranges over — always name the domain.
+            </div>
+
+            <div class="viz-widget" id="vennQuantWidget">
+                <h4>Interactive: Quantifiers as Pictures</h4>
+                <p>The dots are the domain \(D\); the oval is where property \(P(x)\) holds (green dots satisfy it). Switch scenarios and read the four statements off the picture.</p>
+                <div class="btn-row">
+                    <button class="viz-btn" id="vennQuantWidget-all">All dots inside</button>
+                    <button class="viz-btn" id="vennQuantWidget-some">Some in, some out</button>
+                    <button class="viz-btn" id="vennQuantWidget-none">No dot inside</button>
+                </div>
+                <div class="venn-holder" id="vennQuantWidget-holder"></div>
+                <p class="viz-readout" id="vennQuantWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const IN = [[140,90],[180,120],[220,90],[150,140],[210,140],[180,75],[120,115],[240,120],[165,100],[195,155],[135,135],[225,155]];
+                const OUT = [[40,40],[320,40],[40,185],[320,185],[70,112],[290,60],[60,70],[300,170],[35,140],[325,112],[70,180],[290,112]];
+                const holder = document.getElementById('vennQuantWidget-holder');
+                const readout = document.getElementById('vennQuantWidget-readout');
+                function render(nIn) {
+                    let dots = '';
+                    for (let i = 0; i < 12; i++) {
+                        const inP = i < nIn;
+                        const pos = inP ? IN[i] : OUT[i];
+                        dots += '<circle class="venn-dot" cx="' + pos[0] + '" cy="' + pos[1] + '" r="6" fill="' + (inP ? 'var(--secondary)' : 'var(--code)') + '"/>';
+                    }
+                    holder.innerHTML =
+                        '<svg viewBox="0 0 360 224" role="img" aria-label="Quantifier dot diagram">'
+                        + '<rect class="venn-frame" x="8" y="8" width="344" height="208" rx="8"/>'
+                        + '<ellipse class="venn-circle" style="stroke:var(--primary)" cx="180" cy="115" rx="95" ry="70"/>'
+                        + '<text class="venn-label" x="150" y="60" style="fill:var(--primary)">P(x)</text>'
+                        + '<text class="venn-label" x="322" y="206" style="fill:var(--light)">D</text>'
+                        + dots + '</svg>';
+                    const allIn = nIn === 12, someIn = nIn > 0;
+                    const tv = b => b ? 'T' : 'F';
+                    readout.textContent =
+                        '∀x P(x): ' + tv(allIn) + '      ∃x P(x): ' + tv(someIn) + '\n'
+                        + '∃x ¬P(x): ' + tv(!allIn) + '     ¬∀x P(x): ' + tv(!allIn) + '\n'
+                        + 'The last two always agree: ¬∀x P(x) ≡ ∃x ¬P(x) — one escaped dot is all it takes.';
+                }
+                document.getElementById('vennQuantWidget-all').addEventListener('click', () => render(12));
+                document.getElementById('vennQuantWidget-some').addEventListener('click', () => render(7));
+                document.getElementById('vennQuantWidget-none').addEventListener('click', () => render(0));
+                render(7);
+            })();
+            </script>
+
+            <h4>Order of Quantifiers</h4>
+            <p>With two quantifiers, <strong>order changes meaning</strong>. Compare, over the real numbers:</p>
+            <ul>
+                <li>\(\forall x \, \exists y: y &gt; x\) — "for every number there is a bigger one." <strong>True</strong>: given \(x\), take \(y = x + 1\). The witness \(y\) may <em>depend on</em> \(x\).</li>
+                <li>\(\exists y \, \forall x: y &gt; x\) — "some number is bigger than all numbers (including itself!)." <strong>False</strong>: one fixed \(y\) must work for every \(x\), but \(x = y\) already defeats it.</li>
+            </ul>
+            <p>Rule of thumb: \(\exists\) after \(\forall\) may answer each \(x\) individually; \(\exists\) before \(\forall\) must commit to one witness up front. Swapping \(\forall\exists\) to \(\exists\forall\) makes a statement <em>stronger</em> (often false).</p>
+
             <h4>Negation of Quantified Statements</h4>
             <p>\[\neg(\forall x: P(x)) \equiv \exists x: \neg P(x)\]</p>
             <p>\[\neg(\exists x: P(x)) \equiv \forall x: \neg P(x)\]</p>
+            <p>To negate nested quantifiers, push \(\neg\) inward, flipping each quantifier as it passes:</p>
+            <div class="example">
+                <strong>Worked example:</strong>
+                \[\neg(\forall x \, \exists y: y &gt; x) \;\equiv\; \exists x \, \neg(\exists y: y &gt; x) \;\equiv\; \exists x \, \forall y: y \leq x\]
+                "Not every number has a bigger one" = "some number is at least as big as all numbers." (Over \(\mathbb{R}\) the original is true, so this negation is false — consistency check passed.)
+            </div>
 
-            <h3>Logical Laws and Tautologies</h3>
-            <p>A <strong>tautology</strong> is a proposition that is always true regardless of the truth values of its components.</p>
+            <div class="viz-widget" id="quantNegQuiz">
+                <h4>Exercise: Negate It</h4>
+                <ol>
+                    <li class="quiz-q">
+                        <p>\(\neg(\forall x: x^2 \geq 0)\) is equivalent to:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>∃x: x² &lt; 0</button>
+                            <button class="quiz-opt" data-q="0">∀x: x² &lt; 0</button>
+                            <button class="quiz-opt" data-q="0">∃x: x² ≥ 0</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>¬∀ becomes ∃¬, and ¬(x² ≥ 0) is x² &lt; 0.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>The negation of "some student passed the exam" is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1" data-correct>No student passed the exam</button>
+                            <button class="quiz-opt" data-q="1">Some student did not pass</button>
+                            <button class="quiz-opt" data-q="1">Every student passed</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>¬∃ becomes ∀¬: "for every student: they did not pass," i.e. nobody passed.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>\(\neg(\forall x \, \exists y: y &gt; x)\) is equivalent to:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>∃x ∀y: y ≤ x</button>
+                            <button class="quiz-opt" data-q="2">∀x ∃y: y ≤ x</button>
+                            <button class="quiz-opt" data-q="2">∃x ∃y: y ≤ x</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Push ¬ through both quantifiers: each one flips, and \(y &gt; x\) becomes \(y \leq x\).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>The negation of "if it rains, I take the umbrella" (\(P \rightarrow Q\)) is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>It rains and I don't take the umbrella</button>
+                            <button class="quiz-opt" data-q="3">If it rains, I don't take the umbrella</button>
+                            <button class="quiz-opt" data-q="3">If it doesn't rain, I take the umbrella</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(P \rightarrow Q \equiv \neg P \lor Q\), so \(\neg(P \rightarrow Q) \equiv P \land \neg Q\). The negation of an implication is an AND, never another implication!</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Every unicorn in this room has wings" (\(\forall x \in \emptyset: W(x)\)) is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4" data-correct>True (vacuously)</button>
+                            <button class="quiz-opt" data-q="4">False</button>
+                            <button class="quiz-opt" data-q="4">Neither — not a proposition</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>A ∀ over an empty domain is vacuously true: there is no counterexample. Same phenomenon as the false-premise conditional.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="quantNegQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="quantNegQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="quantNegQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('quantNegQuiz');</script>
+
+            <h3 id="laws">Logical Laws and Tautologies</h3>
+            <p>A <strong>tautology</strong> is a proposition that is always true regardless of the truth values of its components (its column is all T). Its opposite, always false, is a <strong>contradiction</strong> — e.g. \(P \land \neg P\). Each law below states that two formulas are equivalent; every one can be verified by truth table, exactly as you did for De Morgan.</p>
 
             <h4>Commutative Laws</h4>
             <p>\[P \land Q \equiv Q \land P\]</p>
@@ -474,22 +1719,352 @@
             <p>\[\neg(P \land Q) \equiv \neg P \lor \neg Q\]</p>
             <p>\[\neg(P \lor Q) \equiv \neg P \land \neg Q\]</p>
 
-            <h3>Implication and Contrapositive</h3>
+            <h4>More Laws Worth Knowing</h4>
+            <table>
+                <tr><th>Name</th><th>Law</th><th>In words</th></tr>
+                <tr><td>Double negation</td><td>\(\neg\neg P \equiv P\)</td><td>two flips cancel</td></tr>
+                <tr><td>Idempotent</td><td>\(P \land P \equiv P\), \(\quad P \lor P \equiv P\)</td><td>repeating adds nothing</td></tr>
+                <tr><td>Identity</td><td>\(P \land \top \equiv P\), \(\quad P \lor \bot \equiv P\)</td><td>⊤ = "true", ⊥ = "false"</td></tr>
+                <tr><td>Domination</td><td>\(P \lor \top \equiv \top\), \(\quad P \land \bot \equiv \bot\)</td><td>one side decides everything</td></tr>
+                <tr><td>Absorption</td><td>\(P \lor (P \land Q) \equiv P\)</td><td>the weaker clause is swallowed</td></tr>
+                <tr><td><strong>Implication elimination</strong></td><td>\(P \rightarrow Q \equiv \neg P \lor Q\)</td><td>an implication is an OR in disguise</td></tr>
+                <tr><td>Contrapositive</td><td>\(P \rightarrow Q \equiv \neg Q \rightarrow \neg P\)</td><td>the key to indirect proofs</td></tr>
+                <tr><td>Exportation</td><td>\((P \land Q) \rightarrow R \equiv P \rightarrow (Q \rightarrow R)\)</td><td>assumptions can be fed in one at a time</td></tr>
+            </table>
+            <p><strong>Implication elimination</strong> deserves a highlight: it is how a circuit with no "→" gate can still compute implications, and how proofs rewrite implications into manipulable form. You discovered it yourself in the Beginner truth-table exercise.</p>
+
+            <p><strong>Worked example — two ways to prove a tautology.</strong> Claim: \(P \rightarrow (Q \rightarrow P)\) is a tautology.</p>
+            <div class="example">
+                <strong>Way 1 (truth table):</strong> the only way it could fail is \(P = T\) and \(Q \rightarrow P = F\); but \(Q \rightarrow P\) with \(P = T\) is always T. No failing row exists.<br><br>
+                <strong>Way 2 (algebraic rewriting):</strong>
+                \[P \rightarrow (Q \rightarrow P) \;\equiv\; \neg P \lor (\neg Q \lor P) \;\equiv\; (\neg P \lor P) \lor \neg Q \;\equiv\; \top \lor \neg Q \;\equiv\; \top\]
+                using implication elimination twice, associativity/commutativity, and domination. Rewriting chains like this are formal proofs in miniature.
+            </div>
+
+            <div class="viz-widget" id="equivQuiz">
+                <h4>Exercise: Equivalent or Not?</h4>
+                <ol>
+                    <li class="quiz-q">
+                        <p>\(P \rightarrow Q\) and \(\neg P \lor Q\)</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>Equivalent</button>
+                            <button class="quiz-opt" data-q="0">Not equivalent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Implication elimination — identical columns (T F T T).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>\(P \rightarrow Q\) and \(Q \rightarrow P\)</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1">Equivalent</button>
+                            <button class="quiz-opt" data-q="1" data-correct>Not equivalent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The converse! Row \(P=T, Q=F\): first is F, second is T. "Rain → wet streets" is not "wet streets → rain".</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>\(\neg(P \lor Q)\) and \(\neg P \land \neg Q\)</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>Equivalent</button>
+                            <button class="quiz-opt" data-q="2">Not equivalent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>De Morgan's second law: "neither" = "both fail".</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>\(P \rightarrow Q\) and \(\neg Q \rightarrow \neg P\)</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>Equivalent</button>
+                            <button class="quiz-opt" data-q="3">Not equivalent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The contrapositive — always equivalent. Basis of proof by contrapositive (Advanced level).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>\(\neg(P \land Q)\) and \(\neg P \land \neg Q\)</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4">Equivalent</button>
+                            <button class="quiz-opt" data-q="4" data-correct>Not equivalent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>De Morgan trap: negating an AND gives an <em>OR</em> of negations, not an AND. Row \(P=T, Q=F\): first is T, second is F.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="equivQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="equivQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="equivQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('equivQuiz');</script>
+
+            <h3 id="variants">Implication Variants and Classic Fallacies</h3>
             <p>For an implication \(P \rightarrow Q\):</p>
             <ul>
-                <li><strong>Contrapositive:</strong> \(\neg Q \rightarrow \neg P\) is logically equivalent to \(P \rightarrow Q\)</li>
-                <li><strong>Converse:</strong> \(Q \rightarrow P\) is not necessarily equivalent</li>
-                <li><strong>Inverse:</strong> \(\neg P \rightarrow \neg Q\) is not necessarily equivalent</li>
+                <li><strong>Contrapositive:</strong> \(\neg Q \rightarrow \neg P\) — logically equivalent to \(P \rightarrow Q\)</li>
+                <li><strong>Converse:</strong> \(Q \rightarrow P\) — <em>not</em> equivalent</li>
+                <li><strong>Inverse:</strong> \(\neg P \rightarrow \neg Q\) — <em>not</em> equivalent (it is the contrapositive of the converse)</li>
             </ul>
             <p>\[P \rightarrow Q \equiv \neg Q \rightarrow \neg P\]</p>
+            <p><strong>Worked example</strong>, with \(P\) = "it rains", \(Q\) = "the streets are wet":</p>
+            <table>
+                <tr><th>Form</th><th>Statement</th><th>Same truth value as original?</th></tr>
+                <tr><td>Original</td><td>If it rains, the streets are wet.</td><td>—</td></tr>
+                <tr><td>Contrapositive</td><td>If the streets are dry, it is not raining.</td><td><strong>Yes, always</strong></td></tr>
+                <tr><td>Converse</td><td>If the streets are wet, it is raining.</td><td>No — a street cleaner defeats it</td></tr>
+                <tr><td>Inverse</td><td>If it doesn't rain, the streets stay dry.</td><td>No — same street cleaner</td></tr>
+            </table>
+            <p>The converse and inverse are equivalent <em>to each other</em>, and both fail exactly when \(Q\) can happen without \(P\).</p>
+
+            <h4>Two Fallacies to Never Commit</h4>
+            <div class="pitfall">
+                <strong>Affirming the consequent (invalid):</strong> "If it rains, the streets are wet. The streets are wet. Therefore it rained." — No: you silently used the <em>converse</em>. Wet streets have other causes.
+            </div>
+            <div class="pitfall">
+                <strong>Denying the antecedent (invalid):</strong> "If it rains, the streets are wet. It is not raining. Therefore the streets are dry." — No: you silently used the <em>inverse</em>.
+            </div>
+            <p>Valid reasoning from \(P \rightarrow Q\) goes only two ways: forward from \(P\) (modus ponens) or backward from \(\neg Q\) (modus tollens) — both defined precisely in the next section.</p>
+
+            <div class="viz-widget" id="formQuiz">
+                <h4>Exercise: Name That Form</h4>
+                <p>Original statement: <em>"If \(n\) is a multiple of 4, then \(n\) is even."</em></p>
+                <ol>
+                    <li class="quiz-q">
+                        <p>"If \(n\) is even, then \(n\) is a multiple of 4" is the:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>Converse</button>
+                            <button class="quiz-opt" data-q="0">Inverse</button>
+                            <button class="quiz-opt" data-q="0">Contrapositive</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Premise and conclusion swapped: \(Q \rightarrow P\). (And it is false: \(n = 6\).)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"If \(n\) is not a multiple of 4, then \(n\) is odd" is the:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1" data-correct>Inverse</button>
+                            <button class="quiz-opt" data-q="1">Converse</button>
+                            <button class="quiz-opt" data-q="1">Contrapositive</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Both parts negated in place: \(\neg P \rightarrow \neg Q\). (False: \(n = 6\) again.)</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"If \(n\) is odd, then \(n\) is not a multiple of 4" is the:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>Contrapositive</button>
+                            <button class="quiz-opt" data-q="2">Converse</button>
+                            <button class="quiz-opt" data-q="2">Inverse</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Swapped AND negated: \(\neg Q \rightarrow \neg P\) — and therefore true, like the original.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"If a shape is a square, it has four sides. This shape has four sides. Therefore it is a square." This argument is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>Invalid — affirming the consequent</button>
+                            <button class="quiz-opt" data-q="3">Valid — modus ponens</button>
+                            <button class="quiz-opt" data-q="3">Invalid — denying the antecedent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>From \(P \rightarrow Q\) and \(Q\) you cannot conclude \(P\): a rectangle has four sides too. Modus ponens would need \(P\) ("it is a square") as the second premise.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"If you study, you pass. You didn't study. Therefore you fail." This argument is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4" data-correct>Invalid — denying the antecedent</button>
+                            <button class="quiz-opt" data-q="4">Valid — modus tollens</button>
+                            <button class="quiz-opt" data-q="4">Valid — contrapositive</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>From \(P \rightarrow Q\) and \(\neg P\), nothing follows about \(Q\) — you might pass anyway. Modus tollens would need \(\neg Q\) ("you failed") to conclude \(\neg P\).</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="formQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="formQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="formQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('formQuiz');</script>
+
+            <h3 id="tautologies-theorems">From Tautologies to Theorems</h3>
+            <p>Here is the bridge between truth tables and real mathematics. A tautology is true by its mere shape — no matter what its letters stand for. That makes tautologies <strong>reusable reasoning templates</strong>: substitute actual mathematical statements for \(P, Q, R\) and the reasoning stays valid. Packaged for use, such templates are called <strong>rules of inference</strong>, and chains of them are <strong>proofs</strong>.</p>
+
+            <h4>Rules of Inference</h4>
+            <p>Each rule says: from the premises above the line, conclude what is below. Each is backed by a tautology (check any of them by truth table!).</p>
+            <table>
+                <tr><th>Rule</th><th>Premises ⊢ Conclusion</th><th>Backing tautology</th><th>Instance</th></tr>
+                <tr><td><strong>Modus ponens</strong></td><td>\(P \rightarrow Q,\; P \;\vdash\; Q\)</td><td>\(((P \rightarrow Q) \land P) \rightarrow Q\)</td><td>"Rain → wet. It rains. So: wet."</td></tr>
+                <tr><td><strong>Modus tollens</strong></td><td>\(P \rightarrow Q,\; \neg Q \;\vdash\; \neg P\)</td><td>\(((P \rightarrow Q) \land \neg Q) \rightarrow \neg P\)</td><td>"Rain → wet. Streets dry. So: no rain."</td></tr>
+                <tr><td>Hypothetical syllogism</td><td>\(P \rightarrow Q,\; Q \rightarrow R \;\vdash\; P \rightarrow R\)</td><td>\(((P \rightarrow Q) \land (Q \rightarrow R)) \rightarrow (P \rightarrow R)\)</td><td>chaining implications</td></tr>
+                <tr><td>Disjunctive syllogism</td><td>\(P \lor Q,\; \neg P \;\vdash\; Q\)</td><td>\(((P \lor Q) \land \neg P) \rightarrow Q\)</td><td>"Rational or irrational; not rational; so irrational."</td></tr>
+                <tr><td>Simplification</td><td>\(P \land Q \;\vdash\; P\)</td><td>\((P \land Q) \rightarrow P\)</td><td>drop one conjunct</td></tr>
+                <tr><td>Conjunction</td><td>\(P,\; Q \;\vdash\; P \land Q\)</td><td>—</td><td>combine two facts</td></tr>
+                <tr><td>Addition</td><td>\(P \;\vdash\; P \lor Q\)</td><td>\(P \rightarrow (P \lor Q)\)</td><td>"\(x &gt; 0\), hence \(x &gt; 0\) or \(x = 0\)."</td></tr>
+            </table>
+
+            <h4>What a Formal Proof Is</h4>
+            <p>A <strong>formal proof</strong> of \(\varphi\) from premises \(\Gamma\) is a finite numbered list of formulas in which every line is either a premise, an axiom, or follows from earlier lines by a rule of inference — and the last line is \(\varphi\). We then write \(\Gamma \vdash \varphi\) ("\(\Gamma\) proves \(\varphi\)").</p>
+            <p><strong>Worked derivation:</strong> show \(\{P \rightarrow Q,\; Q \rightarrow R,\; P\} \vdash R\).</p>
+            <table>
+                <tr><th>#</th><th>Formula</th><th>Justification</th></tr>
+                <tr><td>1</td><td>\(P \rightarrow Q\)</td><td>premise</td></tr>
+                <tr><td>2</td><td>\(Q \rightarrow R\)</td><td>premise</td></tr>
+                <tr><td>3</td><td>\(P\)</td><td>premise</td></tr>
+                <tr><td>4</td><td>\(Q\)</td><td>modus ponens on 1, 3</td></tr>
+                <tr><td>5</td><td>\(R\)</td><td>modus ponens on 2, 4</td></tr>
+            </table>
+            <p>Every proof you will ever write — however informal it looks in prose — compresses a derivation like this. "Proof by contradiction", "by contrapositive", etc. (next level) are just standard high-level patterns over these small steps.</p>
+
+            <h4>Two Different Turnstiles: ⊢ vs ⊨</h4>
+            <ul>
+                <li>\(\Gamma \vDash \varphi\) (<strong>semantic</strong>, "entails"): in every situation where all of \(\Gamma\) is true, \(\varphi\) is true. About <em>truth tables / models</em>.</li>
+                <li>\(\Gamma \vdash \varphi\) (<strong>syntactic</strong>, "proves"): there is a finite derivation of \(\varphi\) from \(\Gamma\) using the rules. About <em>symbol manipulation</em> — a machine could check it.</li>
+            </ul>
+            <p>These are conceptually totally different — one talks about meaning, the other about text. The deep facts below say they coincide.</p>
+
+            <h4>The Deduction Theorem</h4>
+            <p>\[\Gamma \cup \{P\} \vdash Q \quad\text{if and only if}\quad \Gamma \vdash P \rightarrow Q\]</p>
+            <p>In words: to prove an implication, you may <strong>assume the premise and derive the conclusion</strong>. This theorem is why the "direct proof" method (assume \(P\), show \(Q\)) is legitimate — it converts a proof-under-assumption into a proof of the implication itself.</p>
+
+            <h4>Soundness and Completeness</h4>
+            <p><strong>Soundness:</strong> if \(\Gamma \vdash \varphi\) then \(\Gamma \vDash \varphi\). The rules never lie: anything you can derive really is entailed. (This is why checking each rule's backing tautology matters — soundness is proved rule by rule.)</p>
+            <p><strong>Completeness:</strong> if \(\Gamma \vDash \varphi\) then \(\Gamma \vdash \varphi\). The rules are enough: every genuine entailment has a finite derivation. For propositional logic this is provable (and truth tables even give a decision procedure); Gödel extended completeness to first-order logic (Research level).</p>
+            <p>Together: <strong>provable = true in all models</strong>. Symbol-pushing and meaning agree perfectly — for these logics.</p>
+
+            <h4>Everyday Theorems Are Instances of Schemas</h4>
+            <p>Take the theorem "<em>if \(n^2\) is even then \(n\) is even</em>". Its logical skeleton is \(P \rightarrow Q\) with \(P\) = "\(n^2\) even", \(Q\) = "\(n\) even". The standard proof shows the <em>contrapositive</em> \(\neg Q \rightarrow \neg P\) ("\(n\) odd \(\Rightarrow\) \(n^2\) odd", easy to compute) and then invokes the tautology \((\neg Q \rightarrow \neg P) \rightarrow (P \rightarrow Q)\) to conclude. The arithmetic lives in one small step; the tautology carries all the logical weight. <strong>That is the pattern of all mathematics: domain facts + logical schemas = theorems.</strong></p>
+
+            <div class="viz-widget" id="ruleQuiz">
+                <h4>Exercise: Which Rule Was Used?</h4>
+                <ol>
+                    <li class="quiz-q">
+                        <p>"If \(n &gt; 2\), then \(n^2 &gt; 4\). We know \(n &gt; 2\). Therefore \(n^2 &gt; 4\)."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>Modus ponens</button>
+                            <button class="quiz-opt" data-q="0">Modus tollens</button>
+                            <button class="quiz-opt" data-q="0">Disjunctive syllogism</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(P \rightarrow Q\) and \(P\), conclude \(Q\) — the forward direction.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Every bird has feathers. This animal has no feathers. Therefore it is not a bird."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1" data-correct>Modus tollens</button>
+                            <button class="quiz-opt" data-q="1">Modus ponens</button>
+                            <button class="quiz-opt" data-q="1">Affirming the consequent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(P \rightarrow Q\) and \(\neg Q\), conclude \(\neg P\) — the valid backward direction.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(x\) is rational or irrational. \(x\) is not rational. Therefore \(x\) is irrational."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>Disjunctive syllogism</button>
+                            <button class="quiz-opt" data-q="2">Addition</button>
+                            <button class="quiz-opt" data-q="2">Simplification</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(P \lor Q\) and \(\neg P\), conclude \(Q\): eliminate the dead branch of an OR.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"If \(a\) divides \(b\) then \(a\) divides \(2b\). If \(a\) divides \(2b\) then \(a\) divides \(2b+a\). Therefore: if \(a\) divides \(b\), \(a\) divides \(2b+a\)."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>Hypothetical syllogism</button>
+                            <button class="quiz-opt" data-q="3">Modus ponens</button>
+                            <button class="quiz-opt" data-q="3">Conjunction</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Two implications chained into one: \(P \rightarrow Q\), \(Q \rightarrow R\), conclude \(P \rightarrow R\).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(n\) is even and \(n &gt; 10\). Therefore \(n\) is even."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4" data-correct>Simplification</button>
+                            <button class="quiz-opt" data-q="4">Addition</button>
+                            <button class="quiz-opt" data-q="4">Modus ponens</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>From \(P \land Q\), conclude \(P\).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(x &gt; 0\). Therefore \(x &gt; 0\) or \(x = 0\) (that is, \(x \geq 0\))."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="5" data-correct>Addition</button>
+                            <button class="quiz-opt" data-q="5">Simplification</button>
+                            <button class="quiz-opt" data-q="5">Disjunctive syllogism</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>From \(P\), conclude \(P \lor Q\) — weakening a statement is always safe.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="ruleQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="ruleQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="ruleQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('ruleQuiz');</script>
+
+            <h3 id="intermediate-check">Intermediate Checkpoint</h3>
+            <div class="viz-widget" id="intQuiz">
+                <ol>
+                    <li class="quiz-q">
+                        <p>A truth table for a formula with 3 variables needs how many rows?</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>8</button>
+                            <button class="quiz-opt" data-q="0">6</button>
+                            <button class="quiz-opt" data-q="0">9</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>\(2^n\) rows for \(n\) variables: \(2^3 = 8\).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>Which of these is a tautology?</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1" data-correct>(P ∧ Q) → P</button>
+                            <button class="quiz-opt" data-q="1">P → (P ∧ Q)</button>
+                            <button class="quiz-opt" data-q="1">P ∧ ¬P</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Simplification's backing tautology. The second fails at \(P=T, Q=F\); the third is a contradiction (always false).</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>The negation of "\(\exists x \, \forall y: L(x,y)\)" ("someone loves everyone") is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>∀x ∃y: ¬L(x,y)</button>
+                            <button class="quiz-opt" data-q="2">∃x ∀y: ¬L(x,y)</button>
+                            <button class="quiz-opt" data-q="2">∀x ∀y: ¬L(x,y)</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Flip each quantifier as ¬ passes: "everyone has someone they don't love."</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"\(\Gamma \vdash \varphi\)" means:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>φ has a finite derivation from Γ via inference rules</button>
+                            <button class="quiz-opt" data-q="3">φ is true whenever all of Γ is true</button>
+                            <button class="quiz-opt" data-q="3">φ and Γ are logically equivalent</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>⊢ is syntactic (proof); "true whenever" is ⊨, the semantic side. Soundness + completeness make them agree.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p><strong>Soundness</strong> of a proof system says:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="4" data-correct>Everything provable is actually entailed (rules never lie)</button>
+                            <button class="quiz-opt" data-q="4">Everything entailed is provable (rules are enough)</button>
+                            <button class="quiz-opt" data-q="4">Every formula is provable or refutable</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Soundness: ⊢ implies ⊨. The second option is completeness. The third is decidability of a theory — a different (and rarer) property.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>You assume \(P\), and after some steps derive \(Q\). By the deduction theorem you have established:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="5" data-correct>⊢ P → Q</button>
+                            <button class="quiz-opt" data-q="5">⊢ Q</button>
+                            <button class="quiz-opt" data-q="5">⊢ P ∧ Q</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>Proof under assumption of \(P\) = proof of the implication \(P \rightarrow Q\). This is exactly the licence behind direct proof, coming next.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="intQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="intQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="intQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('intQuiz');</script>
 
             <div class="hr-line"></div>
         </section>
 
         <section id="advanced">
-            <h2>Advanced Level</h2>
+            <h2>Advanced Level <span class="study-time">≈ 2.5 h study</span></h2>
 
-            <h3>Predicate Logic</h3>
+            <h3 id="predicate-logic">Predicate Logic</h3>
             <p><strong>Predicate logic</strong> extends propositional logic with predicates and quantifiers, allowing more expressive statements.</p>
             <p>A <strong>predicate</strong> is a function \(P: D \rightarrow \{T, F\}\) that assigns truth values to elements of a domain.</p>
 
@@ -508,34 +2083,402 @@
                 \[\forall x: \text{Human}(x) \rightarrow \text{Mortal}(x)\]
             </div>
 
-            <h4>Logical Consequence</h4>
-            <p>A set of propositions \(\Gamma\) <strong>logically entails</strong> a proposition \(\phi\), denoted \(\Gamma \vDash \phi\), if whenever all propositions in \(\Gamma\) are true, \(\phi\) must be true.</p>
+            <h4>Free and Bound Variables</h4>
+            <p>A variable is <strong>bound</strong> if a quantifier captures it, <strong>free</strong> otherwise. In \(\forall x: x + y &gt; x\), the \(x\) is bound but \(y\) is free — the formula is an open sentence about \(y\), not yet a proposition. A formula with no free variables is a <strong>sentence</strong>; only sentences have definite truth values. Renaming a bound variable changes nothing: \(\forall x: P(x)\) and \(\forall t: P(t)\) are the same statement (like the dummy variable in \(\int_0^1 f(x)\,dx\)).</p>
 
-            <h3>Proof Techniques</h3>
+            <h4>Translating English ↔ FOL</h4>
+            <table>
+                <tr><th>English</th><th>FOL</th></tr>
+                <tr><td>Every prime greater than 2 is odd</td><td>\(\forall n\,((\text{Prime}(n) \land n &gt; 2) \rightarrow \text{Odd}(n))\)</td></tr>
+                <tr><td>Some prime is even</td><td>\(\exists n\,(\text{Prime}(n) \land \text{Even}(n))\)</td></tr>
+                <tr><td>No prime is a perfect square</td><td>\(\forall n\,(\text{Prime}(n) \rightarrow \neg\text{Square}(n))\)</td></tr>
+                <tr><td>There is no largest natural number</td><td>\(\forall n\, \exists m: m &gt; n\)</td></tr>
+                <tr><td>Between any two reals lies a rational</td><td>\(\forall x \forall y\,(x &lt; y \rightarrow \exists q\,(\text{Rat}(q) \land x &lt; q \land q &lt; y))\)</td></tr>
+                <tr><td>\(f\) is continuous at \(a\)</td><td>\(\forall \varepsilon &gt; 0\; \exists \delta &gt; 0\; \forall x\,(|x - a| &lt; \delta \rightarrow |f(x) - f(a)| &lt; \varepsilon)\)</td></tr>
+            </table>
+            <div class="pitfall">
+                <strong>The classic translation trap:</strong> \(\forall\) pairs with \(\rightarrow\), \(\exists\) pairs with \(\land\). Writing "some human is mortal" as \(\exists x\,(\text{Human}(x) \rightarrow \text{Mortal}(x))\) is wrong: that formula is true as soon as <em>anything</em> non-human exists (false premise ⇒ true implication!). The correct form is \(\exists x\,(\text{Human}(x) \land \text{Mortal}(x))\).
+            </div>
+            <p><em>A glimpse of semantics:</em> a first-order sentence is not true or false in a vacuum — it is true or false <em>in a structure</em> (a domain plus interpretations of the predicate/function symbols). \(\forall x \exists y: y &gt; x\) is true in \((\mathbb{R}, &lt;)\) but false in a finite ordered set. This idea, made precise, is <strong>model theory</strong> (Research level).</p>
 
-            <h4>Direct Proof</h4>
-            <p>To prove \(P \rightarrow Q\), assume \(P\) is true and show \(Q\) must be true.</p>
+            <div class="viz-widget" id="folQuiz">
+                <h4>Exercise: Pick the Correct Translation</h4>
+                <ol>
+                    <li class="quiz-q">
+                        <p>"Some student answered every question." (\(A(s, q)\) = student \(s\) answered question \(q\))</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="0" data-correct>∃s ∀q: A(s,q)</button>
+                            <button class="quiz-opt" data-q="0">∀q ∃s: A(s,q)</button>
+                            <button class="quiz-opt" data-q="0">∀s ∃q: A(s,q)</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>One student, fixed up front, who handled all questions: ∃ before ∀.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Every question was answered by some student (possibly different students for different questions)."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="1" data-correct>∀q ∃s: A(s,q)</button>
+                            <button class="quiz-opt" data-q="1">∃s ∀q: A(s,q)</button>
+                            <button class="quiz-opt" data-q="1">∃q ∀s: A(s,q)</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>The student may depend on the question: ∃ after ∀. Compare with the previous item — this is the quantifier-order distinction in action.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>"Some human is mortal."</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="2" data-correct>∃x (Human(x) ∧ Mortal(x))</button>
+                            <button class="quiz-opt" data-q="2">∃x (Human(x) → Mortal(x))</button>
+                            <button class="quiz-opt" data-q="2">∀x (Human(x) ∧ Mortal(x))</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>∃ pairs with ∧. The → version is true in any world containing a rock.</p></details>
+                    </li>
+                    <li class="quiz-q">
+                        <p>In the formula \(\forall x\,(x + y &gt; x)\), the variable \(y\) is:</p>
+                        <div class="quiz-opts">
+                            <button class="quiz-opt" data-q="3" data-correct>Free</button>
+                            <button class="quiz-opt" data-q="3">Bound</button>
+                            <button class="quiz-opt" data-q="3">Both free and bound</button>
+                        </div>
+                        <details><summary>Explanation</summary><p>No quantifier captures \(y\), so the formula's truth depends on which value \(y\) takes (true iff \(y &gt; 0\)). Only \(x\) is bound.</p></details>
+                    </li>
+                </ol>
+                <div class="btn-row">
+                    <button class="viz-btn" id="folQuiz-check">Check answers</button>
+                    <button class="viz-btn" id="folQuiz-reset">Reset</button>
+                </div>
+                <p class="viz-readout" id="folQuiz-readout"></p>
+            </div>
+            <script>wireQuiz('folQuiz');</script>
 
-            <h4>Proof by Contradiction</h4>
-            <p>To prove \(P\), assume \(\neg P\) and derive a contradiction, concluding \(P\) must be true.</p>
+            <h3 id="consequence">Logical Consequence</h3>
+            <p>A set of propositions \(\Gamma\) <strong>logically entails</strong> a proposition \(\phi\), denoted \(\Gamma \vDash \phi\), if whenever all propositions in \(\Gamma\) are true, \(\phi\) must be true. (This is the semantic turnstile from the Tautologies → Theorems section; by soundness and completeness it coincides with provability \(\vdash\).)</p>
+            <div class="example">
+                <strong>Worked check:</strong> does \(\{P \lor Q,\; \neg Q\} \vDash P\) hold? Scan the four rows: the premises are both true only in the row \(P = T, Q = F\) — and \(P\) is true there. Yes, the entailment holds (it is disjunctive syllogism, seen semantically). Contrast: \(\{P \lor Q\} \nvDash P\), because the row \(P = F, Q = T\) makes the premise true and \(P\) false.
+            </div>
 
-            <h4>Proof by Contrapositive</h4>
-            <p>To prove \(P \rightarrow Q\), prove \(\neg Q \rightarrow \neg P\) instead.</p>
+            <h3 id="proof-methods">Proof Methods — the Toolbox</h3>
+            <p>Knowing the operators and inference rules is knowing the <em>chess pieces</em>; proof methods are the <em>openings</em>. Below is every standard method, each with: when to use it, a fill-in template, worked examples, and the classic mistakes. Use the flowchart to pick a method, then study its subsection.</p>
 
-            <h4>Mathematical Induction</h4>
-            <p>To prove \(P(n)\) for all \(n \in \mathbb{N}\):</p>
-            <ol>
-                <li><strong>Base case</strong>: Show \(P(1)\) is true</li>
-                <li><strong>Inductive step</strong>: Assume \(P(k)\) is true, show \(P(k+1)\) must be true</li>
-            </ol>
+            <div class="mermaid">
+graph TD
+    START["What must you prove?"] --> QIND["'For every natural number n...'"]
+    QIND --> IND["Induction, or strong induction"]
+    START --> QIMP["'If P then Q'"]
+    QIMP --> DIR["Direct proof: assume P, chain to Q"]
+    DIR -- "stuck, but not-Q is concrete" --> CTR["Contrapositive: assume not-Q, derive not-P"]
+    DIR -- "no foothold at all" --> CON["Contradiction: assume P and not-Q together"]
+    QIMP -- "premise splits into finitely many types" --> CAS["Proof by cases"]
+    START --> QEX["'There exists x...'"]
+    QEX --> EXC["Constructive: exhibit a witness"]
+    QEX --> EXN["Non-constructive: show one must exist"]
+    START --> QUNI["'There is exactly one x...'"]
+    QUNI --> UNI["Existence + uniqueness (a = b argument)"]
+    START --> QDIS["Claim looks false? ('all n satisfy...')"]
+    QDIS --> CEX["Disprove with ONE counterexample"]
+            </div>
+
+            <h4>1. Direct Proof</h4>
+            <p><strong>When to use:</strong> the default. The premise unfolds into definitions you can compute with, and a path to the conclusion is visible. (Its licence is the deduction theorem: assume \(P\), derive \(Q\), conclude \(P \rightarrow Q\).)</p>
+            <pre>Claim: P → Q.
+Proof. Assume P.
+       [unfold the definitions appearing in P]
+       [compute / apply known facts]
+       [arrive at the definition of Q]
+       Therefore Q.                        ∎</pre>
+            <div class="example">
+                <strong>Worked example 1:</strong> <em>The sum of two even integers is even.</em><br>
+                Assume \(m\) and \(n\) are even. By definition \(m = 2a\) and \(n = 2b\) for some integers \(a, b\). Then
+                \[m + n = 2a + 2b = 2(a + b),\]
+                and \(a + b\) is an integer, so \(m + n\) is even by definition. ∎
+            </div>
+            <div class="example">
+                <strong>Worked example 2:</strong> <em>If \(n\) is odd, then \(n^2\) is odd.</em><br>
+                Assume \(n\) is odd, so \(n = 2k + 1\) for some integer \(k\). Then
+                \[n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1,\]
+                which is odd by definition. ∎ <em>(Keep this result — two other methods below will lean on it.)</em>
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) <em>Circularity</em> — using the conclusion (or a disguised version of it) as a step. (2) <em>Examples are not proofs</em>: verifying "even + even = even" for 2+4, 6+8, 10+12 proves nothing about all cases — only the general computation with \(2a + 2b\) does. (3) Forgetting to state what \(a, b, k\) are ("for some integer" matters).
+            </div>
+
+            <h4>2. Proof by Contrapositive</h4>
+            <p><strong>When to use:</strong> proving \(P \rightarrow Q\) where assuming \(P\) gives you nothing to compute with, but \(\neg Q\) does. Justified by \(P \rightarrow Q \equiv \neg Q \rightarrow \neg P\).</p>
+            <pre>Claim: P → Q.
+Proof. We prove the contrapositive: ¬Q → ¬P.
+       Assume ¬Q.
+       [direct proof machinery]
+       Therefore ¬P.
+       Hence P → Q.                        ∎</pre>
+            <div class="example">
+                <strong>Worked example 1:</strong> <em>If \(n^2\) is even, then \(n\) is even.</em><br>
+                Assuming "\(n^2\) even" gives no handle on \(n\). Contrapositive: <em>if \(n\) is odd, then \(n^2\) is odd</em> — exactly worked example 2 of direct proof, already done! Hence the claim. ∎<br>
+                <em>Notice the economy: a hard-looking statement collapses into an easy computation the moment you flip it.</em>
+            </div>
+            <div class="example">
+                <strong>Worked example 2:</strong> <em>If \(3n + 2\) is odd, then \(n\) is odd.</em><br>
+                Contrapositive: if \(n\) is even, then \(3n + 2\) is even. Assume \(n = 2k\). Then \(3n + 2 = 6k + 2 = 2(3k + 1)\), even. ∎
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) Flipping to the <em>converse</em> \(Q \rightarrow P\) or the <em>inverse</em> \(\neg P \rightarrow \neg Q\) instead — those are NOT equivalent. The contrapositive both swaps AND negates. (2) Sloppy negation: the negation of "\(x &gt; 0\)" is "\(x \leq 0\)", not "\(x &lt; 0\)".
+            </div>
+
+            <h4>3. Proof by Contradiction (Reductio ad Absurdum)</h4>
+            <p><strong>When to use:</strong> the claim is not an implication (e.g. an irrationality or non-existence claim), or its negation hands you powerful ammunition. Logic: \(\neg P \rightarrow \bot\) forces \(P\). To prove an implication \(P \rightarrow Q\) this way, assume <em>both</em> \(P\) and \(\neg Q\).</p>
+            <pre>Claim: P.
+Proof. Suppose, for contradiction, ¬P.
+       [derive consequences...]
+       ... which contradicts [an established fact or an assumption made].
+       Therefore ¬P is impossible, so P.   ∎</pre>
+            <div class="example">
+                <strong>Worked example 1 (the classic):</strong> <em>\(\sqrt{2}\) is irrational.</em><br>
+                Suppose not: \(\sqrt{2} = a/b\) with \(a, b\) integers, \(b \neq 0\), and the fraction in <strong>lowest terms</strong> (no common factor — this choice is the trap we will spring). Squaring: \(2b^2 = a^2\), so \(a^2\) is even. By the contrapositive result above, \(a\) is even: \(a = 2c\). Substituting: \(2b^2 = 4c^2\), so \(b^2 = 2c^2\), so \(b^2\) is even, so \(b\) is even. Now \(a\) and \(b\) share the factor 2 — contradicting lowest terms. Hence no such fraction exists: \(\sqrt{2}\) is irrational. ∎
+            </div>
+            <div class="example">
+                <strong>Worked example 2 (Euclid):</strong> <em>There are infinitely many primes.</em><br>
+                Suppose only finitely many primes exist: \(p_1, p_2, \ldots, p_k\). Let
+                \[N = p_1 p_2 \cdots p_k + 1.\]
+                \(N \geq 2\), so \(N\) has some prime divisor \(p\) (proved below by strong induction). But each \(p_i\) leaves remainder 1 when dividing \(N\), so \(p \neq p_i\) for every \(i\) — a prime missing from the "complete" list. Contradiction. ∎
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) You must contradict an <em>established fact</em> or one of your explicit assumptions — "this seems absurd" is not a contradiction. (2) Bookkeeping: under the assumption \(\neg P\), everything derived is provisional; label the assumption clearly so the reader (and you) know what got refuted. (3) Don't use contradiction when a direct or contrapositive proof is sitting there — wrapping a direct proof inside "suppose not ... contradiction" is a common beginner tic that obscures the argument.
+            </div>
+
+            <h4>4. Proof by Cases (Exhaustion)</h4>
+            <p><strong>When to use:</strong> the hypothesis splits naturally into finitely many types (even/odd, positive/negative/zero, ...) each easy to handle. Logic: \((P_1 \lor P_2) \rightarrow Q\) follows from \(P_1 \rightarrow Q\) and \(P_2 \rightarrow Q\).</p>
+            <pre>Claim: Q (about an arbitrary object x).
+Proof. Every x satisfies P₁ or P₂ (exhaustive!).
+       Case 1: assume P₁. ... then Q.
+       Case 2: assume P₂. ... then Q.
+       In all cases Q.                     ∎</pre>
+            <div class="example">
+                <strong>Worked example 1:</strong> <em>For every integer \(n\), \(n^2 + n\) is even.</em><br>
+                Note \(n^2 + n = n(n + 1)\). <strong>Case \(n\) even:</strong> \(n = 2k\), so \(n(n+1) = 2k(n+1)\), even. <strong>Case \(n\) odd:</strong> then \(n + 1\) is even, \(n + 1 = 2k\), so \(n(n+1) = 2kn\), even. Every integer is even or odd, so the cases are exhaustive. ∎
+            </div>
+            <div class="example">
+                <strong>Worked example 2:</strong> <em>\(|xy| = |x|\,|y|\) for all reals.</em><br>
+                By symmetry in \(x \leftrightarrow y\) and the trivial case of a zero factor, it suffices to check: both positive (\(|xy| = xy = |x||y|\)), both negative (\(xy &gt; 0\), \(|xy| = xy = (-x)(-y) = |x||y|\)), and mixed signs (\(xy &lt; 0\), \(|xy| = -xy = x(-y)\) or \((-x)y = |x||y|\)). ∎ <em>Note the professional move: symmetry arguments shrink the case count — say so explicitly when you use them.</em>
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) <em>Non-exhaustive cases</em> — forgetting \(x = 0\) in sign arguments is the classic. State explicitly why the cases cover everything. (2) Cases may overlap harmlessly, but each case must genuinely reach the conclusion — no "similarly" hand-waving unless it truly is the same computation.
+            </div>
+
+            <h4>5. Disproof by Counterexample</h4>
+            <p><strong>When to use:</strong> to prove a universal claim <em>false</em>: \(\neg\forall x\, P(x) \equiv \exists x\, \neg P(x)\) — one witness settles it.</p>
+            <pre>Claim to refute: "every x satisfies P(x)".
+Proof. Consider x₀ = [specific object].
+       [verify x₀ is in the domain]
+       [verify P(x₀) fails]                ∎</pre>
+            <div class="example">
+                <strong>Worked example 1:</strong> <em>"All primes are odd"</em> — false: 2 is prime and even. One line, case closed.
+            </div>
+            <div class="example">
+                <strong>Worked example 2 (patterns lie):</strong> <em>"\(n^2 + n + 41\) is prime for every natural number \(n\)"</em> (Euler's famous polynomial). It really is prime for \(n = 0, 1, 2, \ldots, 39\) — forty straight successes! But at \(n = 40\):
+                \[40^2 + 40 + 41 = 1681 = 41^2.\]
+                False. <em>Moral: no amount of checking proves a ∀-claim; a single check disproves one.</em>
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) A counterexample must satisfy the hypothesis and violate the conclusion — check both. (2) Counterexamples <em>disprove</em>; they never prove. To prove a ∀-claim you are back to the other methods.
+            </div>
+
+            <h4>6. Existence Proofs: Constructive vs Non-constructive</h4>
+            <p><strong>When to use:</strong> claims of the form \(\exists x\, P(x)\). Two very different flavors:</p>
+            <ul>
+                <li><strong>Constructive:</strong> exhibit a concrete witness and verify it. Preferred when possible — it gives you the object.</li>
+                <li><strong>Non-constructive:</strong> show a witness must exist without producing it (via contradiction, counting/pigeonhole, or case analysis).</li>
+            </ul>
+            <div class="example">
+                <strong>Worked example (constructive):</strong> <em>Between any two distinct rationals lies another rational.</em> Given rationals \(a &lt; b\), take \(x = \frac{a+b}{2}\). It is rational (average of rationals) and \(a &lt; x &lt; b\). Witness produced, properties verified. ∎
+            </div>
+            <div class="example">
+                <strong>Worked example (non-constructive, a gem):</strong> <em>There exist irrational numbers \(a, b\) with \(a^b\) rational.</em><br>
+                Consider \(c = \sqrt{2}^{\sqrt{2}}\). Either \(c\) is rational or not:
+                <br><strong>Case 1:</strong> \(c\) rational — take \(a = b = \sqrt{2}\); done.
+                <br><strong>Case 2:</strong> \(c\) irrational — take \(a = c\), \(b = \sqrt{2}\); then
+                \[a^b = \left(\sqrt{2}^{\sqrt{2}}\right)^{\sqrt{2}} = \sqrt{2}^{\,\sqrt{2}\cdot\sqrt{2}} = \sqrt{2}^{\,2} = 2,\]
+                rational; done. ∎<br>
+                We proved the witnesses exist <em>without ever learning which case holds</em>! (Note this is simultaneously a proof by cases.) Whether non-constructive existence "really" proves anything is a genuine philosophical divide — intuitionistic logic (Research level) rejects this step.
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) In constructive proofs, don't forget to <em>verify</em> the witness — naming \(x = \frac{a+b}{2}\) is half the work; checking \(a &lt; x &lt; b\) is the other half. (2) Existence gives no formula and no uniqueness: don't read more out of \(\exists\) than one witness.
+            </div>
+
+            <h4>7. Uniqueness Proofs</h4>
+            <p><strong>When to use:</strong> claims of the form "there is <em>exactly one</em> \(x\) with \(P(x)\)" (written \(\exists! x\, P(x)\)). Always two halves:</p>
+            <pre>Claim: exactly one x satisfies P(x).
+Proof. (Existence)   [any existence method above]
+       (Uniqueness)  Suppose a and b both satisfy P.
+                     [derive a = b]        ∎</pre>
+            <div class="example">
+                <strong>Worked example:</strong> <em>For fixed reals \(a, b\), the equation \(x + a = b\) has exactly one solution.</em><br>
+                <strong>Existence:</strong> \(x = b - a\) works: \((b - a) + a = b\). <strong>Uniqueness:</strong> if \(x_1 + a = b\) and \(x_2 + a = b\), then \(x_1 + a = x_2 + a\); adding \(-a\) to both sides, \(x_1 = x_2\). ∎
+            </div>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) Proving only uniqueness ("any two solutions coincide") without existence — perhaps there are none! (2) In the uniqueness half, do not assume the two objects are the constructed one; take two <em>arbitrary</em> solutions and force them equal.
+            </div>
+
+            <h4>8. Mathematical Induction</h4>
+            <p><strong>When to use:</strong> claims of the form "\(P(n)\) for every natural number \(n \geq n_0\)". Intuition: dominoes — if the first falls, and each falling domino knocks over the next, all fall.</p>
+            <pre>Claim: P(n) for all n ≥ n₀.
+Proof. (Base case)      Verify P(n₀) directly.
+       (Inductive step) Let k ≥ n₀ be arbitrary.
+         Inductive hypothesis (IH): assume P(k).
+         [use IH...] show P(k+1).
+       By induction, P(n) holds for all n ≥ n₀.   ∎</pre>
+            <div class="example">
+                <strong>Worked example 1:</strong> \(\displaystyle 1 + 2 + \cdots + n = \frac{n(n+1)}{2}\) for all \(n \geq 1\).<br>
+                <strong>Base:</strong> \(n = 1\): left side 1, right side \(\frac{1 \cdot 2}{2} = 1\). ✓<br>
+                <strong>Step:</strong> assume the formula for \(n = k\) (IH). Then
+                \[1 + 2 + \cdots + k + (k{+}1) \overset{\text{IH}}{=} \frac{k(k+1)}{2} + (k{+}1) = (k{+}1)\!\left(\frac{k}{2} + 1\right) = \frac{(k+1)(k+2)}{2},\]
+                which is the formula for \(k + 1\). ∎
+            </div>
+            <div class="example">
+                <strong>Worked example 2 (with a picture in mind):</strong> \(1 + 3 + 5 + \cdots + (2n - 1) = n^2\): <em>the sum of the first \(n\) odd numbers is a perfect square.</em><br>
+                <strong>Base:</strong> \(n = 1\): \(1 = 1^2\). ✓<br>
+                <strong>Step:</strong> assume \(1 + 3 + \cdots + (2k-1) = k^2\). Add the next odd number \(2k + 1\):
+                \[k^2 + (2k + 1) = (k + 1)^2. \;∎\]
+                <em>Geometric interpretation:</em> an L-shaped strip of \(2k+1\) cells wraps a \(k \times k\) square into a \((k{+}1) \times (k{+}1)\) square — induction made visible.
+            </div>
+            <div class="pitfall">
+                <strong>Pitfall 1 — the missing base case:</strong> the inductive step for "\(1 + 2 + \cdots + n = \frac{n^2 + n + 4}{2}\)" works perfectly (adding \(k+1\) preserves the formula), yet the claim is false for every \(n\) — the base fails. A step without a base proves nothing.
+            </div>
+            <div class="pitfall">
+                <strong>Pitfall 2 — the all-horses-are-the-same-color "proof":</strong> Claim: any \(n\) horses have the same color. Base \(n = 1\): sure. Step: given \(k+1\) horses, remove one — the remaining \(k\) share a color by IH; remove a different one — again one color by IH; the two overlapping groups force all \(k+1\) to match. <em>Where is the flaw?</em> At \(k + 1 = 2\) the two groups (1 horse each) <strong>do not overlap</strong>, so nothing links their colors. The step silently assumed \(k \geq 2\). Moral: check the step at its smallest instance.
+            </div>
+
+            <h4>9. Strong Induction and Well-Ordering</h4>
+            <p><strong>When to use:</strong> the step needs not just \(P(k)\) but some or all of \(P(n_0), \ldots, P(k)\) — typical when objects decompose into <em>smaller pieces of unpredictable size</em>.</p>
+            <pre>Claim: P(n) for all n ≥ n₀.
+Proof. (Base)  Verify P(n₀).
+       (Step)  Assume P(m) for ALL n₀ ≤ m ≤ k  (strong IH);
+               show P(k+1).                    ∎</pre>
+            <div class="example">
+                <strong>Worked example:</strong> <em>Every integer \(n \geq 2\) is a product of primes.</em><br>
+                <strong>Base:</strong> 2 is itself prime. ✓<br>
+                <strong>Step:</strong> let \(k \geq 2\) and assume every \(m\) with \(2 \leq m \leq k\) is a product of primes. Consider \(k + 1\): if it is prime, done. Otherwise \(k + 1 = ab\) with \(2 \leq a, b \leq k\); by the strong IH both \(a\) and \(b\) are products of primes, hence so is \(k+1\). ∎<br>
+                <em>Ordinary induction would be stuck here: knowing only \(P(k)\) says nothing about the factors \(a, b\).</em> (This existence half, plus a uniqueness argument, is the Fundamental Theorem of Arithmetic.)
+            </div>
+            <p><strong>Well-Ordering Principle (WOP):</strong> every non-empty set of natural numbers has a least element. WOP, ordinary induction, and strong induction are all equivalent. WOP powers "minimal counterexample" proofs: <em>suppose the claim fails; take the least \(n\) where it fails; derive a smaller failure — contradiction.</em> Try re-proving the prime-factorization result that way: it becomes three lines.</p>
+            <div class="pitfall">
+                <strong>Pitfalls:</strong> (1) In strong induction the base can still be essential (and sometimes several bases are needed — e.g. proofs splitting \(k+1 = (k-1) + 2\) need two). (2) In minimal-counterexample proofs, verify the smaller object you produce actually lies in the set (stays ≥ n₀, stays a natural number).
+            </div>
+
+            <h3 id="proof-exercises">Write Your Own Proofs</h3>
+            <p>Time to write. Each exercise below matches one method you just studied. Type a full proof in the box and press <em>Check my proof</em>: the page runs an honest <strong>structural check</strong> — it detects whether the key ingredients of the method appear (assumption stated, definitions unfolded, contradiction named, ...). It <em>cannot judge correctness</em> — no keyword matcher can — so after the check, the model solution unlocks and the real work is yours: compare line by line, and be harsher on yourself than the checker is.</p>
+            <p><em>Write in ordinary text; symbols like ¬ ∧ ∨ → √ ² are welcome but ASCII (sqrt(3), k^2, 2k+1) works exactly as well.</em></p>
+
+            <div class="viz-widget proof-box" id="proofDirectEx">
+                <h4>Exercise 1 — Direct Proof</h4>
+                <p><strong>Prove:</strong> the sum of two odd integers is even.</p>
+                <textarea id="proofDirectEx-input" placeholder="Write your proof here. Skeleton: Assume … By definition … Then … Therefore … ∎"></textarea>
+                <div class="btn-row">
+                    <button class="viz-btn" id="proofDirectEx-check">Check my proof</button>
+                </div>
+                <ul class="check-list" id="proofDirectEx-list"></ul>
+                <p class="viz-readout" id="proofDirectEx-readout"></p>
+                <details id="proofDirectEx-solution" hidden>
+                    <summary>Model solution &amp; self-check rubric</summary>
+                    <p><strong>Model solution.</strong> Assume \(m\) and \(n\) are odd integers. By definition there exist integers \(a\) and \(b\) with \(m = 2a + 1\) and \(n = 2b + 1\). Then
+                    \[m + n = (2a + 1) + (2b + 1) = 2a + 2b + 2 = 2(a + b + 1).\]
+                    Since \(a + b + 1\) is an integer, \(m + n\) is even by definition. ∎</p>
+                    <p><strong>Self-check:</strong> ① Did you use <em>two different</em> letters \(a, b\)? (Writing \(m = 2a+1, n = 2a+1\) silently claims \(m = n\).) ② Did you say \(a, b\) are integers? ③ Is every step an equality you could defend? ④ Does the final sentence state the claim proved? ⑤ Could a classmate follow it without reading your mind?</p>
+                </details>
+            </div>
+            <script>
+            ProofCheck('proofDirectEx', [
+                { label: 'States the assumption ("let m, n be odd integers")', hint: 'open with "Assume/Let m and n be odd integers".', patterns: [/assume|suppose|let\b|given/i] },
+                { label: 'Unfolds the definition of odd (2k+1 form)', hint: 'odd means m = 2a+1 for some integer a — use two different letters for the two numbers.', patterns: [/2\s*\*?\s*[a-z]\s*\+\s*1/i] },
+                { label: 'Adds them and factors out 2', hint: 'm + n = 2(a + b + 1) — exhibit the factor 2 explicitly.', patterns: [/2\s*\*?\s*\(/] },
+                { label: 'Concludes the sum is even', hint: 'say it: "... so m + n is even".', patterns: [/even/i] },
+                { label: 'Closes the proof (therefore / hence / ∎ / QED)', hint: 'finish with a concluding sentence.', patterns: [/therefore|hence|thus|conclud|q\.?e\.?d|∎/i] }
+            ]);
+            </script>
+
+            <div class="viz-widget proof-box" id="proofContraposEx">
+                <h4>Exercise 2 — Proof by Contrapositive</h4>
+                <p><strong>Prove:</strong> if \(n^2\) is even, then \(n\) is even.</p>
+                <textarea id="proofContraposEx-input" placeholder="Announce the contrapositive, then prove it directly."></textarea>
+                <div class="btn-row">
+                    <button class="viz-btn" id="proofContraposEx-check">Check my proof</button>
+                </div>
+                <ul class="check-list" id="proofContraposEx-list"></ul>
+                <p class="viz-readout" id="proofContraposEx-readout"></p>
+                <details id="proofContraposEx-solution" hidden>
+                    <summary>Model solution &amp; self-check rubric</summary>
+                    <p><strong>Model solution.</strong> We prove the contrapositive: <em>if \(n\) is odd, then \(n^2\) is odd</em>. Assume \(n\) is odd, so \(n = 2k + 1\) for some integer \(k\). Then
+                    \[n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1,\]
+                    and \(2k^2 + 2k\) is an integer, so \(n^2\) is odd. The contrapositive is proved, hence if \(n^2\) is even, \(n\) is even. ∎</p>
+                    <p><strong>Self-check:</strong> ① Did you state which implication you are actually proving? ② Is your contrapositive really \(\neg Q \rightarrow \neg P\) (not the converse/inverse)? ③ Did the final sentence return to the <em>original</em> claim? ④ Negations correct ("not even" = "odd" works for integers — say so if you use it)? ⑤ Each algebra step checkable?</p>
+                </details>
+            </div>
+            <script>
+            ProofCheck('proofContraposEx', [
+                { label: 'Announces the contrapositive strategy', hint: 'say "we prove the contrapositive: if n is odd then n² is odd".', patterns: [/contrapositive/i] },
+                { label: 'Assumes n is odd', hint: '"Assume n is odd" — that is the ¬Q you get to use.', patterns: [/(assume|suppose|let)[^.\n]*odd/i] },
+                { label: 'Writes n = 2k + 1', hint: 'unfold the definition of odd.', patterns: [/2\s*\*?\s*[a-z]\s*\+\s*1/i] },
+                { label: 'Squares and reaches the odd form 2(…)+1', hint: '(2k+1)² = 4k² + 4k + 1 = 2(2k² + 2k) + 1.', patterns: [/4\s*\*?\s*[a-z]|2\s*\*?\s*\([^)\n]*\)\s*\+\s*1/i] },
+                { label: 'Returns to the original implication', hint: 'close with "hence if n² is even, n is even".', patterns: [/original|hence|therefore|thus|conclud|∎|q\.?e\.?d/i] }
+            ]);
+            </script>
+
+            <div class="viz-widget proof-box" id="proofContradEx">
+                <h4>Exercise 3 — Proof by Contradiction</h4>
+                <p><strong>Prove:</strong> \(\sqrt{3}\) is irrational. <em>(Mirror the \(\sqrt{2}\) proof above — but mind the one spot where the argument needs "3 is prime" rather than evenness.)</em></p>
+                <textarea id="proofContradEx-input" placeholder="Suppose, for contradiction, that sqrt(3) = a/b …"></textarea>
+                <div class="btn-row">
+                    <button class="viz-btn" id="proofContradEx-check">Check my proof</button>
+                </div>
+                <ul class="check-list" id="proofContradEx-list"></ul>
+                <p class="viz-readout" id="proofContradEx-readout"></p>
+                <details id="proofContradEx-solution" hidden>
+                    <summary>Model solution &amp; self-check rubric</summary>
+                    <p><strong>Model solution.</strong> Suppose, for contradiction, that \(\sqrt{3}\) is rational: \(\sqrt{3} = a/b\) with integers \(a, b\), \(b \neq 0\), and the fraction in lowest terms. Squaring gives \(3b^2 = a^2\), so \(3 \mid a^2\). Since 3 is prime, \(3 \mid a\) (if a prime divides a product it divides a factor — with \(a^2 = a \cdot a\)). Write \(a = 3c\). Then \(3b^2 = 9c^2\), so \(b^2 = 3c^2\), so \(3 \mid b^2\), and again \(3 \mid b\). Now 3 divides both \(a\) and \(b\), contradicting lowest terms. Hence \(\sqrt{3}\) is irrational. ∎</p>
+                    <p><strong>Self-check:</strong> ① Did you state the negated assumption explicitly? ② Did you fix lowest terms <em>at the start</em> (that choice is what gets contradicted)? ③ The step \(3 \mid a^2 \Rightarrow 3 \mid a\) needs "3 is prime" — did you justify it? (For \(\sqrt{2}\) the parity argument did this job.) ④ Did you name the contradiction precisely? ⑤ Notice the proof would fail for \(\sqrt{4}\) — where exactly? (Answer: \(4 \mid a^2 \not\Rightarrow 4 \mid a\), e.g. \(a = 2\); 4 is not prime.)</p>
+                </details>
+            </div>
+            <script>
+            ProofCheck('proofContradEx', [
+                { label: 'Assumes the negation (√3 rational, = a/b)', hint: 'open with "Suppose, for contradiction, √3 = a/b with a, b integers".', patterns: [/suppose|assume|contradiction|contrary/i] },
+                { label: 'Fixes the fraction in lowest terms', hint: 'demand gcd(a,b) = 1 (no common factor) — the contradiction will hit exactly this.', patterns: [/lowest terms|gcd|no common|coprime|reduced|simplest/i] },
+                { label: 'Derives 3b² = a² and gets 3 | a', hint: 'square both sides; 3 divides a², and since 3 is prime, 3 divides a.', patterns: [/3\s*\*?\s*b|a\s*(\^2|²|\*\s*a)\s*=\s*3|3\s*(\||divides)\s*a|a[^.\n]{0,25}(divisible|multiple)[^.\n]{0,12}3/i] },
+                { label: 'Substitutes a = 3c and gets 3 | b', hint: 'a = 3c turns the equation into b² = 3c², so 3 divides b too.', patterns: [/3\s*\*?\s*c|b\s*(\^2|²)\s*=\s*3|3\s*(\||divides)\s*b|b[^.\n]{0,25}(divisible|multiple)[^.\n]{0,12}3/i] },
+                { label: 'Names the contradiction', hint: '3 divides both a and b — impossible in lowest terms. Say the word.', patterns: [/contradict/i] }
+            ]);
+            </script>
+
+            <div class="viz-widget proof-box" id="proofInductEx">
+                <h4>Exercise 4 — Induction</h4>
+                <p><strong>Prove:</strong> \(1 + 3 + 5 + \cdots + (2n - 1) = n^2\) for every \(n \geq 1\).</p>
+                <textarea id="proofInductEx-input" placeholder="Base case: … Inductive hypothesis: … Inductive step: … By induction …"></textarea>
+                <div class="btn-row">
+                    <button class="viz-btn" id="proofInductEx-check">Check my proof</button>
+                </div>
+                <ul class="check-list" id="proofInductEx-list"></ul>
+                <p class="viz-readout" id="proofInductEx-readout"></p>
+                <details id="proofInductEx-solution" hidden>
+                    <summary>Model solution &amp; self-check rubric</summary>
+                    <p><strong>Model solution.</strong> <em>Base case</em> \(n = 1\): the left side is 1, the right side \(1^2 = 1\). ✓ <em>Inductive step:</em> let \(k \geq 1\) and assume (IH) that \(1 + 3 + \cdots + (2k - 1) = k^2\). The next odd number is \(2(k{+}1) - 1 = 2k + 1\), so
+                    \[1 + 3 + \cdots + (2k-1) + (2k+1) \overset{\text{IH}}{=} k^2 + 2k + 1 = (k+1)^2,\]
+                    which is the claim for \(k + 1\). By the principle of induction, the formula holds for all \(n \geq 1\). ∎</p>
+                    <p><strong>Self-check:</strong> ① Base case actually computed (both sides)? ② IH stated for a <em>fixed but arbitrary</em> \(k\) — not for "all n" (that would assume the claim)? ③ Did you mark where the IH was used? ④ Is the added term really \(2(k{+}1) - 1\)? ⑤ Concluding sentence appeals to induction explicitly?</p>
+                </details>
+            </div>
+            <script>
+            ProofCheck('proofInductEx', [
+                { label: 'Verifies the base case n = 1', hint: 'compute both sides at n = 1: 1 and 1² = 1.', patterns: [/base|n\s*=\s*1/i] },
+                { label: 'States the inductive hypothesis', hint: '"assume 1 + 3 + … + (2k−1) = k² for some k ≥ 1".', patterns: [/inducti\w*\s*hypothesis|\bIH\b|(assume|suppose)[^.\n]{0,80}k/i] },
+                { label: 'Adds the next odd number 2k + 1', hint: 'the (k+1)-th odd number is 2(k+1) − 1 = 2k + 1.', patterns: [/2\s*\*?\s*k\s*\+\s*1|2\s*\(\s*k\s*\+\s*1\s*\)\s*(-|−)\s*1/i] },
+                { label: 'Reaches (k + 1)²', hint: 'k² + 2k + 1 = (k+1)² — recognize the perfect square.', patterns: [/\(\s*k\s*\+\s*1\s*\)\s*(\^\s*2|²)/i] },
+                { label: 'Concludes by the principle of induction', hint: 'close with "by induction, the formula holds for all n ≥ 1".', patterns: [/by (the principle of )?induction|for all n/i] }
+            ]);
+            </script>
 
             <div class="hr-line"></div>
         </section>
 
         <section id="research">
-            <h2>Research Level</h2>
+            <h2>Research Level <span class="study-time">≈ 30 min read, then self-directed</span></h2>
+            <p>By now you can read quantified statements, follow derivations, and write proofs — enough to explore the frontier on your own. This section is a guided lookout point, not a course: read it, then chase whatever hooks you via the search terms at the end.</p>
 
-            <h3>Gödel's Incompleteness Theorems</h3>
+            <h3 id="godel">Gödel's Incompleteness Theorems</h3>
             <p><strong>Gödel's First Incompleteness Theorem:</strong> In any consistent formal system \(\mathcal{S}\) that is powerful enough to express arithmetic, there exists a true proposition that cannot be proven within \(\mathcal{S}\).</p>
             <p><strong>Gödel's Second Incompleteness Theorem:</strong> A consistent formal system \(\mathcal{S}\) cannot prove its own consistency.</p>
             <p>These theorems have profound implications for the foundations of mathematics and show fundamental limits to formal mathematical systems.</p>
@@ -543,7 +2486,7 @@
             <h3>Gödel Numbers and Self-Reference</h3>
             <p>Gödel introduced a method of encoding logical formulas as natural numbers (Gödel numbering), enabling formulas to refer to themselves and proving the incompleteness theorems.</p>
 
-            <h3>Model Theory</h3>
+            <h3 id="model-theory">Model Theory</h3>
             <p><strong>Model theory</strong> studies the relationship between formal languages and mathematical structures:</p>
             <ul>
                 <li>A <strong>model</strong> is a structure that interprets a formal language</li>
@@ -551,6 +2494,17 @@
                 <li><strong>Completeness</strong>: A formal system is complete if every true statement is provable</li>
             </ul>
             <p><strong>Gödel's Completeness Theorem:</strong> For first-order logic, a proposition is true in all models if and only if it is provable.</p>
+            <p><em>Careful with the names:</em> the <strong>completeness</strong> theorem (about first-order logic: ⊨ equals ⊢) and the <strong>incompleteness</strong> theorems (about arithmetic theories: truth outruns proof) coexist without conflict — the first is about the logic, the second about what particular axiom systems can capture.</p>
+
+            <h3 id="next-steps">Where to Go From Here</h3>
+            <p>Five directions, each one search away. For every topic: search the term, skim the Wikipedia article, then find the referenced textbook chapter or an arXiv survey.</p>
+            <ul>
+                <li><strong>Proof theory &amp; natural deduction</strong> — the formal systems behind the inference rules you used; search: <em>"natural deduction"</em>, <em>"sequent calculus"</em>, <em>"cut elimination"</em>.</li>
+                <li><strong>Computability</strong> — what no algorithm can do, and its kinship with incompleteness; search: <em>"halting problem"</em>, <em>"Turing degrees"</em>, <em>"Church–Turing thesis"</em>.</li>
+                <li><strong>Set theory as a foundation</strong> — the axioms beneath everything on this page (see also this site's <a href="Set.html">Set Theory</a> topic); search: <em>"ZFC axioms"</em>, <em>"continuum hypothesis"</em>, <em>"forcing"</em>.</li>
+                <li><strong>Type theory &amp; proof assistants</strong> — proofs checked by machine; the ProofCheck boxes above are toys, these are the real thing; search: <em>"Lean theorem prover"</em>, <em>"Coq"</em>, <em>"Curry–Howard correspondence"</em>.</li>
+                <li><strong>Non-classical logics</strong> — what changes if you refuse non-constructive existence (recall the \(\sqrt{2}^{\sqrt{2}}\) proof) or add modalities; search: <em>"intuitionistic logic"</em>, <em>"modal logic S4"</em>, <em>"linear logic"</em>.</li>
+            </ul>
         </section>
 
         <section id="sources">
@@ -560,6 +2514,9 @@
             <ul>
                 <li><a href="https://en.wikipedia.org/wiki/Mathematical_logic" target="_blank">Mathematical Logic - Wikipedia</a></li>
                 <li><a href="https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems" target="_blank">Gödel's Incompleteness Theorems - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws" target="_blank">De Morgan's Laws - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Mathematical_proof" target="_blank">Mathematical Proof - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Logic_gate" target="_blank">Logic Gate - Wikipedia</a></li>
             </ul>
 
             <h3>Academic Papers (arXiv)</h3>
@@ -567,6 +2524,8 @@
                 <li><a href="https://arxiv.org/search/?query=mathematical+logic+proofs&searchtype=all" target="_blank">Mathematical Logic & Proofs - arXiv Search</a></li>
                 <li><a href="https://arxiv.org/search/?query=first+order+logic&searchtype=all" target="_blank">First-Order Logic - arXiv Search</a></li>
                 <li><a href="https://arxiv.org/search/?query=model+theory&searchtype=all" target="_blank">Model Theory - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=natural+deduction&searchtype=all" target="_blank">Natural Deduction - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=proof+theory&searchtype=all" target="_blank">Proof Theory - arXiv Search</a></li>
             </ul>
 
             <h3>Textbooks & Bibliography</h3>
@@ -575,6 +2534,9 @@
                 <li><strong>Mathematical Logic: Part I</strong> - Heinz-Dieter Ebbinghaus, Jörg Flum, Wolfgang Thomas (1994)</li>
                 <li><strong>A Shorter Model Theory</strong> - Wilfrid Hodges (1997)</li>
                 <li><strong>Gödel's Proof</strong> - Ernest Nagel and James Newman (2001)</li>
+                <li><strong>How to Prove It: A Structured Approach</strong> - Daniel J. Velleman (2019) — ideal companion to the Proof Methods section</li>
+                <li><strong>Book of Proof</strong> - Richard Hammack (2018) — free online, excellent exercises</li>
+                <li><strong>A Mathematical Introduction to Logic</strong> - Herbert B. Enderton (2001)</li>
             </ul>
         </section>
 
