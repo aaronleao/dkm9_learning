@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mechanics - Physics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#9C27B0; --secondary:#FF9800; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        :root[data-theme="dark"] {
+            --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+            --border:#404040; --code:#3a3a3a;
+        }
+        :root[data-theme="light"] {
+            --dark:#333; --light:#666; --bg:#f5f5f5; --card:#fff;
+            --border:#e0e0e0; --code:#f0f0f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.5em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .theme-toggle {
+            background:none; border:2px solid var(--primary); color:var(--primary); padding:8px 12px;
+            border-radius:6px; cursor:pointer; font-size:1em; transition:all 0.3s; font-weight:600;
+        }
+        .theme-toggle:hover {background-color:var(--primary); color:#fff;}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.8em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+
+    <script>
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const stored = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mechanics</h1>
+            <p>Comprehensive Guide from Beginner to Research Level</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Physics Hub</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#kinematics">— Kinematics & Motion</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#newtons-laws">— Newton's Laws</a></li>
+                <li><a href="#energy">— Energy & Momentum</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#lagrangian">— Lagrangian Mechanics</a></li>
+                <li><a href="#research">Research Level</a></li>
+                <li><a href="#chaos">— Chaos & Nonlinear Dynamics</a></li>
+            </ul>
+        </div>
+
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : 0,
+                xmax: opts.xmax !== undefined ? opts.xmax : 100,
+                ymin: opts.ymin !== undefined ? opts.ymin : 0,
+                ymax: opts.ymax !== undefined ? opts.ymax : 50,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#9C27B0',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#FF9800',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 10 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 10 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        </script>
+
+        <!-- ============ BEGINNER LEVEL ============ -->
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+
+            <h3 id="kinematics">Kinematics: Describing Motion</h3>
+            <p><strong>Intuition:</strong> Kinematics is the geometry of motion. We want to predict where an object will be and how fast it will be going at any given time, without worrying about what caused it to move. Key concepts are <strong>position (\(x\))</strong>, <strong>velocity (\(v\))</strong>, and <strong>acceleration (\(a\))</strong>.</p>
+            
+            <p>If acceleration \(a\) is constant, motion is described by these equations:</p>
+            <p>\[v = v_0 + at\]</p>
+            <p>\[x = x_0 + v_0t + \frac{1}{2}at^2\]</p>
+
+            <p><strong>Interactive: Projectile Motion.</strong> When an object is thrown, it moves forward at a constant speed (no horizontal force) while accelerating downward due to gravity (\(g = 9.8 \text{ m/s}^2\)). Play with the angle and initial velocity!</p>
+            
+            <div class="viz-widget" id="projWidget">
+                <div class="viz-controls">
+                    <label>Velocity v₀ (m/s): <span id="projWidget-vVal"></span>
+                        <input type="range" id="projWidget-v" min="5" max="30" step="1" value="20">
+                    </label>
+                    <label>Angle θ (°): <span id="projWidget-aVal"></span>
+                        <input type="range" id="projWidget-a" min="10" max="85" step="5" value="45">
+                    </label>
+                </div>
+                <canvas id="projWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="projWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('projWidget', { xmin: 0, xmax: 100, ymin: 0, ymax: 50 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const v0 = parseFloat($('v').value), angle = parseFloat($('a').value);
+                    $('vVal').textContent = v0; $('aVal').textContent = angle;
+                    
+                    const theta = angle * Math.PI / 180;
+                    const g = 9.81;
+                    const vx = v0 * Math.cos(theta);
+                    const vy = v0 * Math.sin(theta);
+                    
+                    const timeOfFlight = 2 * vy / g;
+                    const range = vx * timeOfFlight;
+                    const maxHeight = (vy * vy) / (2 * g);
+
+                    // Draw trajectory
+                    ctx.strokeStyle = c.curve; ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    let started = false;
+                    for (let t = 0; t <= timeOfFlight; t += 0.05) {
+                        const x = vx * t;
+                        const y = vy * t - 0.5 * g * t * t;
+                        if (!started) { ctx.moveTo(V.px(x), V.py(y)); started = true; }
+                        else ctx.lineTo(V.px(x), V.py(y));
+                    }
+                    ctx.stroke();
+
+                    // Mark peak and landing
+                    ctx.fillStyle = c.accent;
+                    ctx.beginPath(); ctx.arc(V.px(range/2), V.py(maxHeight), 6, 0, 2 * Math.PI); ctx.fill();
+                    ctx.beginPath(); ctx.arc(V.px(range), V.py(0), 6, 0, 2 * Math.PI); ctx.fill();
+
+                    $('readout').textContent = `Time of flight: ${timeOfFlight.toFixed(2)}s | Max Height: ${maxHeight.toFixed(2)}m | Max Range: ${range.toFixed(2)}m`;
+                }
+                V.bind(['v', 'a'], draw);
+            })();
+            </script>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>A ball is dropped from a 20m building. How long does it take to hit the ground?
+                    <details><summary>Solution</summary>
+                    Using \(y = y_0 + v_0t - \frac{1}{2}gt^2\). Here \(y_0=20\), \(v_0=0\), \(y=0\). 
+                    So \(0 = 20 - 4.9t^2 \implies t^2 = 20/4.9 \approx 4.08 \implies t \approx 2.02\) seconds.
+                    </details>
+                </li>
+            </ol>
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ INTERMEDIATE LEVEL ============ -->
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3 id="newtons-laws">Newton's Laws & Dynamics</h3>
+            <p><strong>Intuition:</strong> Why do things move? Forces! Sir Isaac Newton codified three laws that form the bedrock of classical mechanics.</p>
+            <ul>
+                <li><strong>1st Law (Inertia):</strong> An object in motion stays in motion unless acted upon by a net external force.</li>
+                <li><strong>2nd Law (F = ma):</strong> The net force on an object is equal to its mass times its acceleration: \(\Sigma F = ma\).</li>
+                <li><strong>3rd Law (Action/Reaction):</strong> For every action, there is an equal and opposite reaction.</li>
+            </ul>
+
+            <div class="example">
+                <strong>Step-by-step: Block on a frictionless inclined plane</strong><br><br>
+                A block of mass \(m\) is on a plane angled at \(\theta\). What is its acceleration down the plane?<br><br>
+                <strong>Step 1: Identify forces</strong><br>
+                Gravity points straight down (\(mg\)). The normal force points perpendicular to the surface (\(N\)).<br><br>
+                <strong>Step 2: Resolve gravity into components</strong><br>
+                Parallel to the plane: \(mg \sin\theta\). Perpendicular: \(mg \cos\theta\).<br><br>
+                <strong>Step 3: Apply Newton's 2nd Law</strong><br>
+                Perpendicular: \(N - mg \cos\theta = 0 \implies N = mg \cos\theta\).<br>
+                Parallel: \(mg \sin\theta = ma \implies a = g \sin\theta\).
+            </div>
+
+            <h3 id="energy">Work, Energy, and Momentum</h3>
+            <p><strong>Work-Energy Theorem:</strong> The work done by all forces on an object equals its change in kinetic energy: \(W_{net} = \Delta K\).</p>
+            <p>For conservative forces (like gravity or springs), we can define Potential Energy (\(U\)). The total mechanical energy is conserved if there's no friction: \(E = K + U = \text{constant}\).</p>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>A 2 kg block slides down a frictionless 5m high slide. What is its speed at the bottom?
+                    <details><summary>Solution</summary>
+                    Use conservation of energy. Top: \(K_i = 0\), \(U_i = mgh\). Bottom: \(K_f = \frac{1}{2}mv^2\), \(U_f = 0\).<br>
+                    \(mgh = \frac{1}{2}mv^2 \implies v = \sqrt{2gh} = \sqrt{2 \cdot 9.8 \cdot 5} = \sqrt{98} \approx 9.9\) m/s.
+                    </details>
+                </li>
+            </ol>
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ ADVANCED LEVEL ============ -->
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3 id="lagrangian">Lagrangian Mechanics</h3>
+            <p><strong>Intuition:</strong> Instead of tracking forces (vectors), Lagrangian mechanics uses energy (scalars). Nature is lazy; it follows the path that minimizes a quantity called "Action". This is the <em>Principle of Least Action</em>.</p>
+            
+            <p>The <strong>Lagrangian (\(L\))</strong> is defined as Kinetic Energy (\(T\)) minus Potential Energy (\(V\)):</p>
+            <p>\[L = T - V\]</p>
+
+            <p>The equations of motion are found by solving the Euler-Lagrange equation for generalized coordinates \(q_i\):</p>
+            <p>\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right) - \frac{\partial L}{\partial q_i} = 0\]</p>
+
+            <div class="example">
+                <strong>Step-by-step: The Simple Pendulum</strong><br><br>
+                A pendulum of length \(l\) and mass \(m\). Angle is \(\theta\).<br><br>
+                <strong>Step 1: Write Energies</strong><br>
+                Velocity \(v = l\dot{\theta}\). Kinetic \(T = \frac{1}{2}mv^2 = \frac{1}{2}ml^2\dot{\theta}^2\).<br>
+                Height \(h = -l\cos\theta\). Potential \(V = mgh = -mgl\cos\theta\).<br><br>
+                <strong>Step 2: The Lagrangian</strong><br>
+                \(L = T - V = \frac{1}{2}ml^2\dot{\theta}^2 + mgl\cos\theta\).<br><br>
+                <strong>Step 3: Euler-Lagrange Equation</strong><br>
+                \(\frac{\partial L}{\partial \dot{\theta}} = ml^2\dot{\theta} \implies \frac{d}{dt}(ml^2\dot{\theta}) = ml^2\ddot{\theta}\)<br>
+                \(\frac{\partial L}{\partial \theta} = -mgl\sin\theta\)<br>
+                So, \(ml^2\ddot{\theta} + mgl\sin\theta = 0 \implies \ddot{\theta} + \frac{g}{l}\sin\theta = 0\). This perfectly matches the Newtonian derivation, but without needing to find tension!
+            </div>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ RESEARCH LEVEL ============ -->
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3 id="chaos">Chaos & Nonlinear Dynamics</h3>
+            <p>Most mechanical systems cannot be solved perfectly (analytically) like a simple pendulum. When we introduce a second pendulum attached to the first (the <em>Double Pendulum</em>), the equations become highly nonlinear.</p>
+            <p><strong>Deterministic Chaos:</strong> The system obeys exact deterministic laws, yet predicting its long-term future is impossible because it exhibits sensitive dependence on initial conditions (the "Butterfly Effect"). A microscopic change in starting angle completely changes the trajectory over time.</p>
+
+            <p>Modern research in mechanics involves finding stable orbits, exploring phase-space topology, understanding chaotic attractors, and applying these concepts to celestial mechanics (like the Three-Body Problem) and fluid turbulence.</p>
+
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Physics Learning Platform | Built with MathJax</p>
+    </footer>
+
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme-preference', next);
+        });
+    </script>
+</body>
+</html>

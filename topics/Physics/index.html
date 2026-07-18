@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mathematics - Undergraduate Level</title>
+    <title>Physics - Undergraduate Level</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
         * {
@@ -13,8 +13,8 @@
         }
 
         :root {
-            --primary-color: #2196F3;
-            --secondary-color: #4CAF50;
+            --primary-color: #9C27B0;
+            --secondary-color: #FF9800;
             --dark-text: #333;
             --light-text: #666;
             --background: #f5f5f5;
@@ -145,43 +145,16 @@
             font-weight: 500;
         }
 
-        .level-beginner {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .level-intermediate {
-            background-color: #f3e5f5;
-            color: #7b1fa2;
-        }
-
-        .level-advanced {
-            background-color: #ffe0b2;
-            color: #e65100;
-        }
-
-        .level-research {
-            background-color: #ffebee;
-            color: #c62828;
-        }
+        .level-beginner { background-color: #e3f2fd; color: #1976d2; }
+        .level-intermediate { background-color: #f3e5f5; color: #7b1fa2; }
+        .level-advanced { background-color: #ffe0b2; color: #e65100; }
+        .level-research { background-color: #ffebee; color: #c62828; }
 
         @media (prefers-color-scheme: dark) {
-            .level-beginner {
-                background-color: #1a3a52;
-                color: #64b5f6;
-            }
-            .level-intermediate {
-                background-color: #3d2463;
-                color: #ce93d8;
-            }
-            .level-advanced {
-                background-color: #4a3728;
-                color: #ffb74d;
-            }
-            .level-research {
-                background-color: #4a2829;
-                color: #ef5350;
-            }
+            .level-beginner { background-color: #1a3a52; color: #64b5f6; }
+            .level-intermediate { background-color: #3d2463; color: #ce93d8; }
+            .level-advanced { background-color: #4a3728; color: #ffb74d; }
+            .level-research { background-color: #4a2829; color: #ef5350; }
         }
 
         .topic-link {
@@ -197,7 +170,7 @@
         }
 
         .topic-link:hover {
-            background-color: #1976d2;
+            background-color: #7B1FA2;
         }
 
         .learning-paths {
@@ -277,7 +250,6 @@
             margin-top: 50px;
         }
     </style>
-    <!-- Apply theme immediately to prevent flash -->
     <script>
         (function() {
             const STORAGE_KEY = 'theme-preference';
@@ -292,214 +264,95 @@
     <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
     <div class="container">
         <header>
-            <h1>Mathematics</h1>
+            <h1>Physics</h1>
             <p>Undergraduate Level - Comprehensive Guide from Beginner to Research</p>
         </header>
 
         <div class="features">
             <div class="feature">
-                <h3>📊 Visual Learning</h3>
-                <p>Mermaid diagrams illustrate concepts and relationships clearly</p>
+                <h3>🧪 Interactive Simulations</h3>
+                <p>Run physical experiments and change parameters in real-time</p>
             </div>
             <div class="feature">
-                <h3>📐 Mathematical Notation</h3>
-                <p>MathJax renders LaTeX formulas beautifully</p>
+                <h3>📐 Mathematical Rigor</h3>
+                <p>MathJax renders complex equations and derivations beautifully</p>
             </div>
             <div class="feature">
                 <h3>📚 Progressive Learning</h3>
-                <p>Four levels from beginner to research-level mathematics</p>
+                <p>Four levels from beginner to research-level physics</p>
             </div>
             <div class="feature">
-                <h3>🌐 Fully Compatible</h3>
-                <p>Works in Firefox, Brave, Chrome, and LibreWolf</p>
+                <h3>🛠 Hands-On Exercises</h3>
+                <p>Practice with step-by-step solutions to master the concepts</p>
             </div>
         </div>
 
         <div class="topics-grid">
             <div class="topic-card">
                 <div class="topic-header">
-                    <h2>Algebraic Operations</h2>
-                    <p>Foundations of Real Numbers</p>
+                    <h2>Foundations & Mechanics</h2>
+                    <p>Units, Kinematics, Dynamics</p>
                 </div>
                 <div class="topic-body">
-                    <p>The six basic operations (+, -, ×, ÷, ^, log), their properties, axioms, and structure of the real numbers.</p>
+                    <p>From SI units and basic motion to Newton's laws, energy, momentum, and Lagrangian mechanics.</p>
                     <div class="topic-levels">
                         <span class="level level-beginner">Beginner</span>
                         <span class="level level-intermediate">Intermediate</span>
                         <span class="level level-advanced">Advanced</span>
                         <span class="level level-research">Research</span>
                     </div>
-                    <a href="AlgebraicOperations.html" class="topic-link">Explore →</a>
+                    <a href="Mechanics.html" class="topic-link">Explore →</a>
                 </div>
             </div>
 
             <div class="topic-card">
                 <div class="topic-header">
-                    <h2>Set Theory</h2>
-                    <p>Foundations of Mathematics</p>
+                    <h2>Electromagnetism</h2>
+                    <p>Fields, Forces & Waves</p>
                 </div>
                 <div class="topic-body">
-                    <p>Collections, operations, and the foundational structures that underpin all mathematics.</p>
+                    <p>Coulomb's law, electric and magnetic fields, circuits, and Maxwell's equations.</p>
                     <div class="topic-levels">
                         <span class="level level-beginner">Beginner</span>
                         <span class="level level-intermediate">Intermediate</span>
                         <span class="level level-advanced">Advanced</span>
                         <span class="level level-research">Research</span>
                     </div>
-                    <a href="Set.html" class="topic-link">Explore →</a>
+                    <a href="Electromagnetism.html" class="topic-link">Explore →</a>
                 </div>
             </div>
 
             <div class="topic-card">
                 <div class="topic-header">
-                    <h2>Mathematical Logic</h2>
-                    <p>Reasoning & Proof Theory</p>
+                    <h2>Optics</h2>
+                    <p>Light, Lenses & Diffraction</p>
                 </div>
                 <div class="topic-body">
-                    <p>Formal systems, propositions, quantifiers, and the foundations of mathematical reasoning.</p>
+                    <p>Geometrical optics, wave optics, interference, diffraction, and modern photonics.</p>
                     <div class="topic-levels">
                         <span class="level level-beginner">Beginner</span>
                         <span class="level level-intermediate">Intermediate</span>
                         <span class="level level-advanced">Advanced</span>
                         <span class="level level-research">Research</span>
                     </div>
-                    <a href="Logic.html" class="topic-link">Explore →</a>
+                    <a href="Optics.html" class="topic-link">Explore →</a>
                 </div>
             </div>
 
             <div class="topic-card">
                 <div class="topic-header">
-                    <h2>Functions</h2>
-                    <p>Mappings & Transformations</p>
+                    <h2>Quantum Mechanics</h2>
+                    <p>Probability, Waves & Uncertainty</p>
                 </div>
                 <div class="topic-body">
-                    <p>From basic functions to functional analysis, operator theory, and complex analysis.</p>
+                    <p>Wave-particle duality, Schrödinger equation, quantum states, and advanced field theory.</p>
                     <div class="topic-levels">
                         <span class="level level-beginner">Beginner</span>
                         <span class="level level-intermediate">Intermediate</span>
                         <span class="level level-advanced">Advanced</span>
                         <span class="level level-research">Research</span>
                     </div>
-                    <a href="Functions.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Equations & Inequalities</h2>
-                    <p>Solving & Comparing Expressions</p>
-                </div>
-                <div class="topic-body">
-                    <p>From linear equations to transcendental systems, and from basic inequalities through classical and variational inequalities.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="EquationsAndInequalities.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Geometry</h2>
-                    <p>Shapes & Spaces</p>
-                </div>
-                <div class="topic-body">
-                    <p>From basic shapes to differential geometry and non-Euclidean spaces.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="Geomery.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Calculus</h2>
-                    <p>Change & Accumulation</p>
-                </div>
-                <div class="topic-body">
-                    <p>Limits, derivatives, and integrals with interactive plots — through Green, Gauss, and Stokes with animated vector fields.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="Calculus.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Linear Algebra</h2>
-                    <p>Vectors, Matrices & Eigenvalues</p>
-                </div>
-                <div class="topic-body">
-                    <p>Vectors and matrices as transformations of space, Gaussian elimination step-by-step, eigenvalues hunted live on canvas.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="LinearAlgebra.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Numerical Methods</h2>
-                    <p>Algorithms & Approximation</p>
-                </div>
-                <div class="topic-body">
-                    <p>Bisection, Newton, interpolation, quadrature, and ODE solvers — every algorithm animated step by step with its geometric picture.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="NumericalMethods.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Real Analysis</h2>
-                    <p>Rigor, ε-δ & Integration</p>
-                </div>
-                <div class="topic-body">
-                    <p>Sequences, series, and continuity made rigorous — the ε-N game, Darboux sums, and the monsters that sharpen the definitions.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="RealAnalysis.html" class="topic-link">Explore →</a>
-                </div>
-            </div>
-
-            <div class="topic-card">
-                <div class="topic-header">
-                    <h2>Advanced Calculus</h2>
-                    <p>Normed Spaces, Manifolds & Forms</p>
-                </div>
-                <div class="topic-body">
-                    <p>The full Loomis &amp; Sternberg arc — the differential in normed spaces, the contraction theorem, integration, manifolds, and Stokes — with 13 interactive boards: drag a differential, watch a flow, balance a circulation.</p>
-                    <div class="topic-levels">
-                        <span class="level level-beginner">Beginner</span>
-                        <span class="level level-intermediate">Intermediate</span>
-                        <span class="level level-advanced">Advanced</span>
-                        <span class="level level-research">Research</span>
-                    </div>
-                    <a href="AdvancedCalculus.html" class="topic-link">Explore →</a>
+                    <a href="QuantumMechanics.html" class="topic-link">Explore →</a>
                 </div>
             </div>
         </div>
@@ -509,33 +362,26 @@
 
             <div class="path">
                 <h3>For Complete Beginners</h3>
-                <p><strong>Path:</strong> Algebraic Operations → Set Theory → Mathematical Logic → Functions → Equations & Inequalities</p>
-                <p>Start with the foundations of real numbers and operations, then build understanding of mathematical structures and reasoning.</p>
+                <p><strong>Path:</strong> Mechanics (Beginner) → Electromagnetism (Beginner)</p>
+                <p>Start with basic kinematics and Newton's laws before moving onto static charges and simple circuits.</p>
             </div>
 
             <div class="path">
-                <h3>For Applied Mathematics</h3>
-                <p><strong>Path:</strong> Functions → Equations & Inequalities → Geometry</p>
-                <p>Focus on practical problem-solving and concrete applications of mathematical concepts.</p>
+                <h3>For Engineering Students</h3>
+                <p><strong>Path:</strong> Mechanics → Electromagnetism → Optics</p>
+                <p>Focus on practical problem-solving, forces, energy, circuits, and wave behavior.</p>
             </div>
 
             <div class="path">
-                <h3>For Pure Mathematics</h3>
-                <p><strong>Path:</strong> Mathematical Logic → Set Theory → Functions → Advanced Topics</p>
-                <p>Start with formal reasoning, then explore theoretical foundations and advanced topics.</p>
-            </div>
-
-            <div class="path">
-                <h3>For Researchers</h3>
-                <p><strong>Path:</strong> Work through Advanced and Research levels of all topics</p>
-                <p>Engage with cutting-edge mathematics, open problems, and specialized branches.</p>
+                <h3>For Theoretical Physics</h3>
+                <p><strong>Path:</strong> Mechanics (Advanced) → Quantum Mechanics → Research Topics</p>
+                <p>Master Lagrangian/Hamiltonian formulation, then dive deep into quantum mechanics and field theory.</p>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>Mathematics Learning Platform | Built with MathJax & Mermaid</p>
-        <p>Compatible with Firefox, Brave, Chrome, and LibreWolf</p>
+        <p>Physics Learning Platform | Built with MathJax & Canvas</p>
     </footer>
 
     <script>
