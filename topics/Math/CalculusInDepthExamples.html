@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus in Depth: Worked Examples &amp; Derivative Rules - Mathematics Learning Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box;}
+        :root {
+            --primary:#2196F3; --secondary:#4CAF50; --dark:#333; --light:#666;
+            --bg:#f5f5f5; --card:#fff; --border:#e0e0e0; --code:#f0f0f0;
+        }
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+                --border:#404040; --code:#3a3a3a;
+            }
+        }
+        :root[data-theme="dark"] {
+            --dark:#e0e0e0; --light:#b0b0b0; --bg:#1a1a1a; --card:#2d2d2d;
+            --border:#404040; --code:#3a3a3a;
+        }
+        :root[data-theme="light"] {
+            --dark:#333; --light:#666; --bg:#f5f5f5; --card:#fff;
+            --border:#e0e0e0; --code:#f0f0f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height:1.7; color:var(--dark); background:var(--bg);
+        }
+        .container {max-width:900px; margin:0 auto; padding:20px;}
+        header {
+            background:linear-gradient(135deg, var(--primary), var(--secondary));
+            color:#fff; padding:40px 20px; border-radius:8px; margin-bottom:30px; text-align:center;
+        }
+        header h1 {font-size:2.2em; margin-bottom:10px;}
+        nav {
+            background:var(--card); padding:15px 20px; border-radius:8px; margin-bottom:30px;
+            display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {color:var(--primary); text-decoration:none; font-weight:500; transition:color 0.3s;}
+        nav a:hover {color:var(--secondary);}
+        .theme-toggle {
+            background:none; border:2px solid var(--primary); color:var(--primary); padding:8px 12px;
+            border-radius:6px; cursor:pointer; font-size:1em; transition:all 0.3s; font-weight:600;
+        }
+        .theme-toggle:hover {background-color:var(--primary); color:#fff;}
+        .toc {background:var(--card); padding:20px; border-radius:8px; margin-bottom:30px; border-left:4px solid var(--primary);}
+        .toc h2 {color:var(--primary); font-size:1.2em; margin-bottom:15px;}
+        .toc ul {list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px;}
+        .toc a {color:var(--primary); text-decoration:none; transition:color 0.3s;}
+        .toc a:hover {color:var(--secondary); text-decoration:underline;}
+        section {background:var(--card); padding:30px; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+        h2 {color:var(--primary); font-size:2em; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:2px solid var(--border);}
+        h3 {color:var(--secondary); font-size:1.4em; margin:25px 0 15px 0;}
+        h4 {color:var(--dark); font-size:1.1em; margin:15px 0 10px 0;}
+        p {margin-bottom:15px; line-height:1.8;}
+        ul, ol {margin-left:25px; margin-bottom:15px;}
+        li {margin-bottom:8px;}
+        strong {color:var(--primary); font-weight:600;}
+        .example {background:var(--code); padding:15px; border-left:4px solid var(--secondary); border-radius:4px; margin:15px 0;}
+        .example strong {color:var(--secondary);}
+        table {width:100%; border-collapse:collapse; margin:20px 0;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid var(--border);}
+        th {background:var(--code); font-weight:600; color:var(--primary);}
+        tr:hover {background:var(--code);}
+        .mermaid {display:flex; justify-content:center; margin:20px 0; background:var(--code); padding:20px; border-radius:8px;}
+        footer {text-align:center; padding:30px 20px; color:var(--light); border-top:1px solid var(--border); margin-top:50px;}
+        footer a {color:var(--primary); text-decoration:none;}
+        footer a:hover {text-decoration:underline;}
+        .viz-widget {background:var(--code); border:1px solid var(--border); border-radius:8px; padding:20px; margin:20px 0;}
+        .viz-widget canvas {width:100%; height:auto; background:var(--card); border-radius:6px; display:block;}
+        .viz-controls {display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:15px;}
+        .viz-controls label {font-size:0.9em; color:var(--dark);}
+        .viz-controls input[type=range] {width:100%; accent-color:var(--primary);}
+        .viz-controls span {color:var(--primary); font-weight:600;}
+        .viz-readout {font-family:monospace; color:var(--light); margin-top:10px;}
+        .viz-btn {background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600;}
+        .viz-btn:hover {background:var(--secondary);}
+        details {background:var(--code); border-radius:6px; padding:10px 15px; margin:10px 0;}
+        details summary {color:var(--primary); font-weight:600; cursor:pointer;}
+        @media (max-width:768px) {
+            header h1 {font-size:1.6em;}
+            nav {flex-direction:column; gap:10px;}
+            h2 {font-size:1.6em;}
+            section {padding:20px;}
+        }
+    </style>
+
+    <!-- Apply theme immediately to prevent flash -->
+    <script>
+        (function() {
+            const STORAGE_KEY = 'theme-preference';
+            const stored = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculus in Depth: Worked Examples &amp; Derivative Rules</h1>
+            <p>A companion deep-dive to <a href="Calculus.html" style="color:#fff; text-decoration:underline;">Calculus</a> — every step shown, nothing skipped</p>
+        </header>
+
+        <nav>
+            <a href="index.html">← Back to Home</a>
+            <div>
+                <a href="#beginner">Beginner</a> |
+                <a href="#intermediate">Intermediate</a> |
+                <a href="#advanced">Advanced</a> |
+                <a href="#research">Research</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark theme">🌙</button>
+        </nav>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#beginner">Beginner Level</a></li>
+                <li><a href="#limit-linear">— Five Worked Limit Examples</a></li>
+                <li><a href="#intermediate">Intermediate Level</a></li>
+                <li><a href="#euler-constant">— Discovering Euler's Number</a></li>
+                <li><a href="#advanced">Advanced Level</a></li>
+                <li><a href="#dx-notation">— Notation: d/dx and Differentials</a></li>
+                <li><a href="#rule-constant">— The Six Differentiation Rules</a></li>
+                <li><a href="#reference-table">— Quick Reference Table</a></li>
+                <li><a href="#research">Research Level</a></li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <strong>About this page:</strong> <a href="Calculus.html">Calculus.html</a> introduces limits, derivatives, and integrals at a brisk pace. This page slows way down on three specific topics — five limit examples worked in complete step-by-step detail, a ludic derivation of Euler's number \(e\) that uses no derivatives at all, and the six general differentiation rules proved from the limit definition with nothing omitted. Head back to <a href="Calculus.html">Calculus.html</a> any time for the broader map (integrals, Green/Gauss/Stokes, differential forms).
+        </div>
+
+        <!-- MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) -->
+        <script>
+        function VizCore(widgetId, opts) {
+            opts = opts || {};
+            const W = document.getElementById(widgetId + '-canvas');
+            const ctx = W.getContext('2d');
+            const $ = id => document.getElementById(widgetId + '-' + id);
+            const S = {
+                W: W, ctx: ctx, $: $,
+                xmin: opts.xmin !== undefined ? opts.xmin : -10,
+                xmax: opts.xmax !== undefined ? opts.xmax : 10,
+                ymin: opts.ymin !== undefined ? opts.ymin : -10,
+                ymax: opts.ymax !== undefined ? opts.ymax : 10,
+                px: x => (x - S.xmin) / (S.xmax - S.xmin) * W.width,
+                py: y => W.height - (y - S.ymin) / (S.ymax - S.ymin) * W.height,
+                colors: () => {
+                    const cs = getComputedStyle(document.documentElement);
+                    return {
+                        axis: cs.getPropertyValue('--light').trim() || '#888',
+                        curve: cs.getPropertyValue('--primary').trim() || '#2196F3',
+                        accent: cs.getPropertyValue('--secondary').trim() || '#4CAF50',
+                        text: cs.getPropertyValue('--dark').trim() || '#333',
+                        grid: cs.getPropertyValue('--border').trim() || '#ccc',
+                        card: cs.getPropertyValue('--card').trim() || '#fff'
+                    };
+                },
+                clear: () => ctx.clearRect(0, 0, W.width, W.height),
+                drawAxes: c => {
+                    const stepx = (S.xmax - S.xmin) > 40 ? 5 : 1;
+                    const stepy = (S.ymax - S.ymin) > 40 ? 5 : 1;
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    for (let gx = Math.ceil(S.xmin / stepx) * stepx; gx <= S.xmax; gx += stepx) {
+                        ctx.beginPath(); ctx.moveTo(S.px(gx), 0); ctx.lineTo(S.px(gx), W.height); ctx.stroke();
+                    }
+                    for (let gy = Math.ceil(S.ymin / stepy) * stepy; gy <= S.ymax; gy += stepy) {
+                        ctx.beginPath(); ctx.moveTo(0, S.py(gy)); ctx.lineTo(W.width, S.py(gy)); ctx.stroke();
+                    }
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(S.px(0), 0); ctx.lineTo(S.px(0), W.height); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, S.py(0)); ctx.lineTo(W.width, S.py(0)); ctx.stroke();
+                },
+                plot: (f, color, dash) => {
+                    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+                    ctx.setLineDash(dash || []);
+                    ctx.beginPath();
+                    let started = false;
+                    for (let i = 0; i <= W.width; i++) {
+                        const x = S.xmin + (S.xmax - S.xmin) * i / W.width;
+                        const y = f(x);
+                        if (!isFinite(y) || Math.abs(y) > 1e4) { started = false; continue; }
+                        if (!started) { ctx.moveTo(S.px(x), S.py(y)); started = true; }
+                        else ctx.lineTo(S.px(x), S.py(y));
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                },
+                dot: (x, y, color, r) => {
+                    ctx.fillStyle = color;
+                    ctx.beginPath(); ctx.arc(S.px(x), S.py(y), r || 5, 0, 2 * Math.PI); ctx.fill();
+                },
+                arrow: (x, y, vx, vy, color) => {
+                    const x2 = x + vx, y2 = y + vy;
+                    ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(S.px(x), S.py(y)); ctx.lineTo(S.px(x2), S.py(y2)); ctx.stroke();
+                    const ang = Math.atan2(S.py(y2) - S.py(y), S.px(x2) - S.px(x));
+                    ctx.beginPath();
+                    ctx.moveTo(S.px(x2), S.py(y2));
+                    ctx.lineTo(S.px(x2) - 6 * Math.cos(ang - 0.4), S.py(y2) - 6 * Math.sin(ang - 0.4));
+                    ctx.moveTo(S.px(x2), S.py(y2));
+                    ctx.lineTo(S.px(x2) - 6 * Math.cos(ang + 0.4), S.py(y2) - 6 * Math.sin(ang + 0.4));
+                    ctx.stroke();
+                },
+                bind: (ids, draw) => {
+                    ids.forEach(id => { const el = $(id); if (el) el.addEventListener('input', draw); });
+                    new MutationObserver(draw).observe(document.documentElement,
+                        { attributes: true, attributeFilter: ['data-theme'] });
+                    draw();
+                }
+            };
+            return S;
+        }
+        </script>
+
+        <!-- ============ BEGINNER LEVEL ============ -->
+        <section id="beginner">
+            <h2>Beginner Level</h2>
+            <p>Five limits, five complete step-by-step solutions. Each one has an interactive widget to explore the general case, followed by a concrete <code>.example</code> box that carries one specific set of numbers all the way through — no algebraic step skipped.</p>
+
+            <h3 id="limit-linear">Example 1 — The Linear Function \(f(x) = x + a\)</h3>
+            <p><strong>Claim:</strong> \(\displaystyle\lim_{x \to c}(x+a) = c+a\) for every real \(a\) and \(c\).</p>
+            <p><strong>Why it's easy:</strong> \(f\) has slope exactly 1 everywhere, so \(|f(x) - f(c)| = |(x+a)-(c+a)| = |x-c|\) — the output error is <em>literally equal</em> to the input error. That means in the \(\varepsilon\text{-}\delta\) definition, \(\delta = \varepsilon\) always works, with nothing left to search for.</p>
+
+            <div class="viz-widget" id="limWidgetA">
+                <div class="viz-controls">
+                    <label>a: <span id="limWidgetA-aVal"></span>
+                        <input type="range" id="limWidgetA-a" min="-5" max="5" step="0.5" value="2">
+                    </label>
+                    <label>ε: <span id="limWidgetA-epsVal"></span>
+                        <input type="range" id="limWidgetA-eps" min="0.05" max="3" step="0.05" value="1">
+                    </label>
+                    <label>approach point c: <span id="limWidgetA-cptVal"></span>
+                        <input type="range" id="limWidgetA-cpt" min="-4" max="4" step="0.1" value="1">
+                    </label>
+                </div>
+                <canvas id="limWidgetA-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="limWidgetA-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('limWidgetA', { xmin: -6, xmax: 6, ymin: -6, ymax: 10 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('a').value), eps = parseFloat($('eps').value), cpt = parseFloat($('cpt').value);
+                    $('aVal').textContent = a.toFixed(1); $('epsVal').textContent = eps.toFixed(2); $('cptVal').textContent = cpt.toFixed(1);
+                    const f = x => x + a;
+                    const L = f(cpt);
+                    const delta = eps; // slope is exactly 1, so delta = epsilon works exactly
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.accent;
+                    ctx.fillRect(0, V.py(L + eps), V.W.width, V.py(L - eps) - V.py(L + eps));
+                    ctx.globalAlpha = 0.15; ctx.fillStyle = c.curve;
+                    ctx.fillRect(V.px(cpt - delta), 0, V.px(cpt + delta) - V.px(cpt - delta), V.W.height);
+                    ctx.globalAlpha = 1;
+                    V.plot(f, c.curve);
+                    V.dot(cpt, L, c.accent, 6);
+                    $('readout').textContent = 'f(x) = x + ' + a.toFixed(1) + '   |   L = f(' + cpt.toFixed(1) + ') = ' + L.toFixed(2)
+                        + '   |   slope is exactly 1, so δ = ε = ' + delta.toFixed(2) + ' always works: |x−c| < δ ⟹ |f(x)−L| = |x−c| < ε';
+                }
+                V.bind(['a', 'eps', 'cpt'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: \(\lim_{x \to 3}(x - 5)\)</strong><br><br>
+                <strong>Step 1 — Guess \(L\) by substitution.</strong> \(f(3) = 3 - 5 = -2\), so we guess \(L = -2\).<br>
+                <strong>Step 2 — Set up the \(\varepsilon\text{-}\delta\) definition.</strong> We must show: for every \(\varepsilon > 0\), there exists \(\delta > 0\) such that \(0 < |x-3| < \delta \Rightarrow |(x-5) - (-2)| < \varepsilon\).<br>
+                <strong>Step 3 — Simplify the target inequality.</strong> \(|(x-5)-(-2)| = |x - 5 + 2| = |x - 3|\). So the condition we need is just \(|x-3| < \varepsilon\).<br>
+                <strong>Step 4 — Choose \(\delta\).</strong> Take \(\delta = \varepsilon\). Then \(|x-3| < \delta = \varepsilon\) immediately gives \(|(x-5)-(-2)| = |x-3| < \varepsilon\). ✓<br>
+                <strong>Conclusion:</strong> \(\lim_{x \to 3}(x-5) = -2\).
+            </div>
+
+            <h3 id="limit-quadratic">Example 2 — The Quadratic \(f(x) = ax^2+bx+c\)</h3>
+            <p><strong>Claim:</strong> \(\displaystyle\lim_{x \to p}(ax^2+bx+c) = ap^2+bp+c\) (using \(p\) for the approach point to avoid clashing with the coefficient \(c\)).</p>
+            <p><strong>Strategy:</strong> rather than an \(\varepsilon\text{-}\delta\) proof from scratch, chain together the <strong>limit laws</strong> — each one itself provable from the definition, but reusable once proved: the limit of a sum is the sum of limits, a constant factors out, and the limit of a product is the product of limits (all provided the individual limits exist, which they do here since every piece is continuous).</p>
+
+            <div class="viz-widget" id="limWidgetB">
+                <div class="viz-controls">
+                    <label>a: <span id="limWidgetB-aVal"></span>
+                        <input type="range" id="limWidgetB-a" min="-2" max="2" step="0.1" value="1">
+                    </label>
+                    <label>b: <span id="limWidgetB-bVal"></span>
+                        <input type="range" id="limWidgetB-b" min="-5" max="5" step="0.5" value="-2">
+                    </label>
+                    <label>c: <span id="limWidgetB-cVal"></span>
+                        <input type="range" id="limWidgetB-c" min="-5" max="5" step="0.5" value="1">
+                    </label>
+                    <label>approach point p: <span id="limWidgetB-cptVal"></span>
+                        <input type="range" id="limWidgetB-cpt" min="-4" max="4" step="0.1" value="2">
+                    </label>
+                </div>
+                <canvas id="limWidgetB-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="limWidgetB-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('limWidgetB', { xmin: -5, xmax: 5, ymin: -8, ymax: 16 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('a').value), b = parseFloat($('b').value), c0 = parseFloat($('c').value), cpt = parseFloat($('cpt').value);
+                    $('aVal').textContent = a.toFixed(1); $('bVal').textContent = b.toFixed(1); $('cVal').textContent = c0.toFixed(1); $('cptVal').textContent = cpt.toFixed(1);
+                    const f = x => a * x * x + b * x + c0;
+                    const L = f(cpt);
+                    V.plot(f, c.curve);
+                    ctx.setLineDash([4, 4]); ctx.strokeStyle = c.axis;
+                    ctx.beginPath(); ctx.moveTo(V.px(cpt), V.py(L)); ctx.lineTo(V.px(cpt), V.py(-8)); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(V.px(cpt), V.py(L)); ctx.lineTo(V.px(-5), V.py(L)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    V.dot(cpt, L, c.accent, 6);
+                    $('readout').textContent = 'f(x) = ' + a.toFixed(1) + 'x² + ' + b.toFixed(1) + 'x + ' + c0.toFixed(1)
+                        + '   |   lim as x→' + cpt.toFixed(1) + ' = ' + L.toFixed(3) + '  (direct substitution — polynomials are continuous everywhere)';
+                }
+                V.bind(['a', 'b', 'c', 'cpt'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: \(\lim_{x \to 2}(x^2 - 3x + 4)\)</strong><br><br>
+                <strong>Step 1 — Split the sum.</strong> By the sum law (valid since each limit below exists):
+                \[\lim_{x\to2}(x^2-3x+4) = \lim_{x\to2}x^2 \;-\; \lim_{x\to2}3x \;+\; \lim_{x\to2}4\]
+                <strong>Step 2 — Pull the constant out of the middle term.</strong> By the constant-multiple law: \(\lim_{x\to2}3x = 3\lim_{x\to2}x\).<br>
+                <strong>Step 3 — Use the product law on the first term.</strong> \(\lim_{x\to2}x^2 = \lim_{x\to2}(x\cdot x) = \left(\lim_{x\to2}x\right)\left(\lim_{x\to2}x\right)\).<br>
+                <strong>Step 4 — The base case: \(\lim_{x\to2}x = 2\).</strong> This is the \(\varepsilon\text{-}\delta\) definition with \(f(x)=x\): \(|x-2|<\varepsilon\) needs \(\delta=\varepsilon\), trivially.<br>
+                <strong>Step 5 — Substitute back.</strong> \(\lim x^2 = 2\cdot2=4\), \(\lim 3x = 3\cdot2=6\), \(\lim 4 = 4\). So the total is \(4 - 6 + 4 = 2\).<br>
+                <strong>Conclusion:</strong> \(\lim_{x\to2}(x^2-3x+4) = 2\) — exactly \(f(2)\), confirming direct substitution works because every step above is legal for a polynomial.
+            </div>
+
+            <h3 id="limit-rational">Example 3 — \(\displaystyle\lim_{x\to0}\left(\frac{a}{x}+\frac{b}{x^2}\right)\): a full case analysis</h3>
+            <p><strong>Why this one is different:</strong> this limit can equal \(+\infty\), \(-\infty\), fail to exist even in the infinite sense, or equal \(0\) — depending entirely on \(a\) and \(b\). Working it out forces you to be honest about what "the limit" means when the function isn't bounded.</p>
+
+            <div class="viz-widget" id="limWidgetC">
+                <div class="viz-controls">
+                    <label>a: <span id="limWidgetC-aVal"></span>
+                        <input type="range" id="limWidgetC-a" min="-5" max="5" step="0.5" value="1">
+                    </label>
+                    <label>b: <span id="limWidgetC-bVal"></span>
+                        <input type="range" id="limWidgetC-b" min="-5" max="5" step="0.5" value="2">
+                    </label>
+                </div>
+                <canvas id="limWidgetC-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="limWidgetC-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('limWidgetC', { xmin: -2, xmax: 2, ymin: -9, ymax: 9 });
+                const $ = V.$;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('a').value), b = parseFloat($('b').value);
+                    $('aVal').textContent = a.toFixed(1); $('bVal').textContent = b.toFixed(1);
+                    const f = x => Math.abs(x) < 1e-9 ? NaN : (a / x + b / (x * x));
+                    V.plot(f, c.curve);
+                    let text;
+                    if (Math.abs(b) > 1e-9) {
+                        const sign = b > 0 ? '+∞' : '−∞';
+                        text = 'Common denominator: (ax+b)/x². As x→0, numerator → ' + b.toFixed(1)
+                            + ' (≠0) and denominator x² → 0⁺ (always positive). So the limit is ' + sign + ' from BOTH sides.';
+                    } else if (Math.abs(a) > 1e-9) {
+                        text = 'b=0, so f(x)=a/x. Right side (x→0⁺) → ' + (a > 0 ? '+∞' : '−∞')
+                            + ', left side (x→0⁻) → ' + (a > 0 ? '−∞' : '+∞') + ' — opposite trends, so the two-sided limit does NOT exist.';
+                    } else {
+                        text = 'a=b=0, so f(x) ≡ 0 for x≠0. The limit is trivially 0.';
+                    }
+                    $('readout').textContent = text;
+                }
+                V.bind(['a', 'b'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step: \(\lim_{x\to0}\left(\dfrac{2}{x}-\dfrac{3}{x^2}\right)\)</strong><br><br>
+                <strong>Step 1 — Combine over a common denominator.</strong> For \(x\neq0\):
+                \[\frac{2}{x}-\frac{3}{x^2} = \frac{2x-3}{x^2}\]
+                <strong>Step 2 — Evaluate the numerator's limit.</strong> \(2x-3\) is a polynomial (Example 2!), so \(\lim_{x\to0}(2x-3) = -3\).<br>
+                <strong>Step 3 — Examine the denominator.</strong> \(x^2 \to 0\), and crucially \(x^2 > 0\) for every \(x\neq0\) — it approaches \(0\) <em>from the positive side only</em>, regardless of whether \(x\to0^-\) or \(x\to0^+\).<br>
+                <strong>Step 4 — Apply the infinite-limit division rule.</strong> A negative constant divided by something approaching \(0^+\) diverges to \(-\infty\): \(\dfrac{-3}{0^+} = -\infty\).<br>
+                <strong>Conclusion:</strong> \(\lim_{x\to0}\left(\dfrac{2}{x}-\dfrac{3}{x^2}\right) = -\infty\) — a determinate (if infinite) two-sided limit, because the sign of the numerator's limit was unambiguous and the denominator's sign never flips.
+            </div>
+
+            <h3 id="limit-sine">Example 4 — \(f(x) = \sin(ax+b)\)</h3>
+            <p><strong>Claim:</strong> \(\displaystyle\lim_{x\to p}\sin(ax+b) = \sin(ap+b)\) for any real \(a,b,p\) — sine is continuous everywhere, so this is direct substitution once continuity of \(\sin\) is established.</p>
+            <p><strong>Step 1 — The key inequality.</strong> For every real \(\theta\), \(|\sin\theta| \le |\theta|\) (the straight chord from \(0\) to the point on the unit circle at angle \(\theta\) is never longer than the arc itself; sine is odd so the inequality is symmetric). This is proved rigorously as part of Example 5 below.</p>
+            <p><strong>Step 2 — Sine is Lipschitz, hence continuous.</strong> Using the sum-to-product identity \(\sin t - \sin t_0 = 2\cos\!\left(\frac{t+t_0}{2}\right)\sin\!\left(\frac{t-t_0}{2}\right)\):
+            \[|\sin t - \sin t_0| = 2\left|\cos\tfrac{t+t_0}{2}\right|\cdot\left|\sin\tfrac{t-t_0}{2}\right| \le 2\cdot1\cdot\left|\tfrac{t-t_0}{2}\right| = |t-t_0|\]
+            (using \(|\cos|\le1\) and Step 1 on the second factor). So \(|\sin t-\sin t_0|\le|t-t_0|\) — sine never amplifies distances, so \(\delta=\varepsilon\) always works, exactly as in Example 1.</p>
+            <p><strong>Step 3 — Compose with the continuous inner function.</strong> \(t = ax+b\) is a polynomial (Example 2 again), so \(ax+b \to ap+b\) as \(x\to p\). Feeding a quantity that converges to \(t_0=ap+b\) into a continuous function gives \(\sin(ax+b)\to\sin(ap+b)\).</p>
+
+            <div class="viz-widget" id="limWidgetD">
+                <div class="viz-controls">
+                    <label>a: <span id="limWidgetD-aVal"></span>
+                        <input type="range" id="limWidgetD-a" min="-3" max="3" step="0.1" value="2">
+                    </label>
+                    <label>b: <span id="limWidgetD-bVal"></span>
+                        <input type="range" id="limWidgetD-b" min="-3.14" max="3.14" step="0.1" value="0.5">
+                    </label>
+                    <label>approach point p: <span id="limWidgetD-cptVal"></span>
+                        <input type="range" id="limWidgetD-cpt" min="-4" max="4" step="0.1" value="1">
+                    </label>
+                </div>
+                <canvas id="limWidgetD-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="limWidgetD-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('limWidgetD', { xmin: -5, xmax: 5, ymin: -2, ymax: 2 });
+                const $ = V.$;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const a = parseFloat($('a').value), b = parseFloat($('b').value), cpt = parseFloat($('cpt').value);
+                    $('aVal').textContent = a.toFixed(1); $('bVal').textContent = b.toFixed(2); $('cptVal').textContent = cpt.toFixed(1);
+                    const f = x => Math.sin(a * x + b);
+                    const L = f(cpt);
+                    V.plot(f, c.curve);
+                    V.dot(cpt, L, c.accent, 6);
+                    $('readout').textContent = 'f(x) = sin(' + a.toFixed(1) + 'x + ' + b.toFixed(2) + ')   |   lim as x→' + cpt.toFixed(1)
+                        + ' = sin(' + (a * cpt + b).toFixed(3) + ') = ' + L.toFixed(4);
+                }
+                V.bind(['a', 'b', 'cpt'], draw);
+            })();
+            </script>
+
+            <h3 id="limit-transcendental">Example 5 (Transcendental) — \(\displaystyle\lim_{x\to0}\frac{\sin x}{x} = 1\)</h3>
+            <p>This is the single most important limit in elementary calculus — the entire derivative of \(\sin x\) rests on it. Algebra alone cannot prove it (it's a \(\frac00\) form with a transcendental function); the classical proof is a squeeze argument built entirely out of <strong>areas</strong>.</p>
+            <p><strong>Setup (for \(0 < \theta < \pi/2\)):</strong> on the unit circle, let \(O=(0,0)\), \(A=(1,0)\), \(P=(\cos\theta,\sin\theta)\), and \(T=(1,\tan\theta)\) — the point where the ray \(OP\) extended meets the vertical tangent line at \(A\). Three regions nest inside each other: the triangle \(OAP\), the circular sector \(OAP\), and the triangle \(OAT\).</p>
+
+            <div class="viz-widget" id="sincWidget">
+                <div class="viz-controls">
+                    <label>angle θ (radians): <span id="sincWidget-thetaVal"></span>
+                        <input type="range" id="sincWidget-theta" min="0.05" max="1.3" step="0.01" value="0.8">
+                    </label>
+                </div>
+                <canvas id="sincWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="sincWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('sincWidget', { xmin: -1.8, xmax: 2.0, ymin: -0.5, ymax: 4.2 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const theta = parseFloat($('theta').value);
+                    $('thetaVal').textContent = theta.toFixed(2);
+                    const P = [Math.cos(theta), Math.sin(theta)], Tt = Math.tan(theta);
+                    // sector OAP (filled)
+                    ctx.fillStyle = c.accent; ctx.globalAlpha = 0.3;
+                    ctx.beginPath(); ctx.moveTo(V.px(0), V.py(0));
+                    for (let t = 0; t <= theta; t += 0.02) ctx.lineTo(V.px(Math.cos(t)), V.py(Math.sin(t)));
+                    ctx.lineTo(V.px(P[0]), V.py(P[1]));
+                    ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+                    // triangle OAP (filled)
+                    ctx.fillStyle = c.curve; ctx.globalAlpha = 0.35;
+                    ctx.beginPath(); ctx.moveTo(V.px(0), V.py(0)); ctx.lineTo(V.px(1), V.py(0)); ctx.lineTo(V.px(P[0]), V.py(P[1]));
+                    ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+                    // triangle OAT (outline)
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(V.px(0), V.py(0)); ctx.lineTo(V.px(1), V.py(0)); ctx.lineTo(V.px(1), V.py(Tt));
+                    ctx.closePath(); ctx.stroke();
+                    // unit circle arc (reference, first quadrant)
+                    ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    for (let t = 0; t <= Math.PI / 2 + 0.01; t += 0.02) {
+                        const X = V.px(Math.cos(t)), Y = V.py(Math.sin(t));
+                        if (t === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+                    }
+                    ctx.stroke();
+                    // dashed segment AT
+                    ctx.setLineDash([4, 4]); ctx.strokeStyle = c.axis;
+                    ctx.beginPath(); ctx.moveTo(V.px(1), V.py(0)); ctx.lineTo(V.px(1), V.py(Tt)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    // points + labels
+                    V.dot(0, 0, c.text, 3); V.dot(1, 0, c.text, 3); V.dot(P[0], P[1], c.curve, 5); V.dot(1, Tt, c.axis, 4);
+                    ctx.fillStyle = c.text; ctx.font = '14px sans-serif';
+                    ctx.fillText('O', V.px(0) - 14, V.py(0) + 16);
+                    ctx.fillText('A', V.px(1) + 6, V.py(0) + 16);
+                    ctx.fillText('P', V.px(P[0]) + 6, V.py(P[1]) - 6);
+                    ctx.fillText('T', V.px(1) + 6, V.py(Tt) - 4);
+                    const areaOAP = 0.5 * Math.sin(theta), areaSector = 0.5 * theta, areaOAT = 0.5 * Tt, ratio = Math.sin(theta) / theta;
+                    $('readout').textContent = 'Area(OAP)=½sinθ=' + areaOAP.toFixed(4) + '  ≤  Area(sector)=½θ=' + areaSector.toFixed(4)
+                        + '  ≤  Area(OAT)=½tanθ=' + areaOAT.toFixed(4) + '   ⟹   cosθ=' + Math.cos(theta).toFixed(4)
+                        + '  ≤  sinθ/θ=' + ratio.toFixed(6) + '  ≤  1   — shrink θ toward 0 and watch sinθ/θ → 1';
+                }
+                V.bind(['theta'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Step-by-step proof</strong><br><br>
+                <strong>Step 1 — Compare the three areas.</strong> Since the triangle \(OAP\) sits inside the sector \(OAP\), which sits inside the triangle \(OAT\):
+                \[\text{Area}(OAP) \;\le\; \text{Area}(\text{sector }OAP) \;\le\; \text{Area}(OAT)\]
+                <strong>Step 2 — Compute each area.</strong> Triangle \(OAP\) has base \(OA=1\) and height \(\sin\theta\) (the \(y\)-coordinate of \(P\)), so its area is \(\frac12\sin\theta\). The sector has area \(\frac12r^2\theta = \frac12\theta\) (\(r=1\)). Triangle \(OAT\) has base \(OA=1\) and height \(\tan\theta\) (the \(y\)-coordinate of \(T\)), so its area is \(\frac12\tan\theta\).
+                \[\frac12\sin\theta \le \frac12\theta \le \frac12\tan\theta\]
+                <strong>Step 3 — Clear the \(\frac12\)'s and divide by \(\sin\theta > 0\).</strong>
+                \[\sin\theta \le \theta \le \frac{\sin\theta}{\cos\theta} \quad\Longrightarrow\quad 1 \le \frac{\theta}{\sin\theta} \le \frac{1}{\cos\theta}\]
+                <strong>Step 4 — Take reciprocals (this reverses both inequalities).</strong>
+                \[\cos\theta \;\le\; \frac{\sin\theta}{\theta} \;\le\; 1\]
+                <strong>Step 5 — Squeeze as \(\theta\to0^+\).</strong> \(\cos\theta\to1\) and the right side is the constant \(1\), so by the squeeze theorem \(\frac{\sin\theta}{\theta}\to1\).<br>
+                <strong>Step 6 — Extend to \(\theta\to0^-\).</strong> \(\frac{\sin(-\theta)}{-\theta} = \frac{-\sin\theta}{-\theta} = \frac{\sin\theta}{\theta}\) — the function is even, so the left-hand limit equals the right-hand limit.<br>
+                <strong>Conclusion:</strong> \(\displaystyle\lim_{x\to0}\frac{\sin x}{x} = 1\).<br><br>
+                <strong>Numeric sanity check:</strong> \(\sin(0.1)/0.1 \approx 0.99833\), \(\sin(0.01)/0.01\approx0.999983\) — visibly closing in on \(1\), matching the widget above.
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Compute \(\lim_{x \to -3}(x + 7)\).
+                    <details><summary>Solution</summary>Direct substitution (Example 1): \(-3+7=4\).</details>
+                </li>
+                <li>Compute \(\lim_{x \to 2}(3x^2 - 2x + 1)\).
+                    <details><summary>Solution</summary>Direct substitution (Example 2): \(3(4)-2(2)+1 = 12-4+1=9\).</details>
+                </li>
+                <li>Determine \(\lim_{x \to 0}\dfrac{5}{x}\) (does it exist?).
+                    <details><summary>Solution</summary>This is the \(b=0,\,a\neq0\) case of Example 3: right side \(\to+\infty\), left side \(\to-\infty\) — opposite infinite trends, so the two-sided limit does NOT exist.</details>
+                </li>
+                <li>Compute \(\lim_{x \to 1}\sin(3x-3)\).
+                    <details><summary>Solution</summary>Continuity of sine (Example 4): substitute \(t=3(1)-3=0\), giving \(\sin(0)=0\).</details>
+                </li>
+                <li>Use Example 5 to evaluate \(\lim_{x\to0}\dfrac{\sin(5x)}{x}\).
+                    <details><summary>Solution</summary>Write \(\dfrac{\sin(5x)}{x} = 5\cdot\dfrac{\sin(5x)}{5x}\). As \(x\to0\), \(5x\to0\) too, so by Example 5 (with \(u=5x\)) the second factor \(\to1\). Total: \(5\cdot1=5\).</details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ INTERMEDIATE LEVEL ============ -->
+        <section id="intermediate">
+            <h2>Intermediate Level</h2>
+
+            <h3 id="euler-constant">Discovering Euler's Number, Intuitively</h3>
+            <p>Every calculus course eventually announces "\(e \approx 2.71828\ldots\)" and moves on. Here's how to <em>find</em> that number yourself — using nothing but arithmetic and a limit of a sequence. No derivatives required.</p>
+
+            <h4>Story A — The Impatient Investor</h4>
+            <p>A bank offers you a deal that sounds too good to be true: deposit \(\$1\), and it pays <strong>100% annual interest</strong>. Compounded once, at year's end, your dollar becomes \(1\cdot(1+1) = \$2\).</p>
+            <p>But then you notice the fine print: you can ask for the interest to be compounded more often, in smaller pieces, throughout the year — each time getting \(\frac1n\) of the 100% rate, \(n\) times. Compounded monthly (\(n=12\)) you'd expect more than \(\$2\), because each month's interest starts earning interest of its own sooner. The formula for the balance after one year is:
+            \[\left(1+\frac1n\right)^{n}\]
+            Compound quarterly, and you beat \(\$2\). Compound daily, and you beat that. <strong>What happens if the bank compounds continuously</strong> — every instant, forever refining the split?</p>
+
+            <div class="viz-widget" id="eulerWidget">
+                <div class="viz-controls">
+                    <label>compounding frequency (log₁₀ n): <span id="eulerWidget-lognVal"></span>
+                        <input type="range" id="eulerWidget-logn" min="0" max="7" step="0.02" value="2">
+                    </label>
+                </div>
+                <canvas id="eulerWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="eulerWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('eulerWidget', { xmin: 0, xmax: 7, ymin: 1, ymax: 3 });
+                const $ = V.$, ctx = V.ctx;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const logn = parseFloat($('logn').value);
+                    $('lognVal').textContent = logn.toFixed(2);
+                    const n = Math.max(1, Math.round(Math.pow(10, logn)));
+                    const value = Math.pow(1 + 1 / n, n);
+                    const h = t => { const nn = Math.pow(10, t); return Math.pow(1 + 1 / nn, nn); };
+                    V.plot(h, c.curve);
+                    ctx.setLineDash([6, 6]); ctx.strokeStyle = c.accent; ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(0, V.py(Math.E)); ctx.lineTo(V.W.width, V.py(Math.E)); ctx.stroke();
+                    ctx.setLineDash([]);
+                    V.dot(logn, value, c.accent, 6);
+                    $('readout').textContent = 'n ≈ ' + n.toLocaleString() + '   |   (1+1/n)ⁿ = ' + value.toFixed(6)
+                        + '   |   e = 2.718281828…   |   gap = ' + Math.abs(Math.E - value).toExponential(3);
+                }
+                V.bind(['logn'], draw);
+            })();
+            </script>
+
+            <table>
+                <thead><tr><th>Compounding</th><th>n (periods/year)</th><th>(1+1/n)ⁿ</th></tr></thead>
+                <tbody id="eulerTable-body"></tbody>
+            </table>
+            <script>
+            (function () {
+                const rows = [['Annually', 1], ['Quarterly', 4], ['Monthly', 12], ['Weekly', 52],
+                    ['Daily', 365], ['Hourly', 8760], ['Every minute', 525600], ['Every second', 31536000]];
+                const tbody = document.getElementById('eulerTable-body');
+                rows.forEach(function (r) {
+                    const n = r[1], v = Math.pow(1 + 1 / n, n);
+                    const tr = document.createElement('tr');
+                    const td0 = document.createElement('td'); td0.textContent = r[0];
+                    const td1 = document.createElement('td'); td1.textContent = n.toLocaleString();
+                    const td2 = document.createElement('td'); td2.textContent = v.toFixed(6);
+                    tr.appendChild(td0); tr.appendChild(td1); tr.appendChild(td2);
+                    tbody.appendChild(tr);
+                });
+            })();
+            </script>
+            <p>The balance keeps climbing but visibly <em>slows down</em> — it never reaches \(\$2.72\), let alone runs away to infinity. That ceiling is \(e\). By hand you can already check the first couple of rows: \(n=1\) gives exactly \(2\); \(n=2\) gives \((1.5)^2=2.25\); \(n=4\) gives \((1.25)^4 = 2.44140625\). The table above (computed live in your browser) shows the rest converging toward \(2.718281828\ldots\)</p>
+
+            <h4>Story B — The Bacterium's Dilemma</h4>
+            <p>Now forget banks. A bacterium colony grows at an effective rate of 100% per hour. If it reproduced in one lump burst at the end of the hour, the population would double: \(P_0 \to 2P_0\). But real growth is more continuous than that — split the hour into \(n\) equal sub-intervals, and in each one let the population grow by a fraction \(\frac1n\) of the hourly rate, compounding within the hour:
+            \[P(1\text{ hour}) = P_0\left(1+\frac1n\right)^{n}\]
+            This is <em>the exact same sequence</em> as the investor's formula — money and bacteria obey the same limiting law once you let the growth become continuous (\(n\to\infty\)). That shared limit, \(e\), is why the same constant governs compound interest, radioactive decay, population growth, and (later) the derivative of \(e^x\) being itself.</p>
+
+            <div class="example">
+                <strong>What we derived — without a single derivative:</strong> the sequence \(a_n = \left(1+\frac1n\right)^n\) is increasing (each extra split adds a genuinely new, if shrinking, boost) and bounded above (it never crosses \(3\)). An increasing, bounded sequence must converge (the Monotone Convergence Theorem — see <a href="RealAnalysis.html">Real Analysis</a> for the full proof), and its limit is <em>defined</em> to be \(e\):
+                \[e := \lim_{n\to\infty}\left(1+\frac1n\right)^n = 2.718281828459045\ldots\]
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Compute \((1+1/4)^4\) by hand and compare it to \(e\).
+                    <details><summary>Solution</summary>\((1.25)^4 = 1.5625^2 = 2.44140625\) — still noticeably below \(2.71828\), showing the sequence converges slowly at small \(n\).</details>
+                </li>
+                <li>A bank offers 100% annual interest compounded monthly. How much more does \(\$1000\) grow to after one year under <em>continuous</em> compounding versus monthly?
+                    <details><summary>Solution</summary>Monthly: \(1000\cdot(1+1/12)^{12}\approx\$2613.04\). Continuous: \(1000\cdot e\approx\$2718.28\). Difference \(\approx\$105.24\).</details>
+                </li>
+                <li>Why does an increasing, bounded-above sequence have to converge?
+                    <details><summary>Solution</summary>This is the Monotone Convergence Theorem: the set of all sequence values has a least upper bound \(L\) (by the completeness of \(\mathbb{R}\)); since the sequence is increasing, it must eventually get and stay arbitrarily close to \(L\) from below, which is exactly what convergence to \(L\) means.</details>
+                </li>
+                <li>A colony splits itself into \(n\) equal growth-steps per hour, each multiplying the population by \((1+1/n)\). Write the population after 1 hour starting from \(P_0=1\) as a function of \(n\), and state its limit as \(n\to\infty\).
+                    <details><summary>Solution</summary>\(P(n) = (1+1/n)^n \to e\).</details>
+                </li>
+                <li>Roughly how large must \(n\) be for \((1+1/n)^n\) to land within \(0.001\) of \(e\)?
+                    <details><summary>Solution</summary>Using the standard first-order approximation \(e - (1+1/n)^n \approx \dfrac{e}{2n}\), setting \(\dfrac{e}{2n}=0.001\) gives \(n\approx\dfrac{e}{0.002}\approx1359\). Try it on the widget's slider — convergence is genuinely slow (only \(O(1/n)\)).</details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ ADVANCED LEVEL ============ -->
+        <section id="advanced">
+            <h2>Advanced Level</h2>
+
+            <h3 id="dx-notation">Notation: What \(d/dx\) Really Means</h3>
+            <p>Physics textbooks routinely write \(\dfrac{df}{dx}=y\) and then, a line later, \(df = y\,dx\) — as if the \(dx\) in the denominator were simply multiplied across. It looks like algebra on a fraction. It isn't, and understanding why clears up a notation that confuses most students who first meet it.</p>
+
+            <h4>Step 1 — \(dy/dx\) is one indivisible symbol</h4>
+            <p>By definition,
+            \[\frac{dy}{dx}\bigg|_{x=a} \;:=\; \lim_{h\to0}\frac{f(a+h)-f(a)}{h}\]
+            The whole expression \(\frac{dy}{dx}\) is Leibniz's notation for a single number (the limit). It is <strong>not</strong>, on its own, a ratio of two separately-existing quantities \(dy\) and \(dx\) — there's no "\(dy\)" or "\(dx\)" floating around yet at this stage, just a limit of a fraction of finite differences \(\Delta y/\Delta x\).</p>
+
+            <h4>Step 2 — the differential \(dy\) is a <em>definition</em>, not algebra</h4>
+            <p>Once \(f'(a)\) exists, mathematicians <em>define</em> a new pair of symbols, the differentials:
+            \[dx := \text{(any real number, the chosen input increment)}, \qquad dy := f'(a)\cdot dx\]
+            This is a <em>definition</em> of what \(dy\) means — you are not "moving \(dx\) across an equals sign," you are invoking the definition directly. The equation \(df = f'(x)\,dx\) is therefore true by fiat, the moment you decide to call the right-hand side "\(df\)."</p>
+
+            <div class="viz-widget" id="diffWidget">
+                <div class="viz-controls">
+                    <label>function: <span id="diffWidget-pickVal"></span>
+                        <input type="range" id="diffWidget-pick" min="0" max="2" step="1" value="0">
+                    </label>
+                    <label>point a: <span id="diffWidget-aVal"></span>
+                        <input type="range" id="diffWidget-a" min="-2" max="1.5" step="0.1" value="0.5">
+                    </label>
+                    <label>Δx: <span id="diffWidget-dxVal"></span>
+                        <input type="range" id="diffWidget-dx" min="0.05" max="1.5" step="0.05" value="1">
+                    </label>
+                </div>
+                <canvas id="diffWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="diffWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('diffWidget', { xmin: -3, xmax: 4, ymin: -2, ymax: 22 });
+                const $ = V.$, ctx = V.ctx;
+                const presets = [
+                    { name: 'x²', f: x => x * x, df: x => 2 * x },
+                    { name: 'sin x', f: Math.sin, df: Math.cos },
+                    { name: 'eˣ', f: Math.exp, df: Math.exp }
+                ];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const k = parseInt($('pick').value), a = parseFloat($('a').value), dx = parseFloat($('dx').value);
+                    $('pickVal').textContent = presets[k].name; $('aVal').textContent = a.toFixed(2); $('dxVal').textContent = dx.toFixed(2);
+                    const F = presets[k].f, dF = presets[k].df;
+                    V.plot(F, c.curve);
+                    const fa = F(a), s = dF(a);
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(V.px(V.xmin), V.py(fa + s * (V.xmin - a)));
+                    ctx.lineTo(V.px(V.xmax), V.py(fa + s * (V.xmax - a)));
+                    ctx.stroke();
+                    const actualY = F(a + dx), diffY = fa + s * dx;
+                    ctx.setLineDash([4, 4]); ctx.strokeStyle = c.axis;
+                    ctx.beginPath(); ctx.moveTo(V.px(a + dx), V.py(fa)); ctx.lineTo(V.px(a + dx), V.py(Math.max(actualY, diffY))); ctx.stroke();
+                    ctx.setLineDash([]);
+                    V.dot(a, fa, c.text, 5);
+                    V.dot(a + dx, actualY, c.curve, 6);
+                    V.dot(a + dx, diffY, c.accent, 6);
+                    $('readout').textContent = 'at a=' + a.toFixed(2) + ', Δx=' + dx.toFixed(2) + ':   Δy = f(a+Δx)−f(a) = ' + (actualY - fa).toFixed(4)
+                        + '   |   dy = f′(a)·Δx = ' + (diffY - fa).toFixed(4) + '   |   Δy − dy = ' + (actualY - diffY).toFixed(5)
+                        + '   (shrinks faster than Δx as Δx→0 — blue dot is the true change, green dot is the differential estimate)';
+                }
+                V.bind(['pick', 'a', 'dx'], draw);
+            })();
+            </script>
+
+            <h4>Step 3 — why the differentials really do "act like" a fraction</h4>
+            <p>This is the part that makes the physicist's shortcut trustworthy rather than lucky. Consider the chain rule (proved in full below): for \(y=f(u)\) and \(u=g(x)\),
+            \[\frac{dy}{dx} = f'(g(x))\cdot g'(x)\]
+            But by the very definitions in Step 2, \(dy = f'(u)\,du\) and \(du = g'(x)\,dx\). Substituting:
+            \[dy = f'(u)\cdot\big(g'(x)\,dx\big) = \big(f'(u)g'(x)\big)\,dx\]
+            which says \(dy/dx = f'(u)g'(x)\) — <strong>exactly</strong> the chain rule. The "cancellation" \(\dfrac{dy}{du}\cdot\dfrac{du}{dx} = \dfrac{dy}{dx}\) isn't an algebraic trick you're allowed to perform; it is a restatement of a genuine theorem about limits. Treating \(dy,du,dx\) as if they were ordinary numbers that multiply and cancel gives the right answer <em>because</em> the chain rule guarantees it — the notation was engineered by Leibniz specifically so that fraction-like manipulation tracks true theorems.</p>
+            <p>This is also why \(\dfrac{df}{dx}=y \Rightarrow df = y\,dx\) is safe in one-variable physics: it's shorthand for "the differential of \(f\) is \(y\) times the differential of \(x\)," a definitional statement, immediately followed by legitimate operations (integrating both sides, or composing via the chain rule) that are themselves justified by theorems — never a bare algebraic move on a limit symbol. (A cautionary footnote: in <em>multivariable</em> calculus, partial derivatives do <strong>not</strong> cancel this freely — \(\frac{\partial y}{\partial x}\cdot\frac{\partial x}{\partial y} \neq 1\) in general once other variables are involved. The fully rigorous resolution for several variables is in the Research section below.)</p>
+            <p>External reading: <a href="https://en.wikipedia.org/wiki/Differential_(mathematics)" target="_blank">Differential (mathematics) – Wikipedia</a>, <a href="https://en.wikipedia.org/wiki/Leibniz%27s_notation" target="_blank">Leibniz's notation – Wikipedia</a>.</p>
+
+            <h3 id="rule-constant">The Six Differentiation Rules, Proved From First Principles</h3>
+            <p>Every rule below starts from the same definition, \(f'(x) = \lim_{h\to0}\frac{f(x+h)-f(x)}{h}\), and every algebraic step is shown — nothing is "left as an exercise."</p>
+
+            <h4 id="rule-constant-1">Rule 1 — Constant Rule: \(\dfrac{d}{dx}[c] = 0\)</h4>
+            <div class="example">
+                <strong>Proof.</strong><br>
+                <strong>Step 1:</strong> Let \(f(x)=c\) for a fixed constant \(c\). Write the difference quotient: \(\dfrac{f(x+h)-f(x)}{h}\).<br>
+                <strong>Step 2:</strong> Substitute: \(f(x+h)=c\) and \(f(x)=c\) (the function never changes), so the numerator is \(c-c=0\).<br>
+                <strong>Step 3:</strong> The quotient is \(\dfrac{0}{h}=0\) for every \(h\neq0\) — not just approximately zero, <em>exactly</em> zero before any limit is taken.<br>
+                <strong>Step 4:</strong> \(\lim_{h\to0}0 = 0\) (the limit of a constant sequence is that constant).<br>
+                <strong>Conclusion:</strong> \(f'(x)=0\).
+            </div>
+            <p><strong>Geometric picture:</strong> the graph of \(y=c\) is a horizontal line — it never rises or falls, so its slope is \(0\) at every point, everywhere.</p>
+
+            <h4 id="rule-constant-multiple">Rule 2 — Constant Multiple Rule: \(\dfrac{d}{dx}[c\,f(x)] = c\,f'(x)\)</h4>
+            <div class="example">
+                <strong>Proof.</strong><br>
+                <strong>Step 1:</strong> Let \(F(x) = c\cdot f(x)\). Difference quotient: \(\dfrac{F(x+h)-F(x)}{h} = \dfrac{c\,f(x+h)-c\,f(x)}{h}\).<br>
+                <strong>Step 2:</strong> Factor \(c\) out of the numerator (ordinary distributive algebra, valid for any \(h\)): \(= c\cdot\dfrac{f(x+h)-f(x)}{h}\).<br>
+                <strong>Step 3:</strong> Take the limit as \(h\to0\). By the constant-multiple law for limits (itself an \(\varepsilon\text{-}\delta\) fact: scaling the input error by \(|c|\) scales the output error by \(|c|\)), the limit of \(c\) times something equals \(c\) times the limit of that thing — <em>provided</em> the inner limit exists.<br>
+                <strong>Step 4:</strong> The inner limit is exactly the definition of \(f'(x)\), which exists by hypothesis.<br>
+                <strong>Conclusion:</strong> \(F'(x) = c\,f'(x)\).
+            </div>
+            <p><strong>Corollary — the Difference Rule:</strong> writing \(f(x)-g(x) = f(x) + (-1)g(x)\), the Constant Multiple Rule (with \(c=-1\)) combined with the Sum Rule (next) immediately gives \(\dfrac{d}{dx}[f-g] = f'-g'\) — no separate proof needed.</p>
+            <p><strong>Geometric picture:</strong> multiplying \(f\) by \(c\) stretches (or flips, if \(c<0\)) the graph vertically by factor \(c\); a vertical stretch by \(c\) scales every slope by exactly \(c\) too.</p>
+            <p><strong>Building block for later examples:</strong> applying the Product Rule (Rule 4, below) to \(f(x)=x\cdot x = x^2\) gives \(\dfrac{d}{dx}[x^2] = 1\cdot x + x\cdot1 = 2x\) — we'll reuse this fact without re-deriving it.</p>
+
+            <h4 id="rule-sum">Rule 3 — Sum Rule: \(\dfrac{d}{dx}[f(x)+g(x)] = f'(x)+g'(x)\)</h4>
+            <div class="example">
+                <strong>Proof.</strong><br>
+                <strong>Step 1:</strong> Let \(F=f+g\). Difference quotient: \(\dfrac{F(x+h)-F(x)}{h} = \dfrac{\big(f(x+h)+g(x+h)\big) - \big(f(x)+g(x)\big)}{h}\).<br>
+                <strong>Step 2:</strong> Regroup the numerator (addition is commutative/associative, always legal): \(= \dfrac{\big(f(x+h)-f(x)\big) + \big(g(x+h)-g(x)\big)}{h}\).<br>
+                <strong>Step 3:</strong> Split the single fraction into two: \(= \dfrac{f(x+h)-f(x)}{h} + \dfrac{g(x+h)-g(x)}{h}\).<br>
+                <strong>Step 4:</strong> Take the limit as \(h\to0\). Both individual limits exist (\(f,g\) differentiable at \(x\)), so by the sum law for limits, the limit of the sum is the sum of the limits.<br>
+                <strong>Conclusion:</strong> \(F'(x) = f'(x)+g'(x)\).
+            </div>
+            <p><strong>Geometric picture:</strong> stacking two graphs (adding their heights pointwise) adds their slopes pointwise too — a flat piece of \(g\) added to \(f\) doesn't change \(f\)'s rate of change; a steeply rising piece of \(g\) tilts the sum upward by exactly that much extra.</p>
+
+            <h4 id="rule-product">Rule 4 — Product Rule: \(\dfrac{d}{dx}[f(x)g(x)] = f'(x)g(x)+f(x)g'(x)\)</h4>
+            <div class="example">
+                <strong>Proof.</strong><br>
+                <strong>Step 1:</strong> Let \(F=fg\). Difference quotient numerator: \(f(x+h)g(x+h) - f(x)g(x)\).<br>
+                <strong>Step 2 — the key trick:</strong> add and subtract \(f(x+h)g(x)\) (adding zero in a useful form):
+                \[f(x+h)g(x+h) \;\underbrace{-\,f(x+h)g(x)+f(x+h)g(x)\,}_{=\,0}-\; f(x)g(x)\]
+                <strong>Step 3:</strong> Regroup into two matched pairs:
+                \[= f(x+h)\big[g(x+h)-g(x)\big] \;+\; g(x)\big[f(x+h)-f(x)\big]\]
+                <strong>Step 4:</strong> Divide by \(h\):
+                \[\frac{F(x+h)-F(x)}{h} = f(x+h)\cdot\frac{g(x+h)-g(x)}{h} + g(x)\cdot\frac{f(x+h)-f(x)}{h}\]
+                <strong>Step 5 — take the limit \(h\to0\) term by term.</strong> The second factor of the first term needs \(f(x+h)\to f(x)\): this holds because \(f\) is differentiable at \(x\), hence continuous there (a one-line lemma: \(f(x+h)-f(x) = h\cdot\frac{f(x+h)-f(x)}{h} \to 0\cdot f'(x)=0\) as \(h\to0\)). So the first term \(\to f(x)\cdot g'(x)\). The second term \(\to g(x)\cdot f'(x)\) directly.<br>
+                <strong>Conclusion:</strong> \(F'(x) = f(x)g'(x) + g(x)f'(x) = f'(x)g(x)+f(x)g'(x)\).
+            </div>
+
+            <p><strong>Geometric picture — area of a growing rectangle.</strong> Think of \(f(x)\) and \(g(x)\) as the width and height of a rectangle. Growing \(x\) by \(\Delta x\) grows the width by \(\Delta u\) and the height by \(\Delta v\); the new area splits into the old rectangle plus <em>two thin strips</em> (one of area \(u\cdot\Delta v\), one of area \(v\cdot\Delta u\)) plus a tiny leftover corner of area \(\Delta u\cdot\Delta v\). That corner is second-order small — it vanishes faster than \(\Delta x\) itself — leaving exactly \(d(uv)=u\,dv+v\,du\).</p>
+
+            <div class="viz-widget" id="productRectWidget">
+                <div class="viz-controls">
+                    <label>x: <span id="productRectWidget-x0Val"></span>
+                        <input type="range" id="productRectWidget-x0" min="0" max="5" step="0.1" value="2">
+                    </label>
+                    <label>Δx: <span id="productRectWidget-dxVal"></span>
+                        <input type="range" id="productRectWidget-dx" min="0.2" max="3" step="0.1" value="1.5">
+                    </label>
+                </div>
+                <canvas id="productRectWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="productRectWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('productRectWidget', { xmin: 0, xmax: 8, ymin: 0, ymax: 6 });
+                const $ = V.$, ctx = V.ctx;
+                const u = x => 0.5 * x + 2, v = x => 0.3 * x + 1.5;
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const x0 = parseFloat($('x0').value), dx = parseFloat($('dx').value);
+                    $('x0Val').textContent = x0.toFixed(1); $('dxVal').textContent = dx.toFixed(1);
+                    const u0 = u(x0), v0 = v(x0), u1 = u(x0 + dx), v1 = v(x0 + dx), du = u1 - u0, dv = v1 - v0;
+                    // original rectangle
+                    ctx.fillStyle = c.curve; ctx.globalAlpha = 0.15;
+                    ctx.fillRect(V.px(0), V.py(v0), V.px(u0) - V.px(0), V.py(0) - V.py(v0));
+                    ctx.globalAlpha = 1; ctx.strokeStyle = c.curve; ctx.lineWidth = 2;
+                    ctx.strokeRect(V.px(0), V.py(v0), V.px(u0) - V.px(0), V.py(0) - V.py(v0));
+                    // top strip: u0 * dv
+                    ctx.fillStyle = c.accent; ctx.globalAlpha = 0.35;
+                    ctx.fillRect(V.px(0), V.py(v1), V.px(u0) - V.px(0), V.py(v0) - V.py(v1));
+                    // right strip: v0 * du
+                    ctx.fillRect(V.px(u0), V.py(v0), V.px(u1) - V.px(u0), V.py(0) - V.py(v0));
+                    ctx.globalAlpha = 1;
+                    // corner: du * dv
+                    ctx.fillStyle = c.text; ctx.globalAlpha = 0.3;
+                    ctx.fillRect(V.px(u0), V.py(v1), V.px(u1) - V.px(u0), V.py(v0) - V.py(v1));
+                    ctx.globalAlpha = 1;
+                    // outline enlarged rectangle
+                    ctx.strokeStyle = c.axis; ctx.lineWidth = 1.5;
+                    ctx.strokeRect(V.px(0), V.py(v1), V.px(u1) - V.px(0), V.py(0) - V.py(v1));
+                    ctx.fillStyle = c.text; ctx.font = '13px sans-serif';
+                    ctx.fillText('u=' + u0.toFixed(2), V.px(u0 / 2) - 16, V.py(0) - 6);
+                    ctx.fillText('v=' + v0.toFixed(2), 4, V.py(v0 / 2));
+                    ctx.fillText('Δu', V.px((u0 + u1) / 2) - 10, V.py(0) - 6);
+                    ctx.fillText('Δv', 4, V.py((v0 + v1) / 2));
+                    const dA = u1 * v1 - u0 * v0, linApprox = u0 * dv + v0 * du, corner = du * dv;
+                    $('readout').textContent = 'ΔA=' + dA.toFixed(4) + '  =  u·Δv + v·Δu + Δu·Δv  =  ' + linApprox.toFixed(4)
+                        + ' + ' + corner.toFixed(4) + '   |   as Δx→0 the gray corner Δu·Δv vanishes faster than the rest, leaving d(uv)=u dv+v du';
+                }
+                V.bind(['x0', 'dx'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Worked example:</strong> \(\dfrac{d}{dx}[x\sin x] = 1\cdot\sin x + x\cdot\cos x = \sin x + x\cos x\) (using the standard derivative \(\frac{d}{dx}\sin x=\cos x\)).
+            </div>
+
+            <h4 id="rule-quotient">Rule 5 — Quotient Rule: \(\dfrac{d}{dx}\!\left[\dfrac{f(x)}{g(x)}\right] = \dfrac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}\) (for \(g(x)\neq0\))</h4>
+            <div class="example">
+                <strong>Proof.</strong><br>
+                <strong>Step 1:</strong> Let \(F = f/g\). Difference quotient numerator: \(\dfrac{f(x+h)}{g(x+h)} - \dfrac{f(x)}{g(x)}\).<br>
+                <strong>Step 2 — common denominator:</strong>
+                \[= \frac{f(x+h)g(x) - f(x)g(x+h)}{g(x+h)g(x)}\]
+                <strong>Step 3 — the same add-and-subtract trick, now with \(f(x)g(x)\):</strong>
+                \[f(x+h)g(x)\underbrace{-f(x)g(x)+f(x)g(x)}_{=\,0}-f(x)g(x+h) = g(x)\big[f(x+h)-f(x)\big] - f(x)\big[g(x+h)-g(x)\big]\]
+                <strong>Step 4:</strong> Divide everything by \(h\):
+                \[\frac{F(x+h)-F(x)}{h} = \frac{\displaystyle g(x)\cdot\frac{f(x+h)-f(x)}{h} - f(x)\cdot\frac{g(x+h)-g(x)}{h}}{g(x+h)g(x)}\]
+                <strong>Step 5 — take the limit \(h\to0\).</strong> The numerator's two difference quotients converge to \(f'(x)\) and \(g'(x)\); the denominator's \(g(x+h)\to g(x)\) by continuity of \(g\) (differentiable \(\Rightarrow\) continuous, same lemma as Rule 4).<br>
+                <strong>Conclusion:</strong> \(F'(x) = \dfrac{g(x)f'(x)-f(x)g'(x)}{g(x)^2} = \dfrac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}\).
+            </div>
+            <p><strong>Geometric picture:</strong> the Quotient Rule is the Product Rule turned inside-out. Since \(f = F\cdot g\) (where \(F=f/g\)), the Product Rule gives \(f' = F'g + Fg'\); solving for \(F'\) and substituting \(F=f/g\) reproduces exactly the formula above — a nice consistency check that the two rules agree.</p>
+            <div class="example">
+                <strong>Worked example:</strong> \(\dfrac{d}{dx}\!\left[\dfrac{2x+1}{x-3}\right] = \dfrac{2(x-3)-(2x+1)(1)}{(x-3)^2} = \dfrac{2x-6-2x-1}{(x-3)^2} = \dfrac{-7}{(x-3)^2}\).
+            </div>
+
+            <h4 id="rule-chain">Rule 6 — Chain Rule: \(\dfrac{d}{dx}\big[f(g(x))\big] = f'(g(x))\cdot g'(x)\)</h4>
+            <div class="example">
+                <strong>Proof (standard version).</strong><br>
+                <strong>Step 1:</strong> Let \(F(x)=f(g(x))\), \(u=g(x)\). Difference quotient: \(\dfrac{f(g(x+h))-f(g(x))}{h}\).<br>
+                <strong>Step 2 — multiply and divide by \(g(x+h)-g(x)\)</strong> (valid whenever this quantity is nonzero for the \(h\) in question):
+                \[\frac{f(g(x+h))-f(g(x))}{g(x+h)-g(x)} \cdot \frac{g(x+h)-g(x)}{h}\]
+                <strong>Step 3:</strong> As \(h\to0\), \(g(x+h)\to g(x)\) (continuity of \(g\)); write \(k = g(x+h)-g(x) \to 0\). The first factor becomes \(\dfrac{f(u+k)-f(u)}{k} \to f'(u)\) as \(k\to0\) (definition of \(f'\) at \(u=g(x)\)). The second factor \(\to g'(x)\) by definition.<br>
+                <strong>Conclusion:</strong> \(F'(x) = f'(g(x))\cdot g'(x)\).
+            </div>
+            <div class="example">
+                <strong>Honest technical caveat.</strong> Step 2 divides by \(g(x+h)-g(x)\), which can be exactly \(0\) for a sequence of \(h\)'s arbitrarily close to \(0\) if \(g\) is locally constant along that sequence (imagine \(g\) wiggling and touching the same value at \(x\) infinitely often as \(h\to0\)) — the algebra above breaks down at those particular \(h\)'s. The rigorous fix (due to Constantin Carathéodory) defines an auxiliary function \(\varphi(u) = \frac{f(u)-f(g(x))}{u-g(x)}\) for \(u\neq g(x)\) and \(\varphi(g(x))=f'(g(x))\), shows \(\varphi\) is continuous at \(u=g(x)\), and writes \(f(g(x+h))-f(g(x)) = \varphi(g(x+h))\cdot\big(g(x+h)-g(x)\big)\) — an identity that holds even when \(g(x+h)-g(x)=0\) (both sides are just \(0\)), sidestepping the division entirely. The conclusion is identical; only the proof needs the patch. See <a href="RealAnalysis.html">Real Analysis</a> for the full \(\varepsilon\text{-}\delta\) treatment.
+            </div>
+
+            <p><strong>Geometric picture — the stretching machine.</strong> \(g\) stretches a small interval near \(x\) by local factor \(g'(x)\); \(f\) then stretches the resulting interval near \(u=g(x)\) by local factor \(f'(u)\). A width of \(dx\) comes out the far end with width \(f'(g(x))\cdot g'(x)\cdot dx\) — <strong>the two local stretch factors multiply.</strong></p>
+
+            <div class="viz-widget" id="chainStretchWidget">
+                <div class="viz-controls">
+                    <label>x (composite: sin(x²)): <span id="chainStretchWidget-xVal"></span>
+                        <input type="range" id="chainStretchWidget-x" min="0.3" max="2" step="0.05" value="1">
+                    </label>
+                </div>
+                <canvas id="chainStretchWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="chainStretchWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('chainStretchWidget', { xmin: 0, xmax: 10, ymin: -0.5, ymax: 2.5 });
+                const $ = V.$, ctx = V.ctx;
+                const g = x => x * x, gp = x => 2 * x, f = Math.sin, fp = Math.cos;
+                function draw() {
+                    const c = V.colors();
+                    V.clear();
+                    [0, 1, 2].forEach(function (level) {
+                        ctx.strokeStyle = c.grid; ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(V.px(0), V.py(level)); ctx.lineTo(V.px(10), V.py(level)); ctx.stroke();
+                    });
+                    const x = parseFloat($('x').value);
+                    $('xVal').textContent = x.toFixed(2);
+                    const u = g(x), gpx = gp(x), y = f(u), fpu = fp(u);
+                    const px0 = 5, bracketHalf = 0.6, dxSample = 0.05;
+                    const du = gpx * dxSample, dyv = fpu * du;
+                    function bracket(level, color) {
+                        ctx.strokeStyle = color; ctx.lineWidth = 5; ctx.globalAlpha = 0.6;
+                        ctx.beginPath(); ctx.moveTo(V.px(px0 - bracketHalf), V.py(level)); ctx.lineTo(V.px(px0 + bracketHalf), V.py(level)); ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                    bracket(0, c.curve); bracket(1, c.accent); bracket(2, c.curve);
+                    V.dot(px0, 0, c.text, 4); V.dot(px0, 1, c.text, 4); V.dot(px0, 2, c.text, 4);
+                    V.arrow(px0, 0.15, 0, 0.7, c.axis);
+                    V.arrow(px0, 1.15, 0, 0.7, c.axis);
+                    ctx.fillStyle = c.text; ctx.font = '13px sans-serif';
+                    ctx.fillText('g', V.px(px0) + 8, V.py(0.5));
+                    ctx.fillText('f', V.px(px0) + 8, V.py(1.5));
+                    ctx.fillText('x=' + x.toFixed(2) + '   dx=' + dxSample.toFixed(2), V.px(px0 - bracketHalf), V.py(0) - 12);
+                    ctx.fillText('u=g(x)=' + u.toFixed(3) + '   du=g′(x)·dx=' + du.toFixed(4), V.px(px0 - bracketHalf), V.py(1) - 12);
+                    ctx.fillText('y=f(u)=' + y.toFixed(3) + '   dy=f′(u)·du=' + dyv.toFixed(5), V.px(px0 - bracketHalf), V.py(2) - 12);
+                    $('readout').textContent = 'g′(x)=' + gpx.toFixed(4) + '   |   f′(u)=' + fpu.toFixed(4)
+                        + '   |   (f∘g)′(x) = f′(g(x))·g′(x) = ' + (fpu * gpx).toFixed(4)
+                        + '   |   check: dy/dx = ' + (dyv / dxSample).toFixed(4) + ' — matches exactly';
+                }
+                V.bind(['x'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Worked example:</strong> \(\dfrac{d}{dx}\big[\sin(x^2)\big]\): outer \(f=\sin\), inner \(g(x)=x^2\) (derivative \(2x\), from the Rule 2 building block) \(\Rightarrow \cos(x^2)\cdot2x\).
+            </div>
+
+            <h4 id="composite-example">All Six Rules at Once</h4>
+            <p>Differentiate \(\displaystyle h(x) = \frac{4x^2\sin(3x+1)}{5+\cos x}\).</p>
+            <div class="example">
+                <strong>Step 1 — identify the outer structure: a quotient.</strong> \(h = N/D\) with \(N(x)=4x^2\sin(3x+1)\), \(D(x)=5+\cos x\). <em>(Quotient Rule coming.)</em><br>
+                <strong>Step 2 — differentiate \(D\): sum + a known standard derivative.</strong> \(D'(x) = \underbrace{0}_{\text{Constant Rule on }5} + (-\sin x) = -\sin x\). <em>(Constant Rule, Sum Rule.)</em><br>
+                <strong>Step 3 — differentiate \(N\): constant multiple, then product, then chain.</strong> \(N(x) = 4\cdot\big[x^2\sin(3x+1)\big]\) <em>(Constant Multiple Rule pulls the 4 out)</em>. Inside, \(x^2\sin(3x+1)\) is a product: \(\dfrac{d}{dx}\big[x^2\sin(3x+1)\big] = 2x\sin(3x+1) + x^2\cdot\cos(3x+1)\cdot3\) <em>(Product Rule; the factor of 3 on the last term is the Chain Rule applied to \(\sin(3x+1)\)).</em> So:
+                \[N'(x) = 4\big[2x\sin(3x+1)+3x^2\cos(3x+1)\big] = 8x\sin(3x+1)+12x^2\cos(3x+1)\]
+                <strong>Step 4 — assemble with the Quotient Rule.</strong> \(h'(x) = \dfrac{N'(x)D(x) - N(x)D'(x)}{D(x)^2}\). Since \(D'(x)=-\sin x\), the term \(-N(x)D'(x)\) becomes \(+N(x)\sin x\):
+                \[h'(x) = \frac{\big[8x\sin(3x+1)+12x^2\cos(3x+1)\big](5+\cos x) \;+\; 4x^2\sin(3x+1)\sin x}{(5+\cos x)^2}\]
+                <strong>Rules used, in order:</strong> Quotient (Step 1/4) → Constant + Sum (Step 2) → Constant Multiple + Product + Chain (Step 3).
+            </div>
+
+            <h4 id="reference-table">Quick Reference: All Derivative Rules</h4>
+            <p>A capstone reference table — the six general rules above (stated, not re-derived here) plus the standard derivatives of the elementary functions, each given in both its "basic" form and its Chain-Rule form for a composed inner function \(u=u(x)\).</p>
+
+            <h5 style="color:var(--dark); margin:20px 0 10px 0;">General Derivative Rules</h5>
+            <table>
+                <thead><tr><th>Rule</th><th>Formula</th></tr></thead>
+                <tbody>
+                    <tr><td>Constant Rule</td><td>\(\dfrac{d}{dx}[c] = 0\)</td></tr>
+                    <tr><td>Constant Multiple Rule</td><td>\(\dfrac{d}{dx}[cf(x)] = cf'(x)\)</td></tr>
+                    <tr><td>Sum Rule</td><td>\(\dfrac{d}{dx}[f(x)+g(x)] = f'(x)+g'(x)\)</td></tr>
+                    <tr><td>Difference Rule</td><td>\(\dfrac{d}{dx}[f(x)-g(x)] = f'(x)-g'(x)\)</td></tr>
+                    <tr><td>Product Rule</td><td>\(\dfrac{d}{dx}[f(x)g(x)] = f'(x)g(x)+f(x)g'(x)\)</td></tr>
+                    <tr><td>Quotient Rule</td><td>\(\dfrac{d}{dx}\!\left[\dfrac{f(x)}{g(x)}\right] = \dfrac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}\)</td></tr>
+                    <tr><td>Chain Rule</td><td>\(\dfrac{d}{dx}[f(g(x))] = f'(g(x))\cdot g'(x)\)</td></tr>
+                </tbody>
+            </table>
+
+            <h5 style="color:var(--dark); margin:20px 0 10px 0;">Derivative Rules for Particular Functions</h5>
+            <table>
+                <thead><tr><th>Function</th><th>Basic Rule</th><th>Chain Rule (with \(u=u(x)\))</th></tr></thead>
+                <tbody>
+                    <tr><td>Power</td><td>\(\dfrac{d}{dx}[x^n]=nx^{n-1}\)</td><td>\(\dfrac{d}{dx}[u^n]=nu^{n-1}u'\)</td></tr>
+                    <tr><td>Sine</td><td>\(\dfrac{d}{dx}[\sin x]=\cos x\)</td><td>\(\dfrac{d}{dx}[\sin u]=\cos u\cdot u'\)</td></tr>
+                    <tr><td>Cosine</td><td>\(\dfrac{d}{dx}[\cos x]=-\sin x\)</td><td>\(\dfrac{d}{dx}[\cos u]=-\sin u\cdot u'\)</td></tr>
+                    <tr><td>Tangent</td><td>\(\dfrac{d}{dx}[\tan x]=\sec^2x\)</td><td>\(\dfrac{d}{dx}[\tan u]=\sec^2u\cdot u'\)</td></tr>
+                    <tr><td>Cosecant</td><td>\(\dfrac{d}{dx}[\csc x]=-\csc x\cot x\)</td><td>\(\dfrac{d}{dx}[\csc u]=-\csc u\cot u\cdot u'\)</td></tr>
+                    <tr><td>Secant</td><td>\(\dfrac{d}{dx}[\sec x]=\sec x\tan x\)</td><td>\(\dfrac{d}{dx}[\sec u]=\sec u\tan u\cdot u'\)</td></tr>
+                    <tr><td>Cotangent</td><td>\(\dfrac{d}{dx}[\cot x]=-\csc^2x\)</td><td>\(\dfrac{d}{dx}[\cot u]=-\csc^2u\cdot u'\)</td></tr>
+                    <tr><td>Arcsine</td><td>\(\dfrac{d}{dx}[\sin^{-1}x]=\dfrac{1}{\sqrt{1-x^2}}\)</td><td>\(\dfrac{d}{dx}[\sin^{-1}u]=\dfrac{u'}{\sqrt{1-u^2}}\)</td></tr>
+                    <tr><td>Arccosine</td><td>\(\dfrac{d}{dx}[\cos^{-1}x]=\dfrac{-1}{\sqrt{1-x^2}}\)</td><td>\(\dfrac{d}{dx}[\cos^{-1}u]=\dfrac{-u'}{\sqrt{1-u^2}}\)</td></tr>
+                    <tr><td>Arctangent</td><td>\(\dfrac{d}{dx}[\tan^{-1}x]=\dfrac{1}{1+x^2}\)</td><td>\(\dfrac{d}{dx}[\tan^{-1}u]=\dfrac{u'}{1+u^2}\)</td></tr>
+                    <tr><td>Arccosecant</td><td>\(\dfrac{d}{dx}[\csc^{-1}x]=\dfrac{-1}{|x|\sqrt{x^2-1}}\)</td><td>\(\dfrac{d}{dx}[\csc^{-1}u]=\dfrac{-u'}{|u|\sqrt{u^2-1}}\)</td></tr>
+                    <tr><td>Arcsecant</td><td>\(\dfrac{d}{dx}[\sec^{-1}x]=\dfrac{1}{|x|\sqrt{x^2-1}}\)</td><td>\(\dfrac{d}{dx}[\sec^{-1}u]=\dfrac{u'}{|u|\sqrt{u^2-1}}\)</td></tr>
+                    <tr><td>Arccotangent</td><td>\(\dfrac{d}{dx}[\cot^{-1}x]=\dfrac{-1}{1+x^2}\)</td><td>\(\dfrac{d}{dx}[\cot^{-1}u]=\dfrac{-u'}{1+u^2}\)</td></tr>
+                    <tr><td>Exponential (base e)</td><td>\(\dfrac{d}{dx}[e^x]=e^x\)</td><td>\(\dfrac{d}{dx}[e^u]=e^u\cdot u'\)</td></tr>
+                    <tr><td>Exponential (base a)</td><td>\(\dfrac{d}{dx}[a^x]=a^x\ln a\)</td><td>\(\dfrac{d}{dx}[a^u]=a^u\ln a\cdot u'\)</td></tr>
+                    <tr><td>Natural Logarithm</td><td>\(\dfrac{d}{dx}[\ln x]=\dfrac1x\)</td><td>\(\dfrac{d}{dx}[\ln u]=\dfrac{u'}{u}\)</td></tr>
+                    <tr><td>Logarithm (base a)</td><td>\(\dfrac{d}{dx}[\log_a x]=\dfrac{1}{x\ln a}\)</td><td>\(\dfrac{d}{dx}[\log_a u]=\dfrac{u'}{u\ln a}\)</td></tr>
+                </tbody>
+            </table>
+
+            <div class="viz-widget" id="ruleVerifyWidget">
+                <div class="viz-controls">
+                    <label>rule (with u=x², v=sin x): <span id="ruleVerifyWidget-modeVal"></span>
+                        <input type="range" id="ruleVerifyWidget-mode" min="0" max="2" step="1" value="1">
+                    </label>
+                </div>
+                <canvas id="ruleVerifyWidget-canvas" width="820" height="420"></canvas>
+                <p class="viz-readout" id="ruleVerifyWidget-readout"></p>
+            </div>
+            <script>
+            (function () {
+                const V = VizCore('ruleVerifyWidget', { xmin: -4, xmax: 4, ymin: -8, ymax: 8 });
+                const $ = V.$;
+                const u = x => x * x, up = x => 2 * x, v = Math.sin, vp = Math.cos;
+                const modes = ['Sum: u+v', 'Product: u·v', 'Quotient: u/v'];
+                function draw() {
+                    const c = V.colors();
+                    V.clear(); V.drawAxes(c);
+                    const mode = parseInt($('mode').value);
+                    $('modeVal').textContent = modes[mode];
+                    let F, ruleDeriv;
+                    if (mode === 0) { F = x => u(x) + v(x); ruleDeriv = x => up(x) + vp(x); }
+                    else if (mode === 1) { F = x => u(x) * v(x); ruleDeriv = x => up(x) * v(x) + u(x) * vp(x); }
+                    else { F = x => u(x) / v(x); ruleDeriv = x => (up(x) * v(x) - u(x) * vp(x)) / (v(x) * v(x)); }
+                    const h = 1e-5;
+                    const numDeriv = x => (F(x + h) - F(x - h)) / (2 * h);
+                    V.plot(F, c.curve);
+                    V.plot(numDeriv, c.accent, [6, 6]);
+                    let maxDiff = 0;
+                    for (let xx = V.xmin + 0.05; xx < V.xmax; xx += 0.05) {
+                        if (Math.abs(v(xx)) < 0.05) continue; // skip near-asymptote noise for the quotient case
+                        const d = Math.abs(numDeriv(xx) - ruleDeriv(xx));
+                        if (isFinite(d) && d > maxDiff) maxDiff = d;
+                    }
+                    $('readout').textContent = 'u=x², v=sin x   |   solid = F(x), dashed = numeric F′(x)   |   max|numeric − rule-predicted| ≈ '
+                        + maxDiff.toExponential(2) + '  ✓ rule confirmed';
+                }
+                V.bind(['mode'], draw);
+            })();
+            </script>
+
+            <div class="example">
+                <strong>Real-World Applications:</strong>
+                <ul>
+                    <li><strong>Product Rule:</strong> the variable-mass rocket equation and kinetic energy of a growing system both differentiate a product of two changing quantities.</li>
+                    <li><strong>Quotient Rule:</strong> average cost \(=\) total cost \(/\) quantity — marginal-average-cost relationships in economics differentiate a quotient.</li>
+                    <li><strong>Chain Rule:</strong> unit conversions and related-rates problems (the sliding ladder in <a href="Calculus.html#derivatives">Calculus § Derivatives</a>) are chain-rule compositions in disguise.</li>
+                </ul>
+            </div>
+
+            <p><strong>Exercises:</strong></p>
+            <ol>
+                <li>Differentiate \(f(x) = 42\).
+                    <details><summary>Solution</summary>Constant Rule: \(f'(x)=0\).</details>
+                </li>
+                <li>Differentiate \(f(x) = 5x^2\) (use the Rule 2 building block \(\frac{d}{dx}x^2=2x\)).
+                    <details><summary>Solution</summary>Constant Multiple Rule: \(f'(x) = 5\cdot2x = 10x\).</details>
+                </li>
+                <li>Differentiate \(f(x) = x^2 + \sin x\).
+                    <details><summary>Solution</summary>Sum Rule: \(f'(x) = 2x + \cos x\).</details>
+                </li>
+                <li>Differentiate \(f(x) = (3x+1)(x^2-2)\).
+                    <details><summary>Solution</summary>Product Rule: \(f'(x) = 3(x^2-2) + (3x+1)(2x) = 3x^2-6+6x^2+2x = 9x^2+2x-6\).</details>
+                </li>
+                <li>Differentiate \(f(x) = \cos(x^3+2x)\).
+                    <details><summary>Solution</summary>Chain Rule: \(f'(x) = -\sin(x^3+2x)\cdot(3x^2+2)\).</details>
+                </li>
+            </ol>
+
+            <hr style="height:2px; background:linear-gradient(to right, var(--primary), var(--secondary)); margin:40px 0; border:none;">
+        </section>
+
+        <!-- ============ RESEARCH LEVEL ============ -->
+        <section id="research">
+            <h2>Research Level</h2>
+
+            <h3 id="differentials-rigorous">The Rigor Behind \(dx\)</h3>
+            <p>The Advanced section resolved the "cross-multiplication" question at the level physicists need. Here is how it resolves completely, in two different rigorous foundations.</p>
+
+            <h4>The differential as a linear map</h4>
+            <p>The modern definition sidesteps "infinitesimals" entirely. For \(f:\mathbb{R}\to\mathbb{R}\) differentiable at \(a\), the differential is the <strong>linear map</strong>
+            \[df_a : \mathbb{R}\to\mathbb{R}, \qquad df_a(h) = f'(a)\cdot h\]
+            Here \(dx\) is reinterpreted as the identity map \(dx(h)=h\) — so \(df_a = f'(a)\cdot dx\) is literally an equation between two functions (both taking a "direction" \(h\) as input), evaluated identically for every \(h\). "Multiplying by \(dx\)" is really just composing with, or evaluating, this linear map — no infinitesimal quantities are ever invoked. This generalizes directly to several variables and to the Fréchet derivative on normed vector spaces, where \(df_a\) is a linear map \(\mathbb{R}^n\to\mathbb{R}^m\) and the chain rule becomes literal <em>composition of linear maps</em> (matrix multiplication of Jacobians) — see <a href="AdvancedCalculus.html">Advanced Calculus</a> for the full normed-space treatment, where exactly this differential is built up from the ground rules of a normed vector space.</p>
+
+            <h4>Nonstandard analysis: \(dx\) as a genuine infinitesimal</h4>
+            <p>A second, entirely different foundation makes the physicist's intuition <em>literally</em> true rather than merely evocative. Abraham Robinson's <a href="https://en.wikipedia.org/wiki/Non-standard_analysis" target="_blank">nonstandard analysis</a> extends \(\mathbb{R}\) to the hyperreal numbers \({}^*\mathbb{R}\), which contain genuine infinitesimals — nonzero numbers smaller in absolute value than every positive real. In this system, \(dx\) can be an actual infinitesimal, \(dy/dx\) is an honest-to-goodness ratio of two hyperreal numbers, and the derivative \(f'(x)\) is recovered by taking the "standard part" (the unique ordinary real number infinitely close to the hyperreal ratio). Every classical theorem — including all six rules proved above — has a nonstandard proof that manipulates \(dx\) exactly as Leibniz originally imagined, with the rigor supplied by the construction of \({}^*\mathbb{R}\) rather than by \(\varepsilon\text{-}\delta\) limits.</p>
+            <p>A related but distinct approach, <strong>synthetic differential geometry</strong> (smooth infinitesimal analysis), builds infinitesimals into the logical foundations of geometry itself, at the cost of using intuitionistic (non-classical) logic. It is further reading, not covered here.</p>
+
+            <h4>Why both resolve the "cancellation" question</h4>
+            <p>In the linear-map picture, \(\frac{dy}{du}\cdot\frac{du}{dx}=\frac{dy}{dx}\) is composition of linear maps, associative by definition — there was never a fraction to cancel, so nothing needs justifying beyond function composition. In the hyperreal picture, \(dy,du,dx\) are actual numbers and the "cancellation" is literal algebra on hyperreals, valid because hyperreal arithmetic obeys the same field axioms as \(\mathbb{R}\). Two completely different foundations, same theorem, same answer — which is itself evidence that Leibniz's 350-year-old notation was tracking something real.</p>
+        </section>
+
+        <!-- ============ SOURCES & REFERENCES ============ -->
+        <section id="sources">
+            <h2>Sources &amp; References</h2>
+
+            <h3>Wikipedia</h3>
+            <ul>
+                <li><a href="https://en.wikipedia.org/wiki/Limit_of_a_function" target="_blank">Limit of a function - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Squeeze_theorem" target="_blank">Squeeze theorem - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/E_(mathematical_constant)" target="_blank">e (mathematical constant) - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Differential_(mathematics)" target="_blank">Differential (mathematics) - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Product_rule" target="_blank">Product rule - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Quotient_rule" target="_blank">Quotient rule - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Chain_rule" target="_blank">Chain rule - Wikipedia</a></li>
+                <li><a href="https://en.wikipedia.org/wiki/Non-standard_analysis" target="_blank">Non-standard analysis - Wikipedia</a></li>
+            </ul>
+
+            <h3>Academic Papers (arXiv)</h3>
+            <ul>
+                <li><a href="https://arxiv.org/search/?query=nonstandard+analysis+calculus&searchtype=all" target="_blank">Nonstandard Analysis &amp; Calculus - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=synthetic+differential+geometry&searchtype=all" target="_blank">Synthetic Differential Geometry - arXiv Search</a></li>
+                <li><a href="https://arxiv.org/search/?query=history+of+the+derivative+notation&searchtype=all" target="_blank">History of Calculus Notation - arXiv Search</a></li>
+            </ul>
+
+            <h3>Textbooks &amp; Bibliography</h3>
+            <ul>
+                <li><strong>Calculus</strong> - Michael Spivak (1967)</li>
+                <li><strong>Calculus, Volume 1</strong> - Tom M. Apostol (1967)</li>
+                <li><strong>Elementary Calculus: An Infinitesimal Approach</strong> - H. Jerome Keisler (2012)</li>
+                <li><strong>Calculus: Early Transcendentals</strong> - James Stewart (2015)</li>
+                <li><strong>The History of the Calculus and Its Conceptual Development</strong> - Carl B. Boyer (1949)</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><a href="Calculus.html">← Back to Calculus</a> &nbsp;|&nbsp; <a href="index.html">Math Hub</a></p>
+            <p>Calculus in Depth: Worked Examples &amp; Derivative Rules | Mathematics Learning Platform</p>
+            <p>Built with MathJax and Mermaid</p>
+        </footer>
+    </div>
+
+    <script>
+        // ============ MODULAR: Theme Toggle Component ============
+        const ThemeToggle = (() => {
+            const STORAGE_KEY = 'theme-preference';
+            const LIGHT = 'light';
+            const DARK = 'dark';
+
+            const getSystemPreference = () => {
+                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (prefersDark) return DARK;
+                if (prefersLight) return LIGHT;
+                return DARK;
+            };
+
+            const getPreference = () => {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === LIGHT || stored === DARK) return stored;
+                return getSystemPreference();
+            };
+
+            const setTheme = (theme) => {
+                const validTheme = (theme === LIGHT) ? LIGHT : DARK;
+                document.documentElement.setAttribute('data-theme', validTheme);
+                localStorage.setItem(STORAGE_KEY, validTheme);
+                updateButton(validTheme);
+            };
+
+            const updateButton = (theme) => {
+                const btn = document.getElementById('themeToggle');
+                if (btn) btn.textContent = theme === DARK ? '☀️' : '🌙';
+            };
+
+            const toggle = () => {
+                const current = document.documentElement.getAttribute('data-theme') || getPreference();
+                const next = current === DARK ? LIGHT : DARK;
+                setTheme(next);
+            };
+
+            const init = () => {
+                const preference = getPreference();
+                setTheme(preference);
+                document.getElementById('themeToggle')?.addEventListener('click', toggle);
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem(STORAGE_KEY)) {
+                        setTheme(e.matches ? DARK : LIGHT);
+                    }
+                });
+            };
+
+            return { init };
+        })();
+
+        ThemeToggle.init();
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

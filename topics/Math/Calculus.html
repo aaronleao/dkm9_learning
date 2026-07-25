@@ -136,6 +136,10 @@
             </ul>
         </div>
 
+        <div class="example">
+            <strong>Want extremely detailed, step-by-step worked examples?</strong> See <a href="CalculusInDepthExamples.html">Calculus in Depth: Worked Examples &amp; Derivative Rules</a> — five fully worked limit examples (including a geometric proof that \(\sin x/x\to1\)), a ludic derivation of Euler's number \(e\), and every differentiation rule proved from first principles with a geometric picture.
+        </div>
+
         <!-- MODULAR: Canvas Viz Core (VIZ-0 factory form; see topics/COMPONENTS.md) -->
         <script>
         function VizCore(widgetId, opts) {
@@ -226,6 +230,7 @@
             <h3 id="limits">Limits</h3>
             <p><strong>Intuition:</strong> A <a href="https://en.wikipedia.org/wiki/Limit_(mathematics)" target="_blank" style="color: var(--primary);">limit</a> asks: "what value is \(f(x)\) <em>heading toward</em> as \(x\) approaches \(c\)?" — regardless of what happens exactly at \(c\). It is the tool that turns "almost" into precise mathematics, and all of calculus is built on it.</p>
             <p><strong>Formal definition:</strong> \(\lim_{x \to c} f(x) = L\) means: \(\forall \varepsilon > 0\ \exists \delta > 0\) such that \(0 < |x - c| < \delta \Rightarrow |f(x) - L| < \varepsilon\). (Note \(0 < |x - c|\): the point \(c\) itself is excluded — limits don't care about \(f(c)\).)</p>
+            <p>For five more limits worked in complete step-by-step detail — including the classic unit-circle proof that \(\lim_{x\to0}\sin x/x=1\) — see <a href="CalculusInDepthExamples.html#limit-linear" style="color: var(--primary);">Calculus in Depth § Limit Examples</a>.</p>
 
             <p><strong>Interactive: a limit existing where the function doesn't.</strong> \(f(x) = \frac{x^2 - 1}{x - 1}\) is undefined at \(x = 1\) (hole), yet the limit there is 2 — the ε-δ game still works because the definition never asks about \(x = 1\) itself.</p>
             <div class="viz-widget" id="limWidget">
@@ -328,6 +333,7 @@
             <h3 id="derivatives">Derivatives</h3>
             <p><strong>Intuition:</strong> the <a href="https://en.wikipedia.org/wiki/Derivative" target="_blank" style="color: var(--primary);">derivative</a> \(f'(a)\) is the slope of the tangent line at \(a\) — the limit of secant slopes (see the animated secant widget in <a href="Functions.html#differentiable-functions" style="color: var(--primary);">Functions § Differentiable</a>):</p>
             <p>\[f'(a) = \lim_{h \to 0} \frac{f(a + h) - f(a)}{h}\]</p>
+            <p>For a full derivation of what the \(d/dx\) notation actually means (and why "multiplying both sides by \(dx\)" is legitimate) plus every differentiation rule proved from this definition with nothing skipped, see <a href="CalculusInDepthExamples.html#dx-notation" style="color: var(--primary);">Calculus in Depth § Notation &amp; Derivative Rules</a>.</p>
 
             <p><strong>Interactive: a function and its derivative, together.</strong> The dashed green curve is the numerically computed \(f'\); the tangent line at the slider point has exactly that slope. Notice: \(f' = 0\) exactly where \(f\) has flat spots.</p>
             <div class="viz-widget" id="derivWidget">
