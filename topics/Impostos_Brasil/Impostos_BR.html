@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Fábrica - Calculadora de Impostos</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; color: #333; text-align: center; padding: 20px; }
+        .container { background: white; max-width: 600px; margin: auto; padding: 25px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        select, input, button { width: 90%; padding: 10px; margin: 10px 0 20px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; box-sizing: border-box; }
+        button { background-color: #0056b3; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 18px; }
+        button:hover { background-color: #004494; }
+        label { font-weight: bold; display: block; text-align: left; margin-left: 5%; }
+        .link-ajuda { font-weight: normal; font-size: 12px; color: #0056b3; text-decoration: underline; }
+        
+        /* Estilos dos Balões de Informação */
+        .info-icon { cursor: pointer; font-size: 13px; margin-left: 5px; color: #0056b3; font-weight: normal; text-decoration: underline; }
+        .balao-info { display: none; background-color: #e2e8f0; border: 1px solid #cbd5e1; padding: 15px; margin: 0 5% 15px 5%; border-radius: 5px; font-size: 13px; text-align: left; line-height: 1.5; color: #334155; }
+        .balao-info strong { color: #0f172a; display: block; margin-top: 10px; }
+        .balao-info strong:first-child { margin-top: 0; }
+
+        .result { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 5px; display: none; text-align: left; }
+        .destaque { color: #d9534f; font-size: 16px; margin-top: 5px; font-weight: bold; }
+        .calculo-math { font-size: 13px; color: #555; background: #fdfdfd; padding: 8px; border-left: 3px solid #ccc; line-height: 1.6; margin-bottom: 5px; }
+        .credito-math { color: #28a745; font-style: italic; }
+        .total-geral { background-color: #333; color: #fff; padding: 15px; border-radius: 5px; font-size: 20px; margin-top: 15px; text-align: center; }
+        .aviso { font-size: 11px; color: #777; text-align: justify; margin-top: 15px; padding: 10px; border-top: 1px dashed #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🏭 Minha Primeira Fábrica</h2>
+        
+        <label for="produto">
+            1. O que vamos fabricar? <br>
+            <a href="https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/legislacao/tipi-tabela-de-incidencia-do-imposto-sobre-produtos-industrializados" target="_blank" class="link-ajuda">(Tabela TIPI Oficial)</a>
+        </label>
+        <select id="produto">
+            <option value="0">🍚 Arroz (Cesta Básica) - Alíquota IPI: 0%</option>
+            <option value="0.05">🧱 Tijolos (Construção) - Alíquota IPI: 5%</option>
+            <option value="0.15">📱 Smartphones (Eletrônicos) - Alíquota IPI: 15%</option>
+            <option value="0.30">🧴 Perfumes (Cosméticos) - Alíquota IPI: 30%</option>
+            <option value="3.00">🚬 Cigarros (Fumo) - Alíquota IPI: 300%</option>
+        </select>
+
+        <label for="regime">
+            2. Regime Tributário: <br>
+            <span class="info-icon" onclick="toggleBalao('info-regime')">ℹ️ Lucro Real vs Presumido</span> | 
+            <span class="info-icon" onclick="toggleBalao('info-cumulativo')">ℹ️ Cumulativo vs Não Cumulativo</span>
+        </label>
+        
+        <!-- Balão 1: Lucro Real vs Presumido -->
+        <div id="info-regime" class="balao-info">
+            <strong>Quando a escolha é feita?</strong>
+            Uma vez por ano (janeiro). A decisão é irrevogável para todo o ano civil.
+            
+            <strong>Lucro Presumido</strong>
+            • <em>Obrigatoriedade:</em> Permitido para empresas faturando até R$ 78 milhões/ano.<br>
+            • <em>Como funciona:</em> A Receita Federal presume a sua margem de lucro com base na atividade, e não sobre o balanço real.
+            
+            <strong>Lucro Real</strong>
+            • <em>Obrigatoriedade:</em> Obrigatório para faturamento acima de R$ 78 milhões/ano ou setor financeiro.<br>
+            • <em>Como funciona:</em> Os impostos incidem sobre o lucro líquido contábil efetivo (Receitas − Despesas).
+        </div>
+
+        <!-- Balão 2: Cumulativo vs Não Cumulativo -->
+        <div id="info-cumulativo" class="balao-info">
+            <strong>Regime Cumulativo (Efeito Cascata)</strong>
+            • <em>Onde ocorre:</em> PIS e COFINS no Lucro Presumido.<br>
+            • <em>Como funciona:</em> O imposto é cobrado sobre o <strong>valor total da venda</strong> em todas as etapas (Indústria → Atacado → Varejo), sem descontar nada. O imposto acumula no preço final.<br>
+            • <em>Exemplo:</em> Você compra madeira por R$ 100, fabrica uma mesa e vende por R$ 200. Você paga imposto sobre os R$ 200 totais.
+
+            <strong>Regime Não Cumulativo (Sistema de Créditos)</strong>
+            • <em>Onde ocorre:</em> PIS e COFINS no Lucro Real (e regra padrão do ICMS/IPI).<br>
+            • <em>Como funciona:</em> Você só paga imposto sobre o <strong>valor que você agregou</strong> ao produto. O governo permite abater o imposto que já foi pago pelo seu fornecedor na compra da matéria-prima.<br>
+            • <em>Exemplo:</em> Você compra madeira por R$ 100 (já com R$ 10 de imposto pago na nota anterior). Ao vender a mesa por R$ 200, o imposto bruto seria R$ 20, mas você desconta os R$ 10 de crédito. Paga apenas R$ 10 de diferença.
+        </div>
+
+        <select id="regime">
+            <option value="presumido">Lucro Presumido (Cumulativo - PIS 0,65% / COFINS 3%)</option>
+            <option value="real">Lucro Real (Não Cumulativo - PIS 1,65% / COFINS 7,6%)</option>
+        </select>
+
+        <label for="custo">3. Custo de Produção por unidade (R$):</label>
+        <input type="number" id="custo" value="50.00" min="0" step="0.01">
+
+        <label for="lucro">4. Lucro Desejado por unidade (R$):</label>
+        <input type="number" id="lucro" value="50.00" min="0" step="0.01">
+
+        <label for="quantidade">5. Quantidade vendida:</label>
+        <input type="number" id="quantidade" value="10" min="1">
+
+        <label for="origem">6. Estado de Origem (Sua Fábrica):</label>
+        <select id="origem">
+            <option value="SP">São Paulo (SP)</option>
+            <option value="RJ">Rio de Janeiro (RJ)</option>
+            <option value="MG">Minas Gerais (MG)</option>
+            <option value="RS">Rio Grande do Sul (RS)</option>
+        </select>
+
+        <label for="destino">7. Estado de Destino (Seu Cliente):</label>
+        <select id="destino">
+            <option value="BA">Bahia (BA)</option>
+            <option value="SP">São Paulo (SP)</option>
+            <option value="RJ">Rio de Janeiro (RJ)</option>
+            <option value="MG">Minas Gerais (MG)</option>
+        </select>
+
+        <button onclick="calcularImpostos()">Calcular Preço Final e Impostos</button>
+
+        <div id="resultado" class="result">
+            <h3 style="text-align: center;">📊 Resumo da Nota Fiscal</h3>
+            
+            <p><strong>Custo Total:</strong> R$ <span id="res-custo">0.00</span></p>
+            <p><strong>Lucro Total:</strong> R$ <span id="res-lucro">0.00</span></p>
+            <p><strong>Base de Cálculo (Custo + Lucro):</strong> R$ <span id="res-base">0.00</span></p>
+            
+            <hr>
+            
+            <p><strong>IPI (<span id="res-aliquota-ipi">0</span>%)</strong></p>
+            <div class="calculo-math">IPI = R$ <span id="math-ipi-base">0.00</span> × <span id="math-ipi-aliq">0</span>%</div>
+            <p class="destaque">Valor: R$ <span id="res-ipi">0.00</span></p>
+            
+            <hr>
+
+            <p><strong>ICMS Interestadual (<span id="res-aliquota-icms">0</span>%)</strong></p>
+            <div class="calculo-math">ICMS = R$ <span id="math-icms-base">0.00</span> × <span id="math-icms-aliq">0</span>%</div>
+            <p class="destaque">Valor: R$ <span id="res-icms">0.00</span></p>
+
+            <hr>
+
+            <p><strong>PIS (<span id="res-aliquota-pis">0</span>%) e COFINS (<span id="res-aliquota-cofins">0</span>%)</strong> - <span id="res-regime-nome"></span></p>
+            <div class="calculo-math">
+                PIS Bruto = R$ <span id="math-pis-base">0.00</span> × <span id="math-pis-aliq">0</span>% = R$ <span id="math-pis-bruto">0.00</span><br>
+                COFINS Bruto = R$ <span id="math-cofins-base">0.00</span> × <span id="math-cofins-aliq">0</span>% = R$ <span id="math-cofins-bruto">0.00</span><br>
+                <span id="math-creditos" class="credito-math"></span>
+            </div>
+            <p class="destaque">Valor PIS: R$ <span id="res-pis">0.00</span></p>
+            <p class="destaque">Valor COFINS: R$ <span id="res-cofins">0.00</span></p>
+
+            <div class="total-geral">
+                Valor Final de Venda:<br>
+                <strong>R$ <span id="res-valor-final">0.00</span></strong><br>
+            </div>
+            <div class="aviso">Nota: Cálculo de impostos "por fora" da base para fins didáticos.</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleBalao(id) {
+            const balaoAlvo = document.getElementById(id);
+            const estaVisivel = balaoAlvo.style.display === 'block';
+            
+            // Oculta todos os balões primeiro
+            document.querySelectorAll('.balao-info').forEach(b => b.style.display = 'none');
+            
+            // Se não estava visível, exibe o balão clicado
+            if (!estaVisivel) {
+                balaoAlvo.style.display = 'block';
+            }
+        }
+
+        function calcularImpostos() {
+            const produto = document.getElementById('produto');
+            const aliquotaIPI = parseFloat(produto.value);
+            const regime = document.getElementById('regime').value;
+            const custoUnit = parseFloat(document.getElementById('custo').value);
+            const lucroUnit = parseFloat(document.getElementById('lucro').value);
+            const quantidade = parseInt(document.getElementById('quantidade').value);
+            const origem = document.getElementById('origem').value;
+            const destino = document.getElementById('destino').value;
+
+            if (isNaN(custoUnit) || isNaN(lucroUnit) || isNaN(quantidade) || custoUnit < 0 || lucroUnit < 0 || quantidade <= 0) return alert("Insira valores válidos.");
+
+            const formataMoeda = (valor) => valor.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const custoTotal = custoUnit * quantidade;
+            const lucroTotal = lucroUnit * quantidade;
+            const baseCalculo = custoTotal + lucroTotal; 
+
+            const ipiDevido = baseCalculo * aliquotaIPI;
+
+            const estadosSulSudeste = ['SP', 'RJ', 'MG', 'RS'];
+            let aliquotaICMS = (origem === destino) ? 0.18 : (estadosSulSudeste.includes(origem) && !estadosSulSudeste.includes(destino)) ? 0.07 : 0.12;
+            const icmsDevido = baseCalculo * aliquotaICMS;
+
+            let aliquotaPIS = regime === 'presumido' ? 0.0065 : 0.0165;
+            let aliquotaCOFINS = regime === 'presumido' ? 0.03 : 0.076;
+            
+            let pisBruto = baseCalculo * aliquotaPIS;
+            let cofinsBruto = baseCalculo * aliquotaCOFINS;
+            
+            let pisDevido = pisBruto;
+            let cofinsDevido = cofinsBruto;
+            let textoCredito = "Cumulativo: Sem abatimento de custo.";
+
+            if (regime === 'real') {
+                let creditoPIS = custoTotal * aliquotaPIS;
+                let creditoCOFINS = custoTotal * aliquotaCOFINS;
+                
+                pisDevido = pisBruto - creditoPIS;
+                cofinsDevido = cofinsBruto - creditoCOFINS;
+                
+                textoCredito = `Crédito PIS (Custo × ${aliquotaPIS*100}%) = - R$ ${formataMoeda(creditoPIS)}<br>
+                                Crédito COFINS (Custo × ${aliquotaCOFINS*100}%) = - R$ ${formataMoeda(creditoCOFINS)}`;
+            }
+
+            const totalImpostos = ipiDevido + icmsDevido + pisDevido + cofinsDevido;
+            const valorFinalNota = baseCalculo + totalImpostos;
+
+            document.getElementById('res-custo').innerText = formataMoeda(custoTotal);
+            document.getElementById('res-lucro').innerText = formataMoeda(lucroTotal);
+            document.getElementById('res-base').innerText = formataMoeda(baseCalculo);
+
+            document.getElementById('res-aliquota-ipi').innerText = (aliquotaIPI * 100).toFixed(0);
+            document.getElementById('math-ipi-base').innerText = formataMoeda(baseCalculo);
+            document.getElementById('math-ipi-aliq').innerText = (aliquotaIPI * 100).toFixed(0);
+            document.getElementById('res-ipi').innerText = formataMoeda(ipiDevido);
+
+            document.getElementById('res-aliquota-icms').innerText = (aliquotaICMS * 100).toFixed(0);
+            document.getElementById('math-icms-base').innerText = formataMoeda(baseCalculo);
+            document.getElementById('math-icms-aliq').innerText = (aliquotaICMS * 100).toFixed(0);
+            document.getElementById('res-icms').innerText = formataMoeda(icmsDevido);
+
+            document.getElementById('res-regime-nome').innerText = regime === 'presumido' ? 'Lucro Presumido' : 'Lucro Real';
+            document.getElementById('math-pis-base').innerText = formataMoeda(baseCalculo);
+            document.getElementById('math-pis-aliq').innerText = (aliquotaPIS * 100).toFixed(2);
+            document.getElementById('math-pis-bruto').innerText = formataMoeda(pisBruto);
+            
+            document.getElementById('math-cofins-base').innerText = formataMoeda(baseCalculo);
+            document.getElementById('math-cofins-aliq').innerText = (aliquotaCOFINS * 100).toFixed(2);
+            document.getElementById('math-cofins-bruto').innerText = formataMoeda(cofinsBruto);
+            
+            document.getElementById('math-creditos').innerHTML = textoCredito;
+
+            document.getElementById('res-pis').innerText = formataMoeda(pisDevido);
+            document.getElementById('res-cofins').innerText = formataMoeda(cofinsDevido);
+
+            document.getElementById('res-valor-final').innerText = formataMoeda(valorFinalNota);
+
+            document.getElementById('resultado').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
